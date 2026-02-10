@@ -31,7 +31,7 @@ export default function CaseStudiesPage() {
             <header className="space-y-4">
               <div>
                 <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                  <span className="inline-block">What I</span>{' '}
+                  <span className="inline-block">What I&apos;ve</span>{' '}
                   <span className="inline-block text-primary dark:text-[#ADD8E6]">built &amp; why</span>
                 </h1>
                 <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">

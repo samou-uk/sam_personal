@@ -112,6 +112,7 @@ export default function RestaurantsPage() {
   const [page, setPage] = useState(1)
   const PAGE_SIZE = 3
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [citiesExpanded, setCitiesExpanded] = useState(false)
 
   // Load saved ratings from localStorage
   useEffect(() => {
@@ -243,8 +244,8 @@ export default function RestaurantsPage() {
           <div className="max-w-5xl mx-auto px-6 sm:px-8 space-y-10">
             <header>
               <h1 className="text-5xl md:text-6xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                <span className="inline-block">Restaurant</span>{' '}
-                <span className="inline-block text-primary dark:text-[#ADD8E6]">notes</span>
+                <span className="inline-block">Where I like to</span>{' '}
+                <span className="inline-block text-primary dark:text-[#ADD8E6]">eat</span>
               </h1>
               <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">
                 A small, highly opinionated list of spots I actually rate (and a few I really don&apos;t) — closer to personal favourites than a generic directory.
@@ -253,8 +254,26 @@ export default function RestaurantsPage() {
 
             {/* Filters, search, sort */}
             <div className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-white/80 dark:bg-slate-900/80 p-4 sm:p-5 flex flex-col gap-4">
-              {/* City pills */}
-              <div className="flex flex-wrap gap-1.5 text-[11px] sm:text-xs">
+              {/* City pills - collapsible on mobile */}
+              <div>
+                {/* Collapsed view on mobile - shows active city + expand button */}
+                <div className="flex items-center gap-2 sm:hidden">
+                  <button
+                    type="button"
+                    className="px-3 py-1 rounded-full border text-xs font-light bg-primary/10 dark:bg-[#ADD8E6]/15 border-primary/40 dark:border-[#ADD8E6]/40 text-primary dark:text-[#ADD8E6]"
+                  >
+                    {cityFilter === 'All' ? 'Everywhere' : cityFilter}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCitiesExpanded(!citiesExpanded)}
+                    className="text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-light"
+                  >
+                    {citiesExpanded ? '▼' : '▶'} {citiesExpanded ? 'Less' : 'More'}
+                  </button>
+                </div>
+                {/* Expanded view - all cities, always visible on desktop */}
+                <div className={`flex flex-wrap gap-1.5 text-[11px] sm:text-xs ${citiesExpanded ? 'mt-2' : 'hidden sm:flex'}`}>
                   {(['All', ...cities.filter((c) => c !== 'All')] as (
                     | 'All'
                     | Restaurant['city']
@@ -264,7 +283,10 @@ export default function RestaurantsPage() {
                       <button
                         key={c}
                         type="button"
-                        onClick={() => setCityFilter(c)}
+                        onClick={() => {
+                          setCityFilter(c)
+                          setCitiesExpanded(false) // Collapse after selection on mobile
+                        }}
                         className={`px-3 py-1 rounded-full border text-xs font-light transition-all ${
                           isActive
                             ? 'bg-primary/10 dark:bg-[#ADD8E6]/15 border-primary/40 dark:border-[#ADD8E6]/40 text-primary dark:text-[#ADD8E6]'
@@ -275,6 +297,7 @@ export default function RestaurantsPage() {
                       </button>
                     )
                   })}
+                </div>
               </div>
               {/* Search */}
               <div className="w-full">
