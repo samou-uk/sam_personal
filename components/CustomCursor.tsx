@@ -6,8 +6,28 @@ export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [isPointerDevice, setIsPointerDevice] = useState(false)
 
   useEffect(() => {
+    // Check if device has a fine pointer (mouse) vs coarse pointer (touch)
+    if (typeof window === 'undefined') return
+
+    const mediaQuery = window.matchMedia('(pointer: fine)')
+    setIsPointerDevice(mediaQuery.matches)
+    
+    // Listen for changes (e.g., when device is connected/disconnected)
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsPointerDevice(e.matches)
+    }
+    mediaQuery.addEventListener('change', handleChange)
+
+    // Only set up cursor tracking if it's a pointer device
+    if (!mediaQuery.matches) {
+      return () => {
+        mediaQuery.removeEventListener('change', handleChange)
+      }
+    }
+
     const updateCursor = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
       setIsVisible(true)
@@ -32,10 +52,12 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', checkHover)
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseenter', handleMouseEnter)
+      mediaQuery.removeEventListener('change', handleChange)
     }
   }, [])
 
-  if (!isVisible) return null
+  // Don't render cursor on touch devices
+  if (!isPointerDevice || !isVisible) return null
 
   return (
     <div
