@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
+import 'leaflet/dist/leaflet.css'
 import CustomCursor from '@/components/CustomCursor'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import EasterEggs from '@/components/EasterEggs'
+import Footer from '@/components/Footer'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -29,6 +31,7 @@ export default function RootLayout({
           <CustomCursor />
           <EasterEggs />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

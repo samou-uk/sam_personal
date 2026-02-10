@@ -15,6 +15,8 @@ const nextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload'
           },
+          // Allow framing only from same origin + specific trusted domains via CSP
+          // X-Frame-Options is kept restrictive and CSP frame-src is used to allow embeds.
           {
             key: 'X-Frame-Options',
             value: 'SAMEORIGIN'
@@ -43,8 +45,8 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://open.spotify.com https://*.spotify.com",
-              "frame-src 'self' https://open.spotify.com https://calendar.google.com",
+              "connect-src 'self' https://open.spotify.com https://*.spotify.com https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com",
+              "frame-src 'self' https://open.spotify.com https://calendar.google.com https://docs.google.com https://contacts.google.com",
               "media-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",

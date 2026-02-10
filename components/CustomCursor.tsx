@@ -95,7 +95,8 @@ export default function CustomCursor() {
       >
         <path
           d="M0 0 L12 0 L6 12 Z"
-          fill={isHovering ? (isDarkMode ? '#ADD8E6' : '#004225') : (isDarkMode ? '#0f172a' : '#0f172a')}
+          // Use dark blue accent in light mode, light blue in dark mode
+          fill={isHovering ? (isDarkMode ? '#ADD8E6' : '#0f3d91') : (isDarkMode ? '#0f172a' : '#0f172a')}
           stroke="white"
           strokeWidth="0.8"
           strokeLinejoin="round"

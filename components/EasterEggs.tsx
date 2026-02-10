@@ -90,7 +90,7 @@ export default function EasterEggs() {
           'london': 'My hometown! Where it rains 300 days a year',
           'tennis': 'My favorite sport! When I can find a court...',
           'piano': 'I used to play, not anymore though...',
-          'math': 'What is the indefinite\ integral of x^2?',
+          'math': 'What is the indefinite integral of x^2?',
           'coffee': 'Better than matcha.',
           'rain': 'You must be from London too...',
         }

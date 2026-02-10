@@ -367,11 +367,11 @@ export default function ProjectsPage() {
               {/* Selected Project Details - Slides in from side */}
               {selectedProject !== null && filteredProjects[selectedProject] && (
                 <div 
-                  className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+                  className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
                   onClick={() => setSelectedProject(null)}
                 >
                   <div 
-                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-white dark:bg-slate-900 shadow-2xl overflow-y-auto"
+                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-white dark:bg-slate-900 shadow-2xl overflow-y-auto z-[110]"
                     onClick={(e) => e.stopPropagation()}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -396,14 +396,14 @@ export default function ProjectsPage() {
                             <div className="relative mb-4 flex items-center gap-1.5">
                               <button
                                 onClick={() => setSelectedProject(null)}
-                                className="z-[70] w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
+                                className="z-[110] w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
                                 aria-label="Close"
                               >
                                 <XIcon className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                               </button>
                               <button
                                 onClick={() => setSelectedProject(null)}
-                                className="z-[70] w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
+                                className="z-[110] w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
                                 aria-label="Minimize"
                               >
                                 <span className="w-1 h-1 bg-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
@@ -415,7 +415,7 @@ export default function ProjectsPage() {
                                   setMaximizeModalPosition({ top: rect.bottom + 8, left: rect.left })
                                   setShowMaximizeModal(true)
                                 }}
-                                className="z-[70] w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#20d046] transition-colors duration-200 touch-manipulation flex items-center justify-center group relative"
+                                className="z-[110] w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#20d046] transition-colors duration-200 touch-manipulation flex items-center justify-center group relative"
                                 aria-label="Maximize"
                               >
                                 <span className="w-1 h-1 bg-[#006500] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
@@ -531,14 +531,14 @@ export default function ProjectsPage() {
       {/* Lightbox Modal */}
       {(lightboxImage || lightboxImages) && (
         <div
-          className="fixed inset-0 z-[70] bg-black/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[110] bg-black/95 flex items-center justify-center p-4"
           onClick={closeLightbox}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
           {/* macOS-style traffic lights */}
-          <div className="fixed top-20 left-6 sm:absolute sm:top-6 sm:left-6 z-[80] flex items-center gap-1.5">
+          <div className="fixed top-20 left-6 sm:absolute sm:top-6 sm:left-6 z-[120] flex items-center gap-1.5">
             <button
               onClick={closeLightbox}
               className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
@@ -570,7 +570,7 @@ export default function ProjectsPage() {
           {/* Maximize modal for lightbox */}
           {showMaximizeModal && maximizeModalPosition && (
             <div 
-              className="fixed bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4 min-w-[200px] z-[90]"
+              className="fixed bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4 min-w-[200px] z-[130]"
               style={{ top: `${maximizeModalPosition.top}px`, left: `${maximizeModalPosition.left}px` }}
               onClick={(e) => {
                 e.stopPropagation()
@@ -628,7 +628,7 @@ export default function ProjectsPage() {
       {/* Maximize modal - appears below green button */}
       {showMaximizeModal && maximizeModalPosition && (
         <div 
-          className="fixed bg-white/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 p-4 min-w-[200px] z-[90] animate-in fade-in slide-in-from-top-2 duration-200"
+          className="fixed bg-white/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 p-4 min-w-[200px] z-[130] animate-in fade-in slide-in-from-top-2 duration-200"
           style={{ top: `${maximizeModalPosition.top}px`, left: `${maximizeModalPosition.left}px` }}
           onClick={(e) => e.stopPropagation()}
         >

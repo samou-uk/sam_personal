@@ -59,10 +59,14 @@ export default function ContactPage() {
         <section className="pt-32 pb-32 relative">
           {/* Subtle background pattern */}
           <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `radial-gradient(circle at 2px 2px, #004225 1px, transparent 0)`,
-              backgroundSize: '40px 40px'
-            }}></div>
+            <div
+              className="absolute inset-0"
+              style={{
+                // Use dark blue accent in light mode for the dotted pattern
+                backgroundImage: `radial-gradient(circle at 2px 2px, #0f3d91 1px, transparent 0)`,
+                backgroundSize: '40px 40px',
+              }}
+            ></div>
           </div>
           
           <div className="max-w-5xl mx-auto px-6 sm:px-8 relative">

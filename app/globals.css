@@ -7,7 +7,6 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    cursor: none;
     scrollbar-gutter: stable;
   }
   
@@ -17,7 +16,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-weight: 300;
-    cursor: none;
     scrollbar-gutter: stable;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
@@ -26,12 +24,58 @@
     @apply bg-slate-900 text-slate-100;
   }
   
+  /* Hide system cursor globally so only the custom cursor shows */
   * {
-    cursor: none;
+    cursor: none !important;
+  }
+  select, option, button, input, textarea, .leaflet-control, .leaflet-control * {
+    cursor: none !important;
+  }
+
+  /* Ensure Leaflet map stays below navigation (z-[100]) */
+  .leaflet-container,
+  .leaflet-container *,
+  .leaflet-pane,
+  .leaflet-pane *,
+  .leaflet-map-pane,
+  .leaflet-map-pane *,
+  .leaflet-tile-pane,
+  .leaflet-tile-pane *,
+  .leaflet-overlay-pane,
+  .leaflet-overlay-pane *,
+  .leaflet-shadow-pane,
+  .leaflet-shadow-pane *,
+  .leaflet-marker-pane,
+  .leaflet-marker-pane *,
+  .leaflet-tooltip-pane,
+  .leaflet-tooltip-pane *,
+  .leaflet-popup-pane,
+  .leaflet-popup-pane *,
+  .leaflet-control,
+  .leaflet-control * {
+    z-index: 30 !important;
   }
   
-  a, button, [role="button"], input, textarea, select {
-    cursor: none;
+  /* Override fixed positioned Leaflet elements */
+  .leaflet-container[style*="position: fixed"],
+  .leaflet-pane[style*="position: fixed"],
+  .leaflet-control[style*="position: fixed"] {
+    z-index: 30 !important;
+  }
+  
+  .leaflet-control-container,
+  .leaflet-control-container * {
+    z-index: 30 !important;
+  }
+  
+  /* Ensure popups are still visible but below navigation */
+  .leaflet-popup {
+    z-index: 35 !important;
+  }
+  
+  /* Force all Leaflet elements to respect z-index */
+  div[class*="leaflet"] {
+    z-index: 30 !important;
   }
 
   h1, h2, h3, h4, h5, h6 {

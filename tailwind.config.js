@@ -10,11 +10,12 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#004225',
-          dark: '#003018',
-          darker: '#002010',
-          light: '#005a35',
-          lighter: '#007245',
+          // Dark blue accent for light mode
+          DEFAULT: '#0f3d91',
+          dark: '#0b2b66',
+          darker: '#081d44',
+          light: '#1552c0',
+          lighter: '#1f6ff2',
         },
       },
       fontFamily: {

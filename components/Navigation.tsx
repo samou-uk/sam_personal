@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Home, User, Briefcase, FolderKanban, Code, GraduationCap, Menu, X, Music, Mail, Sun, Moon } from 'lucide-react'
+import { Home, User, Briefcase, FolderKanban, GraduationCap, FileText, BookOpen, Menu, X, Music, Mail, Sun, Moon, Globe, Linkedin, Github, Instagram } from 'lucide-react'
 import { useTheme } from '@/components/ThemeProvider'
 
 const navItems = [
@@ -12,7 +12,8 @@ const navItems = [
   { name: 'About', href: '/about', icon: User },
   { name: 'Experience', href: '/experience', icon: Briefcase },
   { name: 'Projects', href: '/projects', icon: FolderKanban },
-  { name: 'Skills', href: '/skills', icon: Code },
+  { name: 'Case studies', href: '/case-studies', icon: BookOpen },
+  { name: 'Resume', href: '/resume', icon: FileText },
   { name: 'Education', href: '/education', icon: GraduationCap },
   { name: 'Contact', href: '/contact', icon: Mail },
 ]
@@ -23,7 +24,6 @@ export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [musicDropdownOpen, setMusicDropdownOpen] = useState(false)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
-  const [hoveredTrousers, setHoveredTrousers] = useState(false)
   const [hoveredMusic, setHoveredMusic] = useState(false)
   const [hoveredTheme, setHoveredTheme] = useState(false)
   const [spotifyLoaded, setSpotifyLoaded] = useState(false)
@@ -74,7 +74,7 @@ export default function Navigation() {
     <>
       {/* Minimal Top Bar */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           scrolled 
             ? 'bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-slate-200/30 dark:border-slate-700/30' 
             : 'bg-transparent'
@@ -161,41 +161,6 @@ export default function Navigation() {
                 )}
               </div>
 
-              {/* Trousers Link */}
-              <div className="relative">
-                <a
-                  href="https://tomstrunks.com/?srsltid=AfmBOorHGx2AkqKWCnrSHsnecsvHyVmAn_fRXe1FUNiC0JHakvkn18Ah"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2.5 rounded-lg transition-all duration-200 text-slate-900 hover:text-slate-1000 dark:text-slate-500 dark:hover:text-slate-100 block"
-                  onMouseEnter={() => setHoveredTrousers(true)}
-                  onMouseLeave={() => setHoveredTrousers(false)}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 32 32"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M24,31.36h-6c-0.192,0-0.351-0.151-0.359-0.343L16.657,10.36h-1.313l-0.984,20.658
-                      C14.351,31.209,14.192,31.36,14,31.36H8c-0.199,0-0.36-0.161-0.36-0.36V1c0-0.199,0.161-0.36,0.36-0.36h16
-                      c0.199,0,0.36,0.161,0.36,0.36v30C24.36,31.199,24.199,31.36,24,31.36z M18.344,30.64h5.296V6.341
-                      c-1.565-0.167-2.813-1.415-2.98-2.981H17.36V8c0,0.199-0.161,0.36-0.36,0.36h-1.64v1.28H17c0.192,0,0.351,0.151,0.359,0.343
-                      L18.344,30.64z M8.36,30.64h5.297L14.64,9.992V3.36h-3.299C11.173,4.926,9.926,6.173,8.36,6.341V30.64z M15.36,7.64h1.28V3.36
-                      h-1.28V7.64z M21.385,3.36c0.159,1.168,1.087,2.096,2.255,2.256V3.36H21.385z M8.36,3.36v2.256c1.168-0.16,2.096-1.087,2.256-2.256
-                      H8.36z M20.36,2.64h3.279V1.36H20.36V2.64z M12.36,2.64h7.28V1.36h-7.28V2.64z M8.36,2.64h3.28V1.36H8.36V2.64z"/>
-                  </svg>
-                </a>
-                
-                {/* Tooltip */}
-                {hoveredTrousers && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light rounded-lg whitespace-nowrap pointer-events-none z-50">
-                    Tom's Trunks
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-slate-100 rotate-45"></div>
-                  </div>
-                )}
-              </div>
-
               {/* Music Dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -261,20 +226,29 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-          <div className="fixed inset-0 z-40 md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl">
-          <div className="pt-20 px-6">
-            <div className="space-y-1">
+        <div className="fixed inset-0 z-[1200] md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl">
+          {/* Close button inside overlay */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            className="absolute top-5 right-5 p-2 rounded-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="pt-20 px-6 pb-6 flex flex-col h-full">
+            <div className="space-y-1 flex-1 overflow-y-auto">
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
                 return (
                   <Link key={item.href} href={item.href}>
                     <div
-                          className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
-                            isActive
-                              ? 'bg-primary/10 dark:bg-[#ADD8E6]/20 text-primary dark:text-[#ADD8E6]'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50'
-                          }`}
+                      className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
+                        isActive
+                          ? 'bg-primary/10 dark:bg-[#ADD8E6]/20 text-primary dark:text-[#ADD8E6]'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50'
+                      }`}
                     >
                       <Icon className="w-5 h-5" />
                       <span className="text-base font-light">{item.name}</span>
@@ -283,33 +257,94 @@ export default function Navigation() {
                 )
               })}
             </div>
+
+            {/* Mobile footer inside hamburger */}
+            <div className="mt-6 border-t border-slate-200 dark:border-slate-800 pt-4">
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-light mb-3">
+                &copy; {new Date().getFullYear()} Sam Chusen Ou
+              </p>
+              {/* Internal links only in mobile footer section */}
+              <div className="flex flex-wrap gap-3 mb-3 text-[11px] font-light text-slate-500 dark:text-slate-400">
+                <a
+                  href="/restaurants"
+                  className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  Restaurant notes
+                </a>
+              </div>
+
+              <div className="flex gap-5">
+                <a
+                  href="mailto:scou@uwaterloo.ca"
+                  className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://samou.co.uk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  <Globe className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/sam-chusen-ou/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://github.com/samou-uk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://instagram.com/samchusenou"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Bottom Mobile Nav - Minimal */}
-          <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/30 dark:border-slate-700/30">
-        <div className="flex items-center justify-around h-14 px-2">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isActive = pathname === item.href
-            return (
-              <Link key={item.href} href={item.href} className="flex-1">
-                <div
-                      className={`flex flex-col items-center justify-center gap-0.5 py-2 transition-all duration-200 ${
+      {/* Bottom Mobile Nav - Labeled (exclude About/Home on bottom bar, hide when menu open) */}
+      {!menuOpen && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/30 dark:border-slate-700/30">
+          <div className="flex items-center justify-around h-16 px-1">
+            {navItems
+              .filter((item) => item.name !== 'About' && item.name !== 'Home')
+              .map((item) => {
+                const Icon = item.icon
+                const isActive = pathname === item.href
+                return (
+                  <Link key={item.href} href={item.href} className="flex-1">
+                    <div
+                      className={`flex flex-col items-center justify-center gap-0.5 py-1.5 transition-all duration-200 text-xs ${
                         isActive ? 'text-primary dark:text-[#ADD8E6]' : 'text-slate-500 dark:text-slate-400'
                       }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  {isActive && (
-                    <div className="w-1 h-1 rounded-full bg-primary dark:bg-[#ADD8E6]" />
-                  )}
-                </div>
-              </Link>
-            )
-          })}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="mt-0.5 font-light">
+                        {item.name}
+                      </span>
+                    </div>
+                  </Link>
+                )
+              })}
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
