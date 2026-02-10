@@ -4,6 +4,12 @@ import React, { useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 
+// Type casting to bypass TypeScript errors with react-leaflet types
+const AnyMapContainer = MapContainer as any
+const AnyTileLayer = TileLayer as any
+const AnyMarker = Marker as any
+const AnyPopup = Popup as any
+
 type RestaurantLocation = {
   id: string
   name: string
@@ -82,7 +88,7 @@ export default function RestaurantLeafletMap({
           zoomControl={false}
           className="w-full h-full"
         >
-          <TileLayer
+          <AnyTileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           />
@@ -92,12 +98,12 @@ export default function RestaurantLeafletMap({
               r.tags?.find((tag) => tag.toLowerCase().startsWith('best ')) ??
               null
             return (
-              <Marker
+              <AnyMarker
                 key={r.id}
                 position={[r.lat, r.lng]}
                 icon={createMarkerIcon(isSelected)}
               >
-                <Popup>
+                <AnyPopup>
                   <div className="space-y-1.5">
                     <p className="text-xs font-semibold text-slate-800">
                       {r.name}
@@ -160,8 +166,8 @@ export default function RestaurantLeafletMap({
                       {r.neighbourhood ? ` · ${r.neighbourhood}` : ''}
                     </p>
                   </div>
-                </Popup>
-              </Marker>
+                </AnyPopup>
+              </AnyMarker>
             )
           })}
         </AnyMapContainer>
