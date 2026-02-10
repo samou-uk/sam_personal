@@ -13,10 +13,9 @@ export default function CustomCursor() {
     // Check if device has a fine pointer (mouse) vs coarse pointer (touch)
     if (typeof window === 'undefined') return
 
-    // Check dark mode
-    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    // Check dark mode - only check the class, not system preference
     const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark') || darkModeQuery.matches)
+      setIsDarkMode(document.documentElement.classList.contains('dark'))
     }
     checkDarkMode()
 
@@ -96,7 +95,7 @@ export default function CustomCursor() {
       >
         <path
           d="M0 0 L12 0 L6 12 Z"
-          fill={isHovering ? (isDarkMode ? '#ADD8E6' : '#004225') : '#0f172a'}
+          fill={isHovering ? (isDarkMode ? '#ADD8E6' : '#004225') : (isDarkMode ? '#0f172a' : '#0f172a')}
           stroke="white"
           strokeWidth="0.8"
           strokeLinejoin="round"
