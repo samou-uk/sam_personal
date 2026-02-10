@@ -1,11 +1,26 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 
 export default function CaseStudiesPage() {
-  const [activeCaseStudy, setActiveCaseStudy] = useState<'placecard' | 'fortune'>('placecard')
+  const searchParams = useSearchParams()
+  const projectParam = searchParams?.get('project')
+  const initialCaseStudy = (projectParam === 'fortune' ? 'fortune' : 'placecard') as 'placecard' | 'fortune'
+  const [activeCaseStudy, setActiveCaseStudy] = useState<'placecard' | 'fortune'>(initialCaseStudy)
+  
+  // Update active case study when URL param changes
+  useEffect(() => {
+    if (!searchParams) return
+    const project = searchParams.get('project')
+    if (project === 'fortune') {
+      setActiveCaseStudy('fortune')
+    } else if (project === 'placecard') {
+      setActiveCaseStudy('placecard')
+    }
+  }, [searchParams])
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
   const [lightboxAlt, setLightboxAlt] = useState<string | null>(null)
   const [showMaximizeNote, setShowMaximizeNote] = useState(false)

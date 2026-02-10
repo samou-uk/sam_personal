@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Image from 'next/image'
-import { ExternalLink, Github, Search, X, ArrowUpRight, X as XIcon } from 'lucide-react'
+import Link from 'next/link'
+import { ExternalLink, Github, Search, X, ArrowUpRight, X as XIcon, BookOpen } from 'lucide-react'
 
 const projects = [
   {
@@ -492,6 +493,19 @@ export default function ProjectsPage() {
                                   </span>
                                 ))}
                               </div>
+
+                              {/* Case Study Link for Placecard and FortuneVantage */}
+                              {(project.name === 'Placecard' || project.name === 'FortuneVantage') && (
+                                <div className="mb-3">
+                                  <Link
+                                    href={`/case-studies?project=${project.name === 'Placecard' ? 'placecard' : 'fortune'}`}
+                                    className="inline-flex items-center gap-2 text-sm text-primary dark:text-[#ADD8E6] hover:text-primary-dark dark:hover:text-[#ADD8E6]/80 active:text-primary-dark dark:active:text-[#ADD8E6]/80 transition-colors duration-200 font-light"
+                                  >
+                                    <BookOpen className="w-4 h-4" />
+                                    Read Case Study
+                                  </Link>
+                                </div>
+                              )}
 
                               {/* Link */}
                               {project.link && (
