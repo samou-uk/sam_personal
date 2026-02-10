@@ -27,6 +27,9 @@ export default function Footer() {
               <a href="/restaurants" className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200">
                 Restaurant notes
               </a>
+              <a href="/privacy" className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200">
+                Privacy
+              </a>
             </nav>
 
             <div className="flex gap-4">

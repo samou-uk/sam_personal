@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import 'leaflet/dist/leaflet.css'
 import CustomCursor from '@/components/CustomCursor'
@@ -32,6 +33,7 @@ export default function RootLayout({
           <EasterEggs />
           {children}
           <Footer />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
