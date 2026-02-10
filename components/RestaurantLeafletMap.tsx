@@ -170,7 +170,8 @@ export default function RestaurantLeafletMap({
         </AnyMapContainer>
       </div>
       <p className="text-[11px] text-slate-500/80 dark:text-slate-400/80 font-light">
-        Scroll or trackpad to zoom, drag to pan.
+        <span className="sm:hidden">Pinch to zoom, drag to pan.</span>
+        <span className="hidden sm:inline">Scroll or trackpad to zoom, drag to pan.</span>
       </p>
     </div>
   )

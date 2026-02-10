@@ -243,7 +243,7 @@ export default function RestaurantsPage() {
         <section className="pt-32 pb-32">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 space-y-10">
             <header>
-              <h1 className="text-5xl md:text-6xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
+              <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
                 <span className="inline-block">Where I like to</span>{' '}
                 <span className="inline-block text-primary dark:text-[#ADD8E6]">eat</span>
               </h1>
@@ -269,7 +269,7 @@ export default function RestaurantsPage() {
                     onClick={() => setCitiesExpanded(!citiesExpanded)}
                     className="text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-light"
                   >
-                    {citiesExpanded ? '▼' : '▶'} {citiesExpanded ? 'Less' : 'More'}
+                    {citiesExpanded ? '▼' : '▶'} {citiesExpanded ? 'Less' : 'More locations'}
                   </button>
                 </div>
                 {/* Expanded view - all cities, always visible on desktop */}
