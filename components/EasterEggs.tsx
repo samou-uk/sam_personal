@@ -14,7 +14,6 @@ export default function EasterEggs() {
   const [showTypedMessage, setShowTypedMessage] = useState(false)
   const [typedMessage, setTypedMessage] = useState('')
   const [lastTriggeredPhrase, setLastTriggeredPhrase] = useState('')
-  const [rainbowMode, setRainbowMode] = useState(false)
 
   // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A
   const konamiSequence = [
@@ -35,7 +34,6 @@ export default function EasterEggs() {
         const matches = newSequence.every((key, index) => key === konamiSequence[index])
         if (matches) {
           setShowKonami(true)
-          setRainbowMode(true)
           setTimeout(() => {
             setShowKonami(false)
           }, 3000)
@@ -117,16 +115,6 @@ export default function EasterEggs() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [konamiCode, typedText, lastTriggeredPhrase])
 
-  // Rainbow mode effect
-  useEffect(() => {
-    if (rainbowMode) {
-      const interval = setInterval(() => {
-        const hue = Math.floor(Math.random() * 360)
-        document.documentElement.style.setProperty('--rainbow-hue', `${hue}`)
-      }, 100)
-      return () => clearInterval(interval)
-    }
-  }, [rainbowMode])
 
   // Profile picture click counter
   useEffect(() => {
@@ -238,21 +226,6 @@ export default function EasterEggs() {
         </div>
       )}
 
-      {/* Rainbow Mode Styles */}
-      {rainbowMode && (
-        <style jsx global>{`
-          @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-          }
-          body {
-            animation: rainbow 3s linear infinite;
-          }
-          * {
-            transition: filter 0.1s ease;
-          }
-        `}</style>
-      )}
     </>,
     document.body
   )
