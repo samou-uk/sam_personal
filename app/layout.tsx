@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import EasterEggs from '@/components/EasterEggs'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.className} font-sans`}>
         <ThemeProvider>
           <CustomCursor />
+          <EasterEggs />
           {children}
         </ThemeProvider>
       </body>

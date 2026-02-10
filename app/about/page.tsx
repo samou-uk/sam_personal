@@ -107,7 +107,10 @@ export default function AboutPage() {
                     <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === 'tennis' ? 'rotate-180' : ''}`} />
                   </button>
                   {openDropdown === 'tennis' && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible">
+                    <div 
+                      className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <div className="relative">
                         {/* macOS traffic lights - positioned to always be visible */}
                         <div className="absolute top-2 right-2 md:top-3 md:left-3 md:right-auto z-30 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-lg p-1 shadow-sm">
@@ -126,6 +129,10 @@ export default function AboutPage() {
                             <span className="w-1 h-1 bg-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              // Just show tooltip, don't close dropdown
+                            }}
                             onMouseEnter={() => setShowMaximizeTooltip('tennis')}
                             onMouseLeave={() => setShowMaximizeTooltip(null)}
                             className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#20d046] transition-colors duration-200 flex items-center justify-center group relative"
@@ -179,7 +186,10 @@ export default function AboutPage() {
                     <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === 'Chicken & Mash' ? 'rotate-180' : ''}`} />
                   </button>
                   {openDropdown === 'Chicken & Mash' && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible">
+                    <div 
+                      className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <div className="relative">
                         {/* macOS traffic lights - positioned to always be visible */}
                         <div className="absolute top-2 right-2 md:top-3 md:left-3 md:right-auto z-30 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-lg p-1 shadow-sm">
@@ -198,6 +208,10 @@ export default function AboutPage() {
                             <span className="w-1 h-1 bg-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              // Just show tooltip, don't close dropdown
+                            }}
                             onMouseEnter={() => setShowMaximizeTooltip('chicken')}
                             onMouseLeave={() => setShowMaximizeTooltip(null)}
                             className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#20d046] transition-colors duration-200 flex items-center justify-center group relative"
@@ -238,7 +252,10 @@ export default function AboutPage() {
                     <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === 'music' ? 'rotate-180' : ''}`} />
                   </button>
                   {openDropdown === 'music' && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible">
+                    <div 
+                      className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-2 z-10 w-[calc(100vw-3rem)] sm:w-96 max-w-[calc(100vw-3rem)] sm:max-w-none bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-xl overflow-visible"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <div className="relative">
                         {/* macOS traffic lights - positioned to always be visible */}
                         <div className="absolute top-2 right-2 md:top-3 md:left-3 md:right-auto z-30 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-lg p-1 shadow-sm">
@@ -257,6 +274,10 @@ export default function AboutPage() {
                             <span className="w-1 h-1 bg-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              // Just show tooltip, don't close dropdown
+                            }}
                             onMouseEnter={() => setShowMaximizeTooltip('music')}
                             onMouseLeave={() => setShowMaximizeTooltip(null)}
                             className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#20d046] transition-colors duration-200 flex items-center justify-center group relative"

@@ -555,6 +555,7 @@ export default function ProjectsPage() {
             </button>
             <button
               onClick={(e) => {
+                e.stopPropagation()
                 const rect = e.currentTarget.getBoundingClientRect()
                 setMaximizeModalPosition({ top: rect.bottom + 8, left: rect.left })
                 setShowMaximizeModal(true)
@@ -571,9 +572,12 @@ export default function ProjectsPage() {
             <div 
               className="fixed bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4 min-w-[200px] z-[90]"
               style={{ top: `${maximizeModalPosition.top}px`, left: `${maximizeModalPosition.left}px` }}
-              onClick={() => setShowMaximizeModal(false)}
+              onClick={(e) => {
+                e.stopPropagation()
+                setShowMaximizeModal(false)
+              }}
             >
-              <p className="text-sm text-slate-700 font-light">What is there to maximise?</p>
+              <p className="text-sm text-slate-700 dark:text-slate-300 font-light">What is there to maximise?</p>
             </div>
           )}
           
