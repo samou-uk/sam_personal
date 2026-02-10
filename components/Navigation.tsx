@@ -335,7 +335,7 @@ export default function Navigation() {
                       }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span className="mt-0.5 font-light">
+                      <span className="mt-0.5 font-light text-[10px]">
                         {item.name}
                       </span>
                     </div>

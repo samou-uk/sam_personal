@@ -17,10 +17,13 @@ type FilterDropdownProps = {
   value: string
   options: DropdownOption[]
   onChange: (value: string) => void
+  id: string
+  openDropdown: string | null
+  setOpenDropdown: (id: string | null) => void
 }
 
-function FilterDropdown({ label, value, options, onChange }: FilterDropdownProps) {
-  const [open, setOpen] = useState(false)
+function FilterDropdown({ label, value, options, onChange, id, openDropdown, setOpenDropdown }: FilterDropdownProps) {
+  const open = openDropdown === id
   const active = options.find((o) => o.value === value)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -28,7 +31,7 @@ function FilterDropdown({ label, value, options, onChange }: FilterDropdownProps
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpen(false)
+        setOpenDropdown(null)
       }
     }
 
@@ -39,13 +42,13 @@ function FilterDropdown({ label, value, options, onChange }: FilterDropdownProps
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [open])
+  }, [open, setOpenDropdown])
 
   return (
-    <div ref={dropdownRef} className="relative z-[35] text-xs sm:text-[13px]">
+    <div ref={dropdownRef} className={`relative text-xs sm:text-[13px] ${open ? 'z-[50]' : 'z-[35]'}`}>
       <button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setOpenDropdown(open ? null : id)}
         className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-primary/40 dark:hover:border-[#ADD8E6]/60 transition-colors min-w-[9rem] justify-between"
       >
         <span className="flex items-center gap-1">
@@ -63,7 +66,7 @@ function FilterDropdown({ label, value, options, onChange }: FilterDropdownProps
         </span>
       </button>
       {open && (
-        <div className="absolute z-[45] mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg max-h-64 overflow-y-auto">
+        <div className="absolute z-[60] mt-1 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg max-h-64 overflow-y-auto">
           {options.map((opt) => {
             const isActive = opt.value === value
             return (
@@ -72,7 +75,7 @@ function FilterDropdown({ label, value, options, onChange }: FilterDropdownProps
                 type="button"
                 onClick={() => {
                   onChange(opt.value)
-                  setOpen(false)
+                  setOpenDropdown(null)
                 }}
                 className={`w-full text-left px-3 py-1.5 text-xs sm:text-[13px] font-light ${
                   isActive
@@ -108,6 +111,7 @@ export default function RestaurantsPage() {
 
   const [page, setPage] = useState(1)
   const PAGE_SIZE = 3
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   // Load saved ratings from localStorage
   useEffect(() => {
@@ -285,6 +289,7 @@ export default function RestaurantsPage() {
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-[13px] justify-between">
                 <div className="flex flex-wrap gap-2 sm:gap-3">
                   <FilterDropdown
+                    id="cuisine"
                     label="Cuisine"
                     value={categoryFilter}
                     options={categories.map((c) => ({
@@ -292,8 +297,11 @@ export default function RestaurantsPage() {
                       label: c === 'All' ? 'All cuisines' : c,
                     }))}
                     onChange={(v) => setCategoryFilter(v as any)}
+                    openDropdown={openDropdown}
+                    setOpenDropdown={setOpenDropdown}
                   />
                   <FilterDropdown
+                    id="price"
                     label="Price"
                     value={priceFilter}
                     options={prices.map((p) => ({
@@ -301,6 +309,8 @@ export default function RestaurantsPage() {
                       label: p === 'All' ? 'Any price' : p,
                     }))}
                     onChange={(v) => setPriceFilter(v as any)}
+                    openDropdown={openDropdown}
+                    setOpenDropdown={setOpenDropdown}
                   />
                 </div>
                 <div className="flex items-center gap-2">
@@ -308,6 +318,7 @@ export default function RestaurantsPage() {
                     Sort
                   </span>
                   <FilterDropdown
+                    id="sort"
                     value={sortBy}
                     options={[
                       { value: 'featured', label: 'Featured' },
@@ -318,6 +329,8 @@ export default function RestaurantsPage() {
                       { value: 'name-asc', label: 'Name A–Z' },
                     ]}
                     onChange={(v) => setSortBy(v as any)}
+                    openDropdown={openDropdown}
+                    setOpenDropdown={setOpenDropdown}
                   />
                 </div>
               </div>

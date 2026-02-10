@@ -40,6 +40,9 @@ export default function ResumePage() {
                 Download PDF
               </a>
             </div>
+            <p className="text-xs text-slate-400 dark:text-slate-500 font-light mb-10 -mt-6">
+              Note: Download may not work on all devices, especially phones.
+            </p>
 
             {/* Embedded PDF viewer */}
             <div className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-white/80 dark:bg-slate-900/80 shadow-lg overflow-hidden">

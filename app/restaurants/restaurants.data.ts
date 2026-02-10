@@ -1103,8 +1103,8 @@ export const restaurants: Restaurant[] = [
     price: '$$$$',
     tags: ['canadian', 'upscale', 'meh'],
     defaultRating: 3.8,
-    lat: 54.6593163,
-    lng: -1.7142735,
+    lat: 43.65128,
+    lng: -79.37937,
   },
   {
     id: 'le-188-degree-hong-kong',
