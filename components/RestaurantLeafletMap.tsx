@@ -48,6 +48,9 @@ interface RestaurantLeafletMapProps {
   selectedId: string | null
 }
 
+// Relax typing here to avoid issues with react-leaflet + custom Leaflet typings in build
+const AnyMapContainer = MapContainer as any
+
 export default function RestaurantLeafletMap({
   restaurants,
   selectedId,
@@ -71,9 +74,9 @@ export default function RestaurantLeafletMap({
         Map
       </p>
       <div className="relative w-full aspect-square rounded-xl overflow-hidden z-[30]" style={{ isolation: 'isolate' }}>
-        <MapContainer
+        <AnyMapContainer
           key={selected?.id ?? 'map'}
-          center={center}
+          center={center as any}
           zoom={13}
           scrollWheelZoom={true}
           zoomControl={false}
@@ -161,7 +164,7 @@ export default function RestaurantLeafletMap({
               </Marker>
             )
           })}
-        </MapContainer>
+        </AnyMapContainer>
       </div>
       <p className="text-[11px] text-slate-500/80 dark:text-slate-400/80 font-light">
         Scroll or trackpad to zoom, drag to pan.
