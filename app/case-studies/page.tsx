@@ -36,7 +36,7 @@ function CaseStudiesContent() {
   }
 
   return (
-    <>
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
 
       <div className="pt-20 pb-16 md:pb-0">
