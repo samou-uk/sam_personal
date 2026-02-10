@@ -54,9 +54,6 @@ interface RestaurantLeafletMapProps {
   selectedId: string | null
 }
 
-// Relax typing here to avoid issues with react-leaflet + custom Leaflet typings in build
-const AnyMapContainer = MapContainer as any
-
 export default function RestaurantLeafletMap({
   restaurants,
   selectedId,
