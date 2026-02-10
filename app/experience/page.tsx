@@ -122,7 +122,7 @@ export default function ExperiencePage() {
 
                             {/* Highlight badges */}
                             <div className="flex flex-wrap gap-2">
-                              {(exp.highlights || [exp.highlight]).map((highlight, idx) => (
+                              {(exp.highlights || []).map((highlight, idx) => (
                                 <div key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 border border-primary/15">
                                   <span className="text-xs font-light text-primary">{highlight}</span>
                                 </div>
