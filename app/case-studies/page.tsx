@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 
-export default function CaseStudiesPage() {
+function CaseStudiesContent() {
   const searchParams = useSearchParams()
   const projectParam = searchParams?.get('project')
   const initialCaseStudy = (projectParam === 'fortune' ? 'fortune' : 'placecard') as 'placecard' | 'fortune'
@@ -36,7 +36,7 @@ export default function CaseStudiesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
+    <>
       <Navigation />
 
       <div className="pt-20 pb-16 md:pb-0">
@@ -843,6 +843,27 @@ export default function CaseStudiesPage() {
         </div>
       )}
     </main>
+  )
+}
+
+export default function CaseStudiesPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-white dark:bg-slate-900">
+        <Navigation />
+        <div className="pt-20 pb-16 md:pb-0">
+          <section className="pt-32 pb-32">
+            <div className="max-w-5xl mx-auto px-6 sm:px-8">
+              <div className="text-center">
+                <p className="text-slate-500 dark:text-slate-400 font-light">Loading...</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    }>
+      <CaseStudiesContent />
+    </Suspense>
   )
 }
 

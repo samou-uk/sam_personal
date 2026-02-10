@@ -77,6 +77,7 @@ const projects = [
     category: 'Mini Game',
     description: 'Hidden React mini-game embedded in Fortune Foods site. Features animated state transitions and persistent high scores via localStorage.',
     skills: ['React', 'JavaScript'],
+    link: 'https://fortunefoods.co.uk/BaoClicker',
     image: '/BaoClicker.png',
   },
   {
@@ -85,6 +86,7 @@ const projects = [
     category: 'Mini Game',
     description: 'Interactive React mini-game inspired by classic pizzeria simulators, adapted to a Fortune Foods retail store setting. Features order fulfillment, animations, sound effects, and an instruction modal to boost engagement and brand personality.',
     skills: ['React', 'JavaScript'],
+    link: 'https://fortunefoods.co.uk/fortune-express',
     image: '/fortuneexpress.png',
   },
   {
