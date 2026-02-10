@@ -257,16 +257,16 @@ export default function ProjectsPage() {
   }, [showMaximizeModal])
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 mb-6 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
               <span className="inline-block">What I've</span>{' '}
-              <span className="inline-block text-primary">built</span>
+              <span className="inline-block text-primary dark:text-[#ADD8E6]">built</span>
             </h1>
             
             {/* Minimal Filter */}
@@ -279,7 +279,7 @@ export default function ProjectsPage() {
                     placeholder="Search projects"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border-b border-slate-300 focus:border-primary focus:outline-none text-slate-900 font-light placeholder:text-slate-400 transition-colors duration-200 bg-transparent text-sm sm:text-base"
+                    className="w-full pl-10 pr-4 py-2.5 border-b border-slate-300 dark:border-slate-600 focus:border-primary dark:focus:border-[#ADD8E6] focus:outline-none text-slate-900 dark:text-slate-100 font-light placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors duration-200 bg-transparent text-sm sm:text-base"
                   />
                 </div>
               </div>
@@ -290,8 +290,8 @@ export default function ProjectsPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-light transition-colors duration-200 whitespace-nowrap flex-shrink-0 ${
                       selectedCategory === category
-                        ? 'text-primary border-b-2 border-primary'
-                        : 'text-slate-600 hover:text-slate-900 active:text-slate-900'
+                        ? 'text-primary dark:text-[#ADD8E6] border-b-2 border-primary dark:border-[#ADD8E6]'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 active:text-slate-900 dark:active:text-slate-100'
                     }`}
                   >
                     {category}
@@ -352,7 +352,7 @@ export default function ProjectsPage() {
                       
                       {/* Title at bottom */}
                       <div className="text-center">
-                        <p className="font-light text-xs sm:text-sm text-slate-900 line-clamp-1 group-hover:text-primary transition-colors duration-200">
+                        <p className="font-light text-xs sm:text-sm text-slate-900 dark:text-slate-100 line-clamp-1 group-hover:text-primary dark:group-hover:text-[#ADD8E6] transition-colors duration-200">
                           {project.name}
                         </p>
                         <p className="font-light text-[10px] sm:text-xs text-slate-500 mt-0.5">
@@ -371,7 +371,7 @@ export default function ProjectsPage() {
                   onClick={() => setSelectedProject(null)}
                 >
                   <div 
-                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-white shadow-2xl overflow-y-auto"
+                    className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-white dark:bg-slate-900 shadow-2xl overflow-y-auto"
                     onClick={(e) => e.stopPropagation()}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -463,20 +463,20 @@ export default function ProjectsPage() {
                             {/* Content */}
                             <div>
                               <div className="mb-3 sm:mb-4">
-                                <span className="text-xs text-slate-500 font-light uppercase tracking-wider">
+                                <span className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider">
                                   {project.category}
                                 </span>
                               </div>
                               
-                              <h2 className="text-2xl sm:text-4xl font-extralight text-slate-900 mb-3 sm:mb-4 tracking-tight">
+                              <h2 className="text-2xl sm:text-4xl font-extralight text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 tracking-tight">
                                 {project.name}
                               </h2>
                               
-                              <p className="text-lg sm:text-xl text-slate-600 font-light mb-4 sm:mb-6">
+                              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-light mb-4 sm:mb-6">
                                 {project.tagline}
                               </p>
                               
-                              <p className="text-slate-700 leading-relaxed font-light mb-6 sm:mb-8 text-sm sm:text-base">
+                              <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-light mb-6 sm:mb-8 text-sm sm:text-base">
                                 {project.description}
                               </p>
 
@@ -485,7 +485,7 @@ export default function ProjectsPage() {
                                 {project.skills.map((skill, skillIndex) => (
                                   <span
                                     key={skillIndex}
-                                    className="text-xs text-slate-600 font-light"
+                                    className="text-xs text-slate-600 dark:text-slate-300 font-light"
                                   >
                                     {skill}
                                     {skillIndex < project.skills.length - 1 && <span className="mx-2 text-slate-400">·</span>}
@@ -499,7 +499,7 @@ export default function ProjectsPage() {
                                   href={project.link}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-dark active:text-primary-dark transition-colors duration-200 font-light"
+                                  className="inline-flex items-center gap-2 text-sm text-primary dark:text-[#ADD8E6] hover:text-primary-dark dark:hover:text-[#ADD8E6]/80 active:text-primary-dark dark:active:text-[#ADD8E6]/80 transition-colors duration-200 font-light"
                                 >
                                   {project.github ? (
                                     <>
@@ -569,7 +569,7 @@ export default function ProjectsPage() {
           {/* Maximize modal for lightbox */}
           {showMaximizeModal && maximizeModalPosition && (
             <div 
-              className="fixed bg-white/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 p-4 min-w-[200px] z-[90]"
+              className="fixed bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 p-4 min-w-[200px] z-[90]"
               style={{ top: `${maximizeModalPosition.top}px`, left: `${maximizeModalPosition.left}px` }}
               onClick={() => setShowMaximizeModal(false)}
             >
@@ -582,7 +582,7 @@ export default function ProjectsPage() {
               {lightboxIndex > 0 && (
                 <button
                   onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                  className="absolute left-6 text-white hover:text-primary transition-colors p-2"
+                  className="absolute left-6 text-white hover:text-primary dark:hover:text-[#ADD8E6] transition-colors p-2"
                 >
                   <ArrowUpRight className="w-6 h-6 rotate-90" />
                 </button>
@@ -590,7 +590,7 @@ export default function ProjectsPage() {
               {lightboxIndex < lightboxImages.length - 1 && (
                 <button
                   onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                  className="absolute right-6 text-white hover:text-primary transition-colors p-2"
+                  className="absolute right-6 text-white hover:text-primary dark:hover:text-[#ADD8E6] transition-colors p-2"
                 >
                   <ArrowUpRight className="w-6 h-6 -rotate-90" />
                 </button>

@@ -53,3 +53,4 @@ To make your portfolio more personal and engaging, here are the photos I recomme
 Once you add the photos, the site will automatically use them. The About section photo will really make the site feel more personal and inviting!
 
 
+

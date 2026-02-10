@@ -59,15 +59,15 @@ export default function ExperiencePage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 mb-2 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
               <span className="inline-block">Where I've</span>{' '}
-              <span className="inline-block text-primary">worked</span>
+              <span className="inline-block text-primary dark:text-[#ADD8E6]">worked</span>
             </h1>
           </div>
 
@@ -76,10 +76,10 @@ export default function ExperiencePage() {
               const isExpanded = expandedIndex === index
               
               return (
-                <div
-                  key={index}
-                  className="group relative border-b border-slate-200 pb-8 last:border-b-0 last:pb-0"
-                >
+                    <div
+                      key={index}
+                      className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
+                    >
                   {/* Header - Always visible */}
                   <button
                     onClick={() => setExpandedIndex(isExpanded ? null : index)}
@@ -88,7 +88,7 @@ export default function ExperiencePage() {
                     <div className="flex items-start gap-6">
                       {/* Logo */}
                       <div className="flex-shrink-0 w-16 h-16">
-                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
                           <Image
                             src={exp.image}
                             alt={exp.company}
@@ -104,27 +104,27 @@ export default function ExperiencePage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-6">
                           <div className="flex-1 min-w-0">
-                            <h2 className="text-2xl font-extralight text-slate-900 mb-2 tracking-tight">
+                            <h2 className="text-2xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
                               {exp.title}
                             </h2>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-light mb-4">
-                              <span className="text-slate-900 font-light">{exp.company}</span>
-                              <span className="text-slate-300">·</span>
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
+                              <span className="text-slate-900 dark:text-slate-100 font-light">{exp.company}</span>
+                              <span className="text-slate-300 dark:text-slate-600">·</span>
                               <span>{exp.location}</span>
-                              <span className="text-slate-300">·</span>
+                              <span className="text-slate-300 dark:text-slate-600">·</span>
                               <span>{exp.date}</span>
                             </div>
                             
                             {/* Summary */}
-                            <p className="text-base text-slate-600 font-light leading-relaxed mb-4">
+                            <p className="text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-4">
                               {exp.summary}
                             </p>
 
                             {/* Highlight badges */}
                             <div className="flex flex-wrap gap-2">
                               {(exp.highlights || []).map((highlight, idx) => (
-                                <div key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 border border-primary/15">
-                                  <span className="text-xs font-light text-primary">{highlight}</span>
+                                <div key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 dark:bg-[#ADD8E6]/20 border border-primary/15 dark:border-[#ADD8E6]/30">
+                                  <span className="text-xs font-light text-primary dark:text-[#ADD8E6]">{highlight}</span>
                                 </div>
                               ))}
                             </div>
@@ -134,8 +134,8 @@ export default function ExperiencePage() {
                           <div className="flex-shrink-0 pt-1">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                               isExpanded 
-                                ? 'bg-primary text-white' 
-                                : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'
+                                ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900' 
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
                             }`}>
                               <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                             </div>
@@ -152,12 +152,12 @@ export default function ExperiencePage() {
                     <div className="pl-24">
                       <ul className="space-y-3 list-disc list-inside">
                         {exp.points.map((point, pointIndex) => (
-                          <li 
-                            key={pointIndex} 
-                            className="text-slate-600 leading-relaxed text-sm font-light"
-                          >
-                            {point}
-                          </li>
+                              <li 
+                                key={pointIndex} 
+                                className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm font-light"
+                              >
+                                {point}
+                              </li>
                         ))}
                       </ul>
                     </div>

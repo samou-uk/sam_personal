@@ -41,15 +41,15 @@ export default function SkillsPage() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 mb-2 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
               <span className="inline-block">What I</span>{' '}
-              <span className="inline-block text-primary">know</span>
+              <span className="inline-block text-primary dark:text-[#ADD8E6]">know</span>
             </h1>
           </div>
 
@@ -68,17 +68,17 @@ export default function SkillsPage() {
                   {/* Category Header */}
                   <div className="flex items-center gap-6 mb-8">
                     <div className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      isHovered ? 'bg-slate-100 scale-110' : 'bg-slate-50'
+                      isHovered ? 'bg-slate-100 dark:bg-slate-800 scale-110' : 'bg-slate-50 dark:bg-slate-800/50'
                     }`}>
                       <Icon className={`w-7 h-7 transition-colors duration-300 ${
                         isHovered ? category.color : 'text-slate-400'
                       }`} />
                     </div>
                     <div>
-                      <h2 className="text-3xl font-extralight text-slate-900 tracking-tight mb-1 transition-colors duration-300">
+                      <h2 className="text-3xl font-extralight text-slate-900 dark:text-slate-100 tracking-tight mb-1 transition-colors duration-300">
                         {category.title}
                       </h2>
-                      <p className="text-sm text-slate-500 font-light">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
                         {category.skills.length} skills
                       </p>
                     </div>
@@ -91,8 +91,8 @@ export default function SkillsPage() {
                         key={skillIndex}
                         className={`px-4 py-2 rounded-lg text-sm font-light border transition-all duration-300 ${
                           isHovered
-                            ? `${category.color} border-current bg-white shadow-sm scale-105`
-                            : 'text-slate-600 border-slate-200 bg-slate-50 hover:border-slate-300'
+                            ? `${category.color} border-current bg-white dark:bg-slate-800 shadow-sm scale-105`
+                            : 'text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:border-slate-300 dark:hover:border-slate-600'
                         }`}
                         style={{
                           transitionDelay: isHovered ? `${skillIndex * 20}ms` : '0ms'

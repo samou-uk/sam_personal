@@ -53,12 +53,12 @@ const contactLinks = [
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
         <section className="pt-32 pb-32 relative">
           {/* Subtle background pattern */}
-          <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none">
             <div className="absolute inset-0" style={{
               backgroundImage: `radial-gradient(circle at 2px 2px, #004225 1px, transparent 0)`,
               backgroundSize: '40px 40px'
@@ -67,11 +67,11 @@ export default function ContactPage() {
           
           <div className="max-w-5xl mx-auto px-6 sm:px-8 relative">
             <div className="mb-20">
-              <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 mb-2 tracking-tight">
+              <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
                 <span className="inline-block">Get in</span>{' '}
-                <span className="inline-block text-primary">touch</span>
+                <span className="inline-block text-primary dark:text-[#ADD8E6]">touch</span>
               </h1>
-              <p className="text-base text-slate-500 font-light mt-6 max-w-2xl">
+              <p className="text-base text-slate-500 dark:text-slate-400 font-light mt-6 max-w-2xl">
                 Always open to new opportunities, collaborations, or just a chat. Feel free to reach out through any of these channels.
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function ContactPage() {
                     href={link.href}
                     target={link.href.startsWith('http') ? '_blank' : undefined}
                     rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="group relative flex items-center gap-6 p-7 border border-slate-200/50 rounded-2xl hover:border-primary/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 bg-white/60 backdrop-blur-md"
+                    className="group relative flex items-center gap-6 p-7 border border-slate-200/50 dark:border-slate-700/50 rounded-2xl hover:border-primary/40 dark:hover:border-[#ADD8E6]/40 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 bg-white/60 dark:bg-slate-800/60 backdrop-blur-md"
                     style={{
                       animationDelay: `${index * 75}ms`
                     }}
@@ -110,21 +110,21 @@ export default function ContactPage() {
                         {isSpotify ? (
                           <Icon className="w-8 h-8 text-[#1DB954] group-hover:scale-110 transition-all duration-300" />
                         ) : (
-                          <Icon className="w-8 h-8 text-slate-700 group-hover:text-primary transition-colors duration-300" />
+                          <Icon className="w-8 h-8 text-slate-700 dark:text-slate-100 group-hover:text-primary dark:group-hover:text-[#ADD8E6] transition-colors duration-300" />
                         )}
                       </div>
                     </div>
                     <div className="flex-1 min-w-0 relative z-10">
-                      <h2 className="text-2xl font-extralight text-slate-900 tracking-tight group-hover:text-primary transition-colors duration-300 mb-2">
+                      <h2 className="text-2xl font-extralight text-slate-900 dark:text-slate-100 tracking-tight group-hover:text-primary dark:group-hover:text-[#ADD8E6] transition-colors duration-300 mb-2">
                         {link.name}
                       </h2>
-                      <p className="text-sm text-slate-600 font-light group-hover:text-slate-900 transition-colors duration-300">
+                      <p className="text-sm text-slate-600 dark:text-slate-300 font-light group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors duration-300">
                         {link.label}
                       </p>
                     </div>
                     {link.href.startsWith('http') && (
                       <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10">
-                        <ExternalLink className="w-5 h-5 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                        <ExternalLink className="w-5 h-5 text-primary dark:text-[#ADD8E6] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
                       </div>
                     )}
                   </a>

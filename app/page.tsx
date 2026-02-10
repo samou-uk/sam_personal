@@ -18,11 +18,11 @@ const collagePhotos = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-0">
         {/* Photo Collage Hero - Mobile Friendly */}
-        <section className="relative min-h-screen md:h-screen flex items-center justify-center overflow-y-auto md:overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50 pb-24 md:pb-0">
+        <section className="relative min-h-screen md:h-screen flex items-center justify-center overflow-y-auto md:overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 pb-24 md:pb-0">
           {/* Dynamic Collage Grid - Responsive */}
           <div className="absolute md:absolute inset-0 p-2 md:p-3 pb-32 md:pb-3">
             <div className="min-h-full md:h-full grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-2.5 auto-rows-fr">

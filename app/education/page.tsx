@@ -36,15 +36,15 @@ export default function EducationPage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 mb-2 tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
               <span className="inline-block">Where I've</span>{' '}
-              <span className="inline-block text-primary">studied</span>
+              <span className="inline-block text-primary dark:text-[#ADD8E6]">studied</span>
             </h1>
           </div>
 
@@ -55,7 +55,7 @@ export default function EducationPage() {
               return (
                 <div
                   key={index}
-                  className="group relative border-b border-slate-200 pb-8 last:border-b-0 last:pb-0"
+                  className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
                 >
                   {/* Header - Always visible */}
                   <button
@@ -65,7 +65,7 @@ export default function EducationPage() {
                     <div className="flex items-start gap-6">
                       {/* Logo */}
                       <div className="flex-shrink-0 w-16 h-16">
-                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
                           <Image
                             src={edu.image}
                             alt={edu.school}
@@ -81,23 +81,23 @@ export default function EducationPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-6">
                           <div className="flex-1 min-w-0">
-                            <h2 className="text-2xl font-extralight text-slate-900 mb-2 tracking-tight">
+                            <h2 className="text-2xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
                               {edu.school}
                             </h2>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-light mb-4">
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
                               <span>{edu.location}</span>
-                              <span className="text-slate-300">·</span>
+                              <span className="text-slate-300 dark:text-slate-600">·</span>
                               <span>{edu.year}</span>
                             </div>
                             
                             {/* Summary */}
-                            <p className="text-base text-slate-600 font-light leading-relaxed mb-4">
+                            <p className="text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-4">
                               {edu.summary}
                             </p>
 
                             {/* Highlight badge */}
-                            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 border border-primary/15">
-                              <span className="text-xs font-light text-primary">{edu.highlight}</span>
+                            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 dark:bg-[#ADD8E6]/20 border border-primary/15 dark:border-[#ADD8E6]/30">
+                              <span className="text-xs font-light text-primary dark:text-[#ADD8E6]">{edu.highlight}</span>
                             </div>
                           </div>
                           
@@ -105,8 +105,8 @@ export default function EducationPage() {
                           <div className="flex-shrink-0 pt-1">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                               isExpanded 
-                                ? 'bg-primary text-white' 
-                                : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'
+                                ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900' 
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
                             }`}>
                               <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                             </div>
@@ -123,7 +123,7 @@ export default function EducationPage() {
                     <div className="pl-24 space-y-6">
                       {edu.degree && (
                         <div>
-                          <p className="text-base font-light text-slate-900 leading-relaxed">
+                          <p className="text-base font-light text-slate-900 dark:text-slate-100 leading-relaxed">
                             {edu.degree}
                           </p>
                         </div>
@@ -131,7 +131,7 @@ export default function EducationPage() {
 
                       {edu.details && (
                         <div>
-                          <p className="text-sm text-slate-600 leading-relaxed font-light">
+                          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-light">
                             {edu.details}
                           </p>
                         </div>
@@ -139,12 +139,12 @@ export default function EducationPage() {
 
                       {edu.coursework && edu.coursework.length > 0 && (
                         <div>
-                          <p className="text-xs text-slate-500 font-light uppercase tracking-wider mb-3">Relevant Coursework</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider mb-3">Relevant Coursework</p>
                           <div className="flex flex-wrap gap-2">
                             {edu.coursework.map((course, courseIndex) => (
                               <span
                                 key={courseIndex}
-                                className="px-3 py-1.5 text-xs font-light text-slate-700 bg-slate-50 rounded-full"
+                                className="px-3 py-1.5 text-xs font-light text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 rounded-full"
                               >
                                 {course}
                               </span>
@@ -155,12 +155,12 @@ export default function EducationPage() {
 
                       {edu.activities && edu.activities.length > 0 && (
                         <div>
-                          <p className="text-xs text-slate-500 font-light uppercase tracking-wider mb-3">Activities & Focus</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider mb-3">Activities & Focus</p>
                           <div className="flex flex-wrap gap-2">
                             {edu.activities.map((activity, actIndex) => (
                               <span
                                 key={actIndex}
-                                className="px-3 py-1.5 text-xs font-light text-slate-700 bg-slate-50 rounded-full"
+                                className="px-3 py-1.5 text-xs font-light text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 rounded-full"
                               >
                                 {activity}
                               </span>

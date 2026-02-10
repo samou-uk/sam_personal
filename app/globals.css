@@ -19,6 +19,11 @@
     font-weight: 300;
     cursor: none;
     scrollbar-gutter: stable;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    @apply bg-slate-900 text-slate-100;
   }
   
   * {
