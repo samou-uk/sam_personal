@@ -7,10 +7,25 @@ export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isPointerDevice, setIsPointerDevice] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
     // Check if device has a fine pointer (mouse) vs coarse pointer (touch)
     if (typeof window === 'undefined') return
+
+    // Check dark mode
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark') || darkModeQuery.matches)
+    }
+    checkDarkMode()
+
+    // Watch for dark mode changes
+    const observer = new MutationObserver(checkDarkMode)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
 
     const mediaQuery = window.matchMedia('(pointer: fine)')
     setIsPointerDevice(mediaQuery.matches)
@@ -53,6 +68,7 @@ export default function CustomCursor() {
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseenter', handleMouseEnter)
       mediaQuery.removeEventListener('change', handleChange)
+      observer.disconnect()
     }
   }, [])
 
@@ -80,7 +96,7 @@ export default function CustomCursor() {
       >
         <path
           d="M0 0 L12 0 L6 12 Z"
-          fill={isHovering ? '#004225' : '#0f172a'}
+          fill={isHovering ? (isDarkMode ? '#ADD8E6' : '#004225') : '#0f172a'}
           stroke="white"
           strokeWidth="0.8"
           strokeLinejoin="round"
