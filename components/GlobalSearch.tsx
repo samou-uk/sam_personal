@@ -174,7 +174,8 @@ export default function GlobalSearch() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search pages, projects, case studies..."
-              className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none text-sm font-light"
+              className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none text-base sm:text-sm font-light"
+              style={{ fontSize: '16px' }}
             />
             <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-light text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded">
               <span className="text-[10px]">⌘</span>K
