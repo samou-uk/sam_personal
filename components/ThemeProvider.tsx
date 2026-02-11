@@ -12,20 +12,12 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Always start with 'light' to match server render
   const [theme, setTheme] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-    // Check localStorage or system preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const initialTheme = savedTheme || systemTheme
-    setTheme(initialTheme)
-    updateTheme(initialTheme)
-  }, [])
-
   const updateTheme = (newTheme: Theme) => {
+    if (typeof window === 'undefined') return
     const root = document.documentElement
     if (newTheme === 'dark') {
       root.classList.add('dark')
@@ -33,6 +25,29 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.remove('dark')
     }
   }
+
+  useEffect(() => {
+    setMounted(true)
+    // Read from localStorage or check what the script set
+    try {
+      const savedTheme = localStorage.getItem('theme') as Theme | null
+      let initialTheme: Theme = 'light'
+      
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        initialTheme = savedTheme
+      } else {
+        // Check if the script already set dark class
+        initialTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+      }
+      
+      setTheme(initialTheme)
+      updateTheme(initialTheme)
+    } catch {
+      // Fallback to light if there's an error
+      setTheme('light')
+      updateTheme('light')
+    }
+  }, [])
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'

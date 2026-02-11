@@ -29,16 +29,18 @@ export default function PrivacyPage() {
                   Information We Collect
                 </h2>
                 <p className="text-base mb-3">
-                  This website uses Vercel Analytics to collect visitor and page view data. This includes:
+                  This website uses Vercel Analytics and Vercel Speed Insights to collect visitor and page view data, as well as performance metrics. This includes:
                 </p>
                 <ul className="list-disc list-inside space-y-2 text-base ml-4">
                   <li>Page views and navigation patterns</li>
                   <li>Referral sources (how you arrived at the site)</li>
                   <li>Browser and device information</li>
                   <li>General geographic location (country/city level)</li>
+                  <li>Page load times and performance metrics</li>
+                  <li>Core Web Vitals data (LCP, FID, CLS)</li>
                 </ul>
                 <p className="text-base mt-3">
-                  This data is collected automatically and helps me understand how the site is being used and improve the user experience. No personally identifiable information is collected.
+                  This data is collected automatically and helps me understand how the site is being used, identify performance issues, and improve the user experience. No personally identifiable information is collected.
                 </p>
               </div>
 
@@ -52,6 +54,7 @@ export default function PrivacyPage() {
                 <ul className="list-disc list-inside space-y-2 text-base ml-4">
                   <li>Understand which pages are most popular</li>
                   <li>Identify technical issues and improve site performance</li>
+                  <li>Monitor page load times and optimize performance</li>
                   <li>Make informed decisions about content and features</li>
                 </ul>
               </div>
@@ -61,16 +64,19 @@ export default function PrivacyPage() {
                   Data Storage and Security
                 </h2>
                 <p className="text-base">
-                  Analytics data is processed and stored by Vercel Analytics in accordance with their privacy policy. The data is aggregated and anonymized. I do not have access to individual user identities or personal information.
+                  Analytics and performance data is processed and stored by Vercel Analytics and Vercel Speed Insights in accordance with their privacy policies. The data is aggregated and anonymized. I do not have access to individual user identities or personal information.
                 </p>
               </div>
 
               <div>
                 <h2 className="text-xl font-normal text-slate-900 dark:text-slate-100 mb-3">
-                  Cookies and Tracking
+                  Cookies and Local Storage
                 </h2>
+                <p className="text-base mb-3">
+                  This website may use cookies or similar tracking technologies through Vercel Analytics and Vercel Speed Insights. You can control cookie preferences through your browser settings.
+                </p>
                 <p className="text-base">
-                  This website may use cookies or similar tracking technologies through Vercel Analytics. You can control cookie preferences through your browser settings.
+                  Additionally, this website uses browser localStorage to store your theme preference (light or dark mode). This preference is stored locally on your device and is not transmitted to any server. You can clear this data at any time through your browser settings, which will reset the theme to your system preference.
                 </p>
               </div>
 
@@ -79,7 +85,7 @@ export default function PrivacyPage() {
                   Third-Party Services
                 </h2>
                 <p className="text-base mb-3">
-                  This website is hosted on Vercel and uses Vercel Analytics. For more information about how Vercel handles data, please refer to their privacy policy.
+                  This website is hosted on Vercel and uses Vercel Analytics and Vercel Speed Insights. For more information about how Vercel handles data, please refer to their privacy policy.
                 </p>
               </div>
 

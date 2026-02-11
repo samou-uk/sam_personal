@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Navigation from '@/components/Navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { ExternalLink, Github, Search, X, ArrowUpRight, X as XIcon, BookOpen } from 'lucide-react'
 
 const projects = [
@@ -146,7 +147,9 @@ const projects = [
 
 const categories = ['All', ...Array.from(new Set(projects.map(p => p.category)))]
 
-export default function ProjectsPage() {
+function ProjectsPageContent() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedProject, setSelectedProject] = useState<number | null>(null)
@@ -157,6 +160,7 @@ export default function ProjectsPage() {
   const [swipeDistance, setSwipeDistance] = useState(0)
   const [showMaximizeModal, setShowMaximizeModal] = useState(false)
   const [maximizeModalPosition, setMaximizeModalPosition] = useState<{ top: number; left: number } | null>(null)
+  const [isManuallyClosing, setIsManuallyClosing] = useState(false)
 
   const filteredProjects = projects.filter(project => {
     const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory
@@ -165,6 +169,17 @@ export default function ProjectsPage() {
                          project.description.toLowerCase().includes(searchQuery.toLowerCase())
     return matchesCategory && matchesSearch
   })
+
+  const closeProjectPanel = () => {
+    setIsManuallyClosing(true)
+    setSelectedProject(null)
+    // Clear the project query parameter from URL
+    if (searchParams?.get('project')) {
+      router.push('/projects')
+    }
+    // Reset the flag after a short delay to allow URL to update
+    setTimeout(() => setIsManuallyClosing(false), 100)
+  }
 
   const openLightbox = (image: string | string[], index: number = 0) => {
     if (Array.isArray(image)) {
@@ -216,7 +231,7 @@ export default function ProjectsPage() {
     // Swipe right more than 100px to close
     if (swipeDistance > 100) {
       if (selectedProject !== null) {
-        setSelectedProject(null)
+        closeProjectPanel()
       } else if (lightboxImage || lightboxImages) {
         closeLightbox()
       }
@@ -234,7 +249,7 @@ export default function ProjectsPage() {
         } else if (lightboxImage || lightboxImages) {
           closeLightbox()
         } else if (selectedProject !== null) {
-          setSelectedProject(null)
+          closeProjectPanel()
         }
       }
     }
@@ -258,6 +273,28 @@ export default function ProjectsPage() {
       }
     }
   }, [showMaximizeModal])
+
+  // Handle project query parameter from URL
+  useEffect(() => {
+    if (!searchParams || isManuallyClosing) return
+    const projectName = searchParams.get('project')
+    if (projectName) {
+      // Find the project by name in the base projects array (case-insensitive)
+      const project = projects.find(
+        p => p.name.toLowerCase() === projectName.toLowerCase()
+      )
+      if (project) {
+        // Find its index in filteredProjects
+        const projectIndex = filteredProjects.findIndex(
+          p => p.name.toLowerCase() === projectName.toLowerCase()
+        )
+        if (projectIndex !== -1) {
+          setSelectedProject(projectIndex)
+        }
+      }
+    }
+    // Don't close the panel if there's no param - user might have clicked a project normally
+  }, [searchParams, filteredProjects, isManuallyClosing])
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-900">
@@ -371,7 +408,7 @@ export default function ProjectsPage() {
               {selectedProject !== null && filteredProjects[selectedProject] && (
                 <div 
                   className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
-                  onClick={() => setSelectedProject(null)}
+                  onClick={closeProjectPanel}
                 >
                   <div 
                     className="fixed right-0 top-0 h-full w-full md:w-[600px] bg-white dark:bg-slate-900 shadow-2xl overflow-y-auto z-[110]"
@@ -398,14 +435,20 @@ export default function ProjectsPage() {
                             {/* macOS-style traffic lights */}
                             <div className="relative mb-4 flex items-center gap-1.5">
                               <button
-                                onClick={() => setSelectedProject(null)}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  closeProjectPanel()
+                                }}
                                 className="z-[110] w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
                                 aria-label="Close"
                               >
                                 <XIcon className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                               </button>
                               <button
-                                onClick={() => setSelectedProject(null)}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  closeProjectPanel()
+                                }}
                                 className="z-[110] w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
                                 aria-label="Minimize"
                               >
@@ -652,5 +695,26 @@ export default function ProjectsPage() {
         </div>
       )}
     </main>
+  )
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-white dark:bg-slate-900">
+        <Navigation />
+        <div className="pt-20 pb-16 md:pb-0">
+          <section className="pt-32 pb-32">
+            <div className="max-w-5xl mx-auto px-6 sm:px-8">
+              <div className="text-center">
+                <p className="text-slate-500 dark:text-slate-400 font-light">Loading...</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    }>
+      <ProjectsPageContent />
+    </Suspense>
   )
 }

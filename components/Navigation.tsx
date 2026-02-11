@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Home, User, Briefcase, FolderKanban, GraduationCap, FileText, BookOpen, Menu, X, Music, Mail, Sun, Moon, Globe, Linkedin, Github, Instagram } from 'lucide-react'
 import { useTheme } from '@/components/ThemeProvider'
+import GlobalSearch from '@/components/GlobalSearch'
 
 const navItems = [
   { name: 'Home', href: '/', icon: Home },
@@ -13,8 +14,8 @@ const navItems = [
   { name: 'Experience', href: '/experience', icon: Briefcase },
   { name: 'Projects', href: '/projects', icon: FolderKanban },
   { name: 'Case studies', href: '/case-studies', icon: BookOpen },
-  { name: 'Resume', href: '/resume', icon: FileText },
   { name: 'Education', href: '/education', icon: GraduationCap },
+  { name: 'Resume', href: '/resume', icon: FileText },
   { name: 'Contact', href: '/contact', icon: Mail },
 ]
 
@@ -138,11 +139,14 @@ export default function Navigation() {
 
             {/* Music Dropdown & Mobile Menu Button */}
             <div className="flex items-center gap-2 absolute right-0">
+              {/* Global Search */}
+              <GlobalSearch />
+              
               {/* Dark Mode Toggle */}
-              <div className="relative">
+              <div className="relative" suppressHydrationWarning>
                 <button
                   onClick={toggleTheme}
-                  className="p-2.5 rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100"
+                  className="p-2.5 rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
                   onMouseEnter={() => setHoveredTheme(true)}
                   onMouseLeave={() => setHoveredTheme(false)}
                   aria-label="Toggle theme"
