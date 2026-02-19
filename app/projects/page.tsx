@@ -438,9 +438,6 @@ function ProjectsPageContent() {
                     }}
                   >
                     <div className="p-4 sm:p-8 relative">
-                      {/* Swipe indicator */}
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-slate-300 rounded-full md:hidden z-10" />
-
                       {(() => {
                         const project = filteredProjects[selectedProject]
                         const hasImage = project.image
@@ -524,12 +521,6 @@ function ProjectsPageContent() {
 
                             {/* Content */}
                             <div>
-                              <div className="mb-3 sm:mb-4">
-                                <span className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider">
-                                  {project.category}
-                                </span>
-                              </div>
-                              
                               <h2 className="text-2xl sm:text-4xl font-extralight text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 tracking-tight">
                                 {project.name}
                               </h2>
@@ -589,6 +580,19 @@ function ProjectsPageContent() {
                                   )}
                                 </a>
                               )}
+
+                              {/* Close Button at Bottom */}
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  closeProjectPanel()
+                                }}
+                                className="mt-8 w-full py-3 px-4 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium rounded-lg transition-colors touch-manipulation flex items-center justify-center gap-2"
+                                aria-label="Close"
+                              >
+                                <XIcon className="w-5 h-5" strokeWidth={2} />
+                                <span>Close</span>
+                              </button>
                             </div>
                           </>
                         )
