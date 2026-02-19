@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ExternalLink, Github, Search, X, ArrowUpRight, X as XIcon, BookOpen } from 'lucide-react'
+import DeviceMockup from '@/components/DeviceMockup'
 
 const projects = [
   {
@@ -300,16 +301,29 @@ function ProjectsPageContent() {
     <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
-      <section className="pt-32 pb-32">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
+      {/* Hero Section with Header and UX Showcase */}
+      <section className="pt-32 pb-8 md:pb-12">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
           {/* Header */}
-          <div className="mb-12">
+          <div className="mb-6 md:mb-8">
             <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
               <span className="inline-block">What I've</span>{' '}
               <span className="inline-block text-primary dark:text-[#ADD8E6]">built</span>
             </h1>
-            
-            {/* Minimal Filter */}
+          </div>
+
+          {/* UX/Web Dev Showcase - Hero */}
+          <div className="mb-8 md:mb-12">
+            <DeviceMockup />
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-32">
+
+        <div className="max-w-5xl mx-auto px-6 sm:px-8">
+          {/* Filter & Search */}
+          <div className="mb-12">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1 w-full sm:min-w-[200px] sm:max-w-md">
                 <div className="relative">
@@ -340,6 +354,8 @@ function ProjectsPageContent() {
               </div>
             </div>
           </div>
+
+          {/* Search Bar only now */}
 
           {filteredProjects.length === 0 ? (
             <div className="text-center py-32">

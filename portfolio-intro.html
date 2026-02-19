@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sam Chusen Ou - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 300;
+      background-color: rgb(255, 255, 255);
+      color: rgb(15, 23, 42);
+      line-height: 1.5;
+      letter-spacing: -0.015em;
+      padding: 40px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1 {
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      font-size: 2.75rem;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .intro {
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      font-size: 2rem;
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+
+    .section-title .highlight {
+      color: #0f3d91;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .link-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .link-url {
+      color: rgb(15, 23, 42);
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: rgb(71, 85, 105);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: rgb(71, 85, 105);
+      margin-bottom: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgb(226, 232, 240);
+    }
+
+    .contact-info a {
+      color: rgb(71, 85, 105);
+      text-decoration: none;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgb(226, 232, 240);
+      margin: 1.5rem 0;
+      border: none;
+    }
+
+    .section-group {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        padding: 30px 30px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .intro {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.75rem;
+      }
+      
+      .links {
+        gap: 1rem;
+      }
+      
+      .link-url {
+        color: rgb(71, 85, 105);
+      }
+
+      .contact-info {
+        font-size: 0.85rem;
+        margin-bottom: 2rem;
+        padding-top: 0.75rem;
+      }
+
+      .divider {
+        margin: 1.25rem 0;
+      }
+    }
+
+    @page {
+      margin: 0.75in;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hi, I'm Sam</h1>
+  
+  <p class="intro">
+    Mathematics/Financial Analysis & Risk Management & Statistics Joint Honours, Computational Mathematics Minor @ UWaterloo
+  </p>
+
+  <div class="contact-info">
+    <a href="mailto:scou@uwaterloo.ca">scou@uwaterloo.ca</a>
+    <span>•</span>
+    <a href="https://www.linkedin.com/in/sam-chusen-ou/" target="_blank">LinkedIn</a>
+    <span>•</span>
+    <a href="https://github.com/samou-uk" target="_blank">GitHub</a>
+  </div>
+
+  <div class="links">
+    <div class="link-item">
+      <div class="section-title">
+        <span>Personal site:</span> <a href="https://samou.co.uk" class="highlight" target="_blank" style="text-decoration: none; color: #0f3d91;">samou.co.uk</a>
+      </div>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>What I've</span> <span class="highlight">built & why</span>
+      </div>
+      <a href="https://samou.co.uk/case-studies" class="link-url" target="_blank">samou.co.uk/case-studies</a>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>What I've</span> <span class="highlight">built</span>
+      </div>
+      <a href="https://samou.co.uk/projects" class="link-url" target="_blank">samou.co.uk/projects</a>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>Where I've</span> <span class="highlight">worked</span>
+      </div>
+      <a href="https://samou.co.uk/experience" class="link-url" target="_blank">samou.co.uk/experience</a>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>Where I've</span> <span class="highlight">studied</span>
+      </div>
+      <a href="https://samou.co.uk/education" class="link-url" target="_blank">samou.co.uk/education</a>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>My</span> <span class="highlight">resume</span>
+      </div>
+      <a href="https://samou.co.uk/resume" class="link-url" target="_blank">samou.co.uk/resume</a>
+    </div>
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>Contact</span>
+      </div>
+      <a href="https://samou.co.uk/contact" class="link-url" target="_blank">samou.co.uk/contact</a>
+    </div>
+    
+    <hr class="divider">
+    
+    <div class="link-item">
+      <div class="section-title">
+        <span>Where I like to</span> <span class="highlight">eat</span>
+      </div>
+      <a href="https://samou.co.uk/restaurants" class="link-url" target="_blank">samou.co.uk/restaurants</a>
+    </div>
+  </div>
+</body>
+</html>
+

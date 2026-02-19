@@ -45,7 +45,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://open.spotify.com https://*.spotify.com https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://vitals.vercel-insights.com https://*.vercel-analytics.com",
+              "connect-src 'self' blob: https://raw.githack.com https://raw.githubusercontent.com https://open.spotify.com https://*.spotify.com https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://vitals.vercel-insights.com https://*.vercel-analytics.com",
               "frame-src 'self' https://open.spotify.com https://calendar.google.com https://docs.google.com https://contacts.google.com",
               "media-src 'self'",
               "object-src 'none'",
