@@ -115,6 +115,9 @@ export default function DeviceMockup() {
   const [contextMenu, setContextMenu] = useState<{ x: number, y: number } | null>(null)
   const [isMobileHomepageOpen, setIsMobileHomepageOpen] = useState(true)
   const [isMobileTabSwitcherOpen, setIsMobileTabSwitcherOpen] = useState(false)
+  const [swipeStart, setSwipeStart] = useState<{ x: number; y: number } | null>(null)
+  const [swipeDistance, setSwipeDistance] = useState(0)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const desktopRef = useRef<HTMLDivElement>(null)
 
   const currentProject = currentIndex >= 0 ? webProjects[currentIndex] : null
@@ -128,6 +131,29 @@ export default function DeviceMockup() {
     setCurrentTime(new Date())
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    // Detect if device has touch capability
+    const detectTouchDevice = () => {
+      // Check for touch support
+      const hasTouch = 'ontouchstart' in window || (typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 0)
+      // Check if it's a mobile device (phone/tablet)
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      // Consider it a touch device if it's a mobile device OR has touch capability in mobile viewport
+      // This ensures phones/tablets show swipe, while desktop (even with touch) shows buttons
+      setIsTouchDevice(isMobileDevice || (hasTouch && window.innerWidth < 768))
+    }
+    
+    // Initial detection
+    detectTouchDevice()
+    
+    // Update on resize
+    window.addEventListener('resize', detectTouchDevice)
+    
+    return () => {
+      window.removeEventListener('resize', detectTouchDevice)
+    }
   }, [])
 
   const formatTime = (date: Date) => {
@@ -242,6 +268,50 @@ export default function DeviceMockup() {
     nextProject()
   }
 
+  const handleSwipeStart = (e: React.TouchEvent) => {
+    if (isMobileTabSwitcherOpen) return
+    const touch = e.touches[0]
+    setSwipeStart({ x: touch.clientX, y: touch.clientY })
+    setSwipeDistance(0)
+  }
+
+  const handleSwipeMove = (e: React.TouchEvent) => {
+    if (!swipeStart || isMobileTabSwitcherOpen) return
+    const touch = e.touches[0]
+    const deltaX = touch.clientX - swipeStart.x
+    const deltaY = Math.abs(touch.clientY - swipeStart.y)
+    
+    // Only track horizontal swipes (more horizontal than vertical)
+    if (Math.abs(deltaX) > deltaY) {
+      setSwipeDistance(deltaX)
+    }
+  }
+
+  const handleSwipeEnd = () => {
+    if (!swipeStart || isMobileTabSwitcherOpen) {
+      setSwipeStart(null)
+      setSwipeDistance(0)
+      return
+    }
+    
+    const threshold = 50 // Minimum swipe distance to trigger navigation
+    
+    if (swipeDistance > threshold) {
+      // Swipe right - previous project
+      setIsMobileTabSwitcherOpen(false)
+      setIsMobileHomepageOpen(false)
+      prevProject()
+    } else if (swipeDistance < -threshold) {
+      // Swipe left - next project
+      setIsMobileTabSwitcherOpen(false)
+      setIsMobileHomepageOpen(false)
+      nextProject()
+    }
+    
+    setSwipeStart(null)
+    setSwipeDistance(0)
+  }
+
   // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying || windowState !== 'normal') return
@@ -322,7 +392,12 @@ export default function DeviceMockup() {
               {/* Safari Browser UI */}
               <div className="absolute inset-0 pt-[44px] pb-[50px] flex flex-col bg-white dark:bg-[#000000]">
                 {/* Content Area */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-black/30 dark:[&::-webkit-scrollbar-thumb]:bg-white/20 dark:[&::-webkit-scrollbar-thumb]:hover:bg-white/30">
+                <div 
+                  className="flex-1 overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-black/20 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-black/30 dark:[&::-webkit-scrollbar-thumb]:bg-white/20 dark:[&::-webkit-scrollbar-thumb]:hover:bg-white/30"
+                  onTouchStart={handleSwipeStart}
+                  onTouchMove={handleSwipeMove}
+                  onTouchEnd={handleSwipeEnd}
+                >
                   {isMobileHomepageOpen ? (
                     /* Safari Homepage with Favorites - iOS Style */
                     <div className="min-h-full bg-white dark:bg-[#000000] pt-12 pb-4 relative">
@@ -387,6 +462,18 @@ export default function DeviceMockup() {
                             ))}
                           </div>
                         </div>
+                        
+                        {/* Swipe Prompt - Only show on touch devices */}
+                        {isTouchDevice && (
+                          <div className="mt-8 text-center">
+                            <p className="text-[13px] text-gray-400 dark:text-gray-500 font-normal flex items-center justify-center gap-2">
+                              <ChevronLeft className="w-4 h-4" />
+                              Swipe to browse projects
+                              <ChevronRight className="w-4 h-4" />
+                            </p>
+                          </div>
+                        )}
+                        
                       </div>
                     </div>
                   ) : (
@@ -578,24 +665,26 @@ export default function DeviceMockup() {
             <div className="absolute right-0 top-[260px] w-[3px] h-[60px] bg-slate-800 rounded-l-sm"></div>
           </div>
         </div>
-
-          {/* Navigation Arrows - Next to Phone */}
-          <div className="flex flex-col gap-3 items-center justify-center">
-          <button
+        
+        {/* Navigation Buttons - Right Side (Stacked) - Only show on desktop */}
+        {!isTouchDevice && (
+          <div className="flex flex-col gap-3">
+            <button
               onClick={handleMobilePrevProject}
               className="w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 active:scale-95 flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
-            aria-label="Previous project"
-          >
+              aria-label="Previous project"
+            >
               <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-300" strokeWidth={2} />
-          </button>
-              <button
+            </button>
+            <button
               onClick={handleMobileNextProject}
               className="w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 active:scale-95 flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
-            aria-label="Next project"
-          >
+              aria-label="Next project"
+            >
               <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-300" strokeWidth={2} />
-          </button>
+            </button>
           </div>
+        )}
         </div>
 
         {/* Mobile Project Details & CTAs */}
@@ -612,6 +701,7 @@ export default function DeviceMockup() {
                 {currentProject.tagline}
               </p>
             </div>
+
 
             {/* Mobile CTAs */}
             <div className="flex flex-col items-center gap-3">

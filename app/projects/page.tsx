@@ -311,7 +311,7 @@ function ProjectsPageContent() {
               <span className="inline-block text-primary dark:text-[#ADD8E6]">built</span>
             </h1>
           </div>
-
+            
           {/* UX/Web Dev Showcase - Hero */}
           <div className="mb-8 md:mb-12">
             <DeviceMockup />

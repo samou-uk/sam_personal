@@ -26,7 +26,7 @@ export default function ResumePage() {
                 or download a PDF.
               </p>
               <p className="mt-2 text-xs text-slate-400 dark:text-slate-500 font-light">
-                Current as of 10/02/2026.
+                Current as of 20/02/2026.
               </p>
             </div>
 
