@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
-import { ChevronDown, X } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 const aboutImages = [
   { src: '/tennis_about.webp', alt: 'Tennis', caption: 'Tennis, being the most accessible, is probably my favourite sport.', keyword: 'tennis' },
@@ -119,7 +119,7 @@ export default function AboutPage() {
                             className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 flex items-center justify-center group"
                             aria-label="Close"
                           >
-                            <X className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                            <span className="w-1 h-1 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
                             onClick={() => setOpenDropdown(null)}
@@ -198,7 +198,7 @@ export default function AboutPage() {
                             className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 flex items-center justify-center group"
                             aria-label="Close"
                           >
-                            <X className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                            <span className="w-1 h-1 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
                             onClick={() => setOpenDropdown(null)}
@@ -264,7 +264,7 @@ export default function AboutPage() {
                             className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 flex items-center justify-center group"
                             aria-label="Close"
                           >
-                            <X className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                            <span className="w-1 h-1 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                           </button>
                           <button
                             onClick={() => setOpenDropdown(null)}

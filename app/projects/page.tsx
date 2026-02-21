@@ -455,7 +455,7 @@ function ProjectsPageContent() {
                                 className="z-[110] w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff3b30] transition-colors duration-200 touch-manipulation flex items-center justify-center group"
                                 aria-label="Close"
                               >
-                                <XIcon className="w-2 h-2 text-[#740000] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                <span className="w-1 h-1 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
                               </button>
                               <button
                                 onClick={(e) => {
