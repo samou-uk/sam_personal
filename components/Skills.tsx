@@ -5,24 +5,28 @@ import { motion } from 'framer-motion'
 
 const skillCategories = [
   {
-    title: 'Languages & Frameworks',
-    skills: ['Python', 'JavaScript', 'SQL', 'C', 'HTML/CSS', 'R', 'VBA', 'Liquid'],
+    title: 'Languages',
+    skills: ['Python', 'JavaScript', 'SQL', 'C', 'R', 'Bash'],
   },
   {
-    title: 'Libraries & Databases',
-    skills: ['Pandas', 'NumPy', 'SQLite', 'MySQL', 'React', 'Flask', 'Prophet', 'Firebase'],
+    title: 'Frontend & Backend',
+    skills: ['React', 'Flask', 'HTML/CSS', 'Liquid (Shopify)'],
   },
   {
-    title: 'Systems, Security & Data',
-    skills: ['Linux (Bash, Cron, SSH)', 'AWS EC2', 'ServiceNow', 'AES', 'Argon2', 'CSP', 'CSRF', 'GDPR', 'Gunicorn'],
+    title: 'Data & Databases',
+    skills: ['Pandas', 'NumPy', 'Prophet', 'MySQL', 'SQLite', 'Supabase', 'Firebase'],
   },
   {
-    title: 'ERP, Finance & Tools',
-    skills: ['IFS (V8, Cloud)', 'Sage 50', 'Excel', 'Payroo', 'Loftware Spectrum', 'Apache Guacamole'],
+    title: 'Infrastructure',
+    skills: ['Linux (Cron, SSH)', 'AWS EC2', 'Cloudflare Workers (KV)', 'Gunicorn', 'Apache Guacamole', 'Railway'],
+  },
+  {
+    title: 'Enterprise Systems',
+    skills: ['IFS (V8, Cloud)', 'Sage 50', 'ServiceNow', 'Payroo', 'Loftware Spectrum'],
   },
   {
     title: 'Interests',
-    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Cooking', 'Speciality Coffee', 'Formula One', 'Sim Racing'],
+    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Formula One', 'Sim Racing', 'Specialty Coffee', 'Cooking'],
   },
 ]
 

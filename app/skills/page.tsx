@@ -2,36 +2,42 @@
 
 import React, { useState } from 'react'
 import Navigation from '@/components/Navigation'
-import { Code, Database, Shield, BarChart3, Heart } from 'lucide-react'
+import { Code, Database, Server, BarChart3, Heart, Layers } from 'lucide-react'
 
 const skillCategories = [
   {
-    title: 'Languages & Frameworks',
-    skills: ['Python', 'JavaScript', 'SQL', 'C', 'HTML/CSS', 'R', 'VBA', 'Liquid'],
+    title: 'Languages',
+    skills: ['Python', 'JavaScript', 'SQL', 'C', 'R', 'Bash'],
     icon: Code,
     color: 'text-blue-600',
   },
   {
-    title: 'Libraries & Databases',
-    skills: ['Pandas', 'NumPy', 'SQLite', 'MySQL', 'React', 'Flask', 'Prophet', 'Firebase'],
-    icon: Database,
+    title: 'Frontend & Backend',
+    skills: ['React', 'Flask', 'HTML/CSS', 'Liquid (Shopify)'],
+    icon: Layers,
     color: 'text-purple-600',
   },
   {
-    title: 'Systems, Security & Data',
-    skills: ['Linux (Bash, Cron, SSH)', 'AWS EC2', 'ServiceNow', 'AES', 'Argon2', 'CSP', 'CSRF', 'GDPR', 'Gunicorn'],
-    icon: Shield,
+    title: 'Data & Databases',
+    skills: ['Pandas', 'NumPy', 'Prophet', 'MySQL', 'SQLite', 'Supabase', 'Firebase'],
+    icon: Database,
+    color: 'text-indigo-600',
+  },
+  {
+    title: 'Infrastructure',
+    skills: ['Linux (Cron, SSH)', 'AWS EC2', 'Cloudflare Workers (KV)', 'Gunicorn', 'Apache Guacamole', 'Railway'],
+    icon: Server,
     color: 'text-green-600',
   },
   {
-    title: 'ERP, Finance & Tools',
-    skills: ['IFS (V8, Cloud)', 'Sage 50', 'Excel', 'Payroo', 'Loftware Spectrum', 'Apache Guacamole'],
+    title: 'Enterprise Systems',
+    skills: ['IFS (V8, Cloud)', 'Sage 50', 'ServiceNow', 'Payroo', 'Loftware Spectrum'],
     icon: BarChart3,
     color: 'text-orange-600',
   },
   {
     title: 'Interests',
-    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Cooking', 'Speciality Coffee', 'Formula One', 'Sim Racing'],
+    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Formula One', 'Sim Racing', 'Specialty Coffee', 'Cooking'],
     icon: Heart,
     color: 'text-red-600',
   },
@@ -79,7 +85,7 @@ export default function SkillsPage() {
                         {category.title}
                       </h2>
                       <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
-                        {category.skills.length} skills
+                        {category.title === 'Interests' ? category.skills.length : `${category.skills.length} skills`}
                       </p>
                     </div>
                   </div>

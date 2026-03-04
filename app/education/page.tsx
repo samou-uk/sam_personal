@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Image from 'next/image'
-import { ChevronDown, Code, Database, Shield, BarChart3, Heart } from 'lucide-react'
+import { ChevronDown, Code, Database, Server, BarChart3, Heart, Layers } from 'lucide-react'
 
 const education = [
   {
@@ -34,28 +34,33 @@ const education = [
 
 const skillCategories = [
   {
-    title: 'Languages & Frameworks',
-    skills: ['Python', 'JavaScript', 'SQL', 'C', 'HTML/CSS', 'R', 'VBA', 'Liquid'],
+    title: 'Languages',
+    skills: ['Python', 'JavaScript', 'SQL', 'C', 'R', 'Bash'],
     icon: Code,
   },
   {
-    title: 'Libraries & Databases',
-    skills: ['Pandas', 'NumPy', 'SQLite', 'MySQL', 'React', 'Flask', 'Prophet', 'Firebase'],
+    title: 'Frontend & Backend',
+    skills: ['React', 'Flask', 'HTML/CSS', 'Liquid (Shopify)'],
+    icon: Layers,
+  },
+  {
+    title: 'Data & Databases',
+    skills: ['Pandas', 'NumPy', 'Prophet', 'MySQL', 'SQLite', 'Supabase', 'Firebase'],
     icon: Database,
   },
   {
-    title: 'Systems, Security & Data',
-    skills: ['Linux (Bash, Cron, SSH)', 'AWS EC2', 'ServiceNow', 'AES', 'Argon2', 'CSP', 'CSRF', 'GDPR', 'Gunicorn'],
-    icon: Shield,
+    title: 'Infrastructure',
+    skills: ['Linux (Cron, SSH)', 'AWS EC2', 'Cloudflare Workers (KV)', 'Gunicorn', 'Apache Guacamole', 'Railway'],
+    icon: Server,
   },
   {
-    title: 'ERP, Finance & Tools',
-    skills: ['IFS (V8, Cloud)', 'Sage 50', 'Excel', 'Payroo', 'Loftware Spectrum', 'Apache Guacamole'],
+    title: 'Enterprise Systems',
+    skills: ['IFS (V8, Cloud)', 'Sage 50', 'ServiceNow', 'Payroo', 'Loftware Spectrum'],
     icon: BarChart3,
   },
   {
     title: 'Interests',
-    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Cooking', 'Speciality Coffee', 'Formula One', 'Sim Racing'],
+    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Formula One', 'Sim Racing', 'Specialty Coffee', 'Cooking'],
     icon: Heart,
   },
 ]

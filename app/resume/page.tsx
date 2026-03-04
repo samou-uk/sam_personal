@@ -5,7 +5,7 @@ import Navigation from '@/components/Navigation'
 
 const RESUME_DOC_ID = '1bxxMM4_84iedEJAmxHOXPqpA57vzqRKE'
 const RESUME_VIEW_URL = `https://docs.google.com/document/d/${RESUME_DOC_ID}/edit?usp=sharing`
-const RESUME_PDF_URL = '/Sam_Chusen_Ou_February_2026_Resume.pdf'
+const RESUME_PDF_URL = '/Sam_Chusen_Ou.pdf'
 
 export default function ResumePage() {
   return (
@@ -26,7 +26,7 @@ export default function ResumePage() {
                 or download a PDF.
               </p>
               <p className="mt-2 text-xs text-slate-400 dark:text-slate-500 font-light">
-                Current as of 20/02/2026.
+                Current as of 04/03/2026.
               </p>
             </div>
 
@@ -34,7 +34,7 @@ export default function ResumePage() {
             <div className="flex flex-wrap items-center gap-3 mb-10">
               <a
                 href={RESUME_PDF_URL}
-                download="Sam_Chusen_Ou_February_2026_Resume.pdf"
+                download="Sam_Chusen_Ou.pdf"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-light hover:bg-primary-dark transition-colors duration-200"
               >
                 Download PDF
