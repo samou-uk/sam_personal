@@ -147,7 +147,7 @@ export default function Navigation() {
               <div className="relative" suppressHydrationWarning>
                 <button
                   onClick={toggleTheme}
-                  className={`p-2.5 rounded-lg transition-all duration-200 ${heroNav ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
+                  className={`p-2.5 rounded-lg transition-all duration-200 ${heroNav ? 'text-white/70 hover:text-white md:text-slate-500 md:hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
                   onMouseEnter={() => setHoveredTheme(true)}
                   onMouseLeave={() => setHoveredTheme(false)}
                   aria-label="Toggle theme"
@@ -176,7 +176,7 @@ export default function Navigation() {
                     musicDropdownOpen
                       ? 'text-primary dark:text-[#ADD8E6]'
                       : heroNav
-                        ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100'
+                        ? 'text-white/70 hover:text-white md:text-slate-500 md:hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
                         : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
                   }`}
                 >

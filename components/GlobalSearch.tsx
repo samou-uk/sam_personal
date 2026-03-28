@@ -133,7 +133,7 @@ export default function GlobalSearch({ forceWhite = false }: { forceWhite?: bool
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className={`p-2.5 rounded-lg transition-all duration-200 ${forceWhite ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
+          className={`p-2.5 rounded-lg transition-all duration-200 ${forceWhite ? 'text-white/70 hover:text-white md:text-slate-500 md:hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
           aria-label="Search"
         >
           <Search className="w-5 h-5" />

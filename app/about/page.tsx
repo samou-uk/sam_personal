@@ -102,7 +102,7 @@ function TypewriterHeadline({ count }: { count: number }) {
   const prefixCount = Math.min(count, INTRO_PREFIX.length)
   const accentCount = Math.max(0, count - INTRO_PREFIX.length)
   return (
-    <h1 className="text-5xl md:text-7xl lg:text-[6.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92]">
+    <h1 className="text-5xl md:text-7xl lg:text-[5.75rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap">
       <span>{INTRO_PREFIX.slice(0, prefixCount)}</span>
       <span className="text-primary dark:text-[#ADD8E6]">{INTRO_ACCENT.slice(0, accentCount)}</span>
       {count < INTRO_FULL.length && (
