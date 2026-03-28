@@ -4,19 +4,19 @@ import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Home, User, Briefcase, FolderKanban, GraduationCap, FileText, BookOpen, Menu, X, Music, Mail, Sun, Moon, Globe, Linkedin, Github, Instagram } from 'lucide-react'
+import { Home, User, Briefcase, FolderKanban, GraduationCap, FileText, BookOpen, Menu, X, Music, Mail, Sun, Moon, Globe, Linkedin, Github, Instagram, MapPin } from 'lucide-react'
 import { useTheme } from '@/components/ThemeProvider'
 import GlobalSearch from '@/components/GlobalSearch'
 
 const navItems = [
   { name: 'Home', href: '/', icon: Home },
-  { name: 'About', href: '/about', icon: User },
   { name: 'Experience', href: '/experience', icon: Briefcase },
   { name: 'Projects', href: '/projects', icon: FolderKanban },
   { name: 'Case studies', href: '/case-studies', icon: BookOpen },
   { name: 'Education', href: '/education', icon: GraduationCap },
   { name: 'Resume', href: '/resume', icon: FileText },
   { name: 'Contact', href: '/contact', icon: Mail },
+  { name: 'Places', href: '/cities', icon: MapPin, desktopOnly: false },
 ]
 
 export default function Navigation() {
@@ -30,6 +30,7 @@ export default function Navigation() {
   const [spotifyLoaded, setSpotifyLoaded] = useState(false)
   const pathname = usePathname()
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const heroNav = pathname === '/' && !scrolled
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,13 +141,13 @@ export default function Navigation() {
             {/* Music Dropdown & Mobile Menu Button */}
             <div className="flex items-center gap-2 absolute right-0">
               {/* Global Search */}
-              <GlobalSearch />
+              <GlobalSearch forceWhite={heroNav} />
               
               {/* Dark Mode Toggle */}
               <div className="relative" suppressHydrationWarning>
                 <button
                   onClick={toggleTheme}
-                  className="p-2.5 rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                  className={`p-2.5 rounded-lg transition-all duration-200 ${heroNav ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
                   onMouseEnter={() => setHoveredTheme(true)}
                   onMouseLeave={() => setHoveredTheme(false)}
                   aria-label="Toggle theme"
@@ -174,7 +175,9 @@ export default function Navigation() {
                   className={`p-2.5 rounded-lg transition-all duration-200 ${
                     musicDropdownOpen
                       ? 'text-primary dark:text-[#ADD8E6]'
-                      : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+                      : heroNav
+                        ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100'
+                        : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
                   }`}
                 >
                   <Music className="w-5 h-5" />
@@ -219,7 +222,7 @@ export default function Navigation() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                    className="md:hidden p-2 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors duration-200"
+                    className={`md:hidden p-2 transition-colors duration-200 ${heroNav ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
               >
                 {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -242,7 +245,7 @@ export default function Navigation() {
           </button>
           <div className="pt-20 px-6 pb-6 flex flex-col h-full">
             <div className="space-y-1 flex-1 overflow-y-auto">
-              {navItems.map((item) => {
+              {navItems.filter((item) => !('desktopOnly' in item && item.desktopOnly)).map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
                 return (
@@ -333,7 +336,7 @@ export default function Navigation() {
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/30 dark:border-slate-700/30">
           <div className="flex items-center justify-around h-16 px-1">
             {navItems
-              .filter((item) => item.name !== 'About' && item.name !== 'Home')
+              .filter((item) => item.name !== 'Home' && item.name !== 'Places')
               .map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href

@@ -15,7 +15,7 @@ type SearchResult = {
 const searchData: SearchResult[] = [
   // Pages
   { title: 'Home', href: '/', category: 'Page' },
-  { title: 'About', href: '/about', category: 'Page' },
+  { title: 'Places', href: '/cities', category: 'Page' },
   { title: 'Experience', href: '/experience', category: 'Page' },
   { title: 'Projects', href: '/projects', category: 'Page' },
   { title: 'Case Studies', href: '/case-studies', category: 'Page' },
@@ -52,12 +52,12 @@ const recommendations: SearchResult[] = [
   { title: 'Placecard', href: '/case-studies?project=placecard', category: 'Case Study', description: 'Private supper-club app for UW/WLU students' },
   { title: 'FortuneVantage', href: '/case-studies?project=fortune', category: 'Case Study', description: 'DSS and BI Platform for UK-based food wholesaler' },
   { title: 'Projects', href: '/projects', category: 'Page' },
-  { title: 'About', href: '/about', category: 'Page' },
+  { title: 'Places', href: '/cities', category: 'Page' },
   { title: 'Experience', href: '/experience', category: 'Page' },
   { title: 'Restaurant Notes', href: '/restaurants', category: 'Page' },
 ]
 
-export default function GlobalSearch() {
+export default function GlobalSearch({ forceWhite = false }: { forceWhite?: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -133,7 +133,7 @@ export default function GlobalSearch() {
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="p-2.5 rounded-lg transition-all duration-200 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+          className={`p-2.5 rounded-lg transition-all duration-200 ${forceWhite ? 'text-white/70 hover:text-white dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
           aria-label="Search"
         >
           <Search className="w-5 h-5" />

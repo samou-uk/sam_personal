@@ -303,19 +303,22 @@ function ProjectsPageContent() {
       <div className="pt-20 pb-16 md:pb-0">
       {/* Hero Section with Header and UX Showcase */}
       <section className="pt-32 pb-8 md:pb-12">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8">
           {/* Header */}
-          <div className="mb-6 md:mb-8">
+          <div className="mb-12">
             <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
               <span className="inline-block">What I've</span>{' '}
               <span className="inline-block text-primary dark:text-[#ADD8E6]">built</span>
             </h1>
+            <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">
+              A mix of production systems, experiments, and revenue-shaping tools across software, operations, and a few weird side quests.
+            </p>
           </div>
-            
-          {/* UX/Web Dev Showcase - Hero */}
-          <div className="mb-8 md:mb-12">
-            <DeviceMockup />
-          </div>
+        </div>
+
+        {/* UX/Web Dev Showcase - Hero */}
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 mb-8 md:mb-12">
+          <DeviceMockup />
         </div>
       </section>
 
@@ -353,6 +356,26 @@ function ProjectsPageContent() {
                 ))}
               </div>
             </div>
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 dark:border-slate-800 pt-4">
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
+                Showing <span className="text-slate-900 dark:text-slate-100">{filteredProjects.length}</span> of <span className="text-slate-900 dark:text-slate-100">{projects.length}</span> builds
+                {selectedCategory !== 'All' && <> in <span className="text-slate-900 dark:text-slate-100">{selectedCategory}</span></>}
+                {searchQuery && <> matching <span className="text-slate-900 dark:text-slate-100">&ldquo;{searchQuery}&rdquo;</span></>}
+              </p>
+              {(selectedCategory !== 'All' || searchQuery) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('All')
+                    setSearchQuery('')
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 transition-colors hover:border-primary/40 hover:text-slate-900 dark:hover:text-slate-100"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  <span>Clear filters</span>
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Search Bar only now */}
@@ -374,9 +397,16 @@ function ProjectsPageContent() {
                     <div
                       key={project.name}
                       className="group cursor-pointer"
-                      onClick={() => setSelectedProject(isSelected ? null : index)}
+                      onClick={() => {
+                        if (isSelected) {
+                          closeProjectPanel()
+                        } else {
+                          setSelectedProject(index)
+                          router.push(`/projects?project=${encodeURIComponent(project.name)}`)
+                        }
+                      }}
                     >
-                      <div className="relative aspect-square overflow-hidden bg-slate-100 rounded-lg sm:rounded-xl active:scale-95 transition-transform duration-200 mb-2">
+                      <div className="relative aspect-square overflow-hidden bg-slate-100 rounded-lg sm:rounded-xl active:scale-95 transition-transform duration-300 mb-2 ring-1 ring-slate-200/70 dark:ring-slate-800 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-slate-200/40 dark:group-hover:shadow-black/20">
                         {hasImage && (
                           <Image
                             src={project.image}
@@ -403,7 +433,18 @@ function ProjectsPageContent() {
                         )}
                         
                         {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 opacity-0 translate-y-2 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[10px] sm:text-xs text-slate-900">
+                              {project.category}
+                            </span>
+                            <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-white/90 font-light">
+                              <span>Open project</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </span>
+                          </div>
+                        </div>
                       </div>
                       
                       {/* Title at bottom */}
