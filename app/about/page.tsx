@@ -15,6 +15,7 @@ const chapters = [
     eyebrow: 'Chapter 01',
     title: 'Across the Pond',
     body: "I was born in London and spent the first 18 years of my life enduring the torrential rain before hopping across the pond to Waterloo, Canada to pursue my Bachelor's Degree.",
+    body2: "A major part of my decision to come to Canada was a friendly interaction with a CBSA officer when I first arrived in Toronto in 2018 (on holiday). Their friendliness and professionalism left a lasting impression on me, shaping my perception of Canada. That first impression stuck with me, and ultimately influenced my decision to move across the pond for university.",
     note: "A lot of how I think comes from living between contexts: UK and Canada, business and engineering, precision and practicality.",
     image: '/tonbridge.webp',
     imageAlt: 'Tonbridge, London',
@@ -687,6 +688,11 @@ export default function AboutPage() {
                 <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                   {ch.body}
                 </p>
+                {'body2' in ch && ch.body2 && (
+                  <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '320ms' } as React.CSSProperties}>
+                    {ch.body2}
+                  </p>
+                )}
               </div>
 
               {/* Globe */}
