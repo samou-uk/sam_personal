@@ -74,7 +74,7 @@ export default function About() {
                   Moreover, I love to cook. Having learned to cook at a young age, this skill has become particularly important as I started university in September 2023. While my cooking predominantly involves Chinese techniques, my girlfriend always claims that I make a brilliant Chicken & Mash!
                 </p>
                 <p>
-                  Furthermore, I have been involved in music ever since I was 8 years old (as you can see in the photo!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.
+                  Furthermore, I have been involved in music ever since I was 8 years old (as you can see in the video!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.
                 </p>
               </div>
             </div>
