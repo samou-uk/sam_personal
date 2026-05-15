@@ -346,7 +346,7 @@ export default function AboutPage() {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/75 to-transparent" />
 
           <div
-            className={`relative z-10 w-full max-w-none px-5 pb-[calc(4rem+env(safe-area-inset-bottom)+3rem)] pt-8 text-left space-y-4 transition-all duration-700 sm:px-6 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`relative z-10 mb-5 w-full max-w-none px-5 pb-[calc(4.5rem+env(safe-area-inset-bottom)+3.75rem)] pt-8 text-left space-y-4 transition-all duration-700 sm:mb-6 sm:px-6 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
             {/* Inline typewriter — white on dark photo; LTR, grows left → right */}
             <h1
