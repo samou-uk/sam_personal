@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Mail, Globe, Linkedin, Github, Instagram } from 'lucide-react'
 
 const footerLinks = [
@@ -11,28 +12,40 @@ const footerLinks = [
   { icon: Instagram, text: 'Instagram', href: 'https://instagram.com/samchusenou', external: true },
 ]
 
+const internalLinks = [
+  { href: '/restaurants', label: 'Restaurant notes' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/privacy', label: 'Privacy' },
+]
+
 export default function Footer() {
   return (
-    // Desktop/footer view only – mobile version lives inside the hamburger menu
-    <footer className="hidden md:block bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-10">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-light">
-            &copy; {new Date().getFullYear()} Sam Chusen Ou
-          </p>
+    <footer className="hidden md:block border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+      <div className="mx-auto max-w-5xl px-6 py-12 sm:px-8 sm:py-14">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-2">
+            <p className="text-sm font-light tracking-tight text-slate-900 dark:text-slate-100">
+              Sam Chusen Ou
+            </p>
+            <p className="text-xs font-light text-slate-400 dark:text-slate-500">
+              &copy; {new Date().getFullYear()} All rights reserved.
+            </p>
+          </div>
 
-          <div className="flex items-center gap-8">
-            {/* Internal links only in footer */}
-            <nav className="flex items-center gap-4 text-xs font-light text-slate-500 dark:text-slate-400">
-              <a href="/restaurants" className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200">
-                Restaurant notes
-              </a>
-              <a href="/privacy" className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200">
-                Privacy
-              </a>
+          <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-12 lg:gap-16">
+            <nav className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-light text-slate-500 dark:text-slate-400">
+              {internalLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="transition-colors hover:text-slate-900 dark:hover:text-slate-100"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
 
-            <div className="flex gap-4">
+            <div className="flex items-center gap-5 border-t border-slate-200 pt-6 dark:border-slate-800 sm:border-0 sm:pt-0">
               {footerLinks.map((link) => {
                 const Icon = link.icon
                 return (
@@ -41,9 +54,10 @@ export default function Footer() {
                     href={link.href}
                     target={link.external ? '_blank' : undefined}
                     rel={link.external ? 'noopener noreferrer' : undefined}
-                    className="text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-300"
+                    className="text-slate-500 transition-colors hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100"
+                    aria-label={link.text}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} />
                   </a>
                 )
               })}

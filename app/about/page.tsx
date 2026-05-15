@@ -214,11 +214,9 @@ export default function AboutPage() {
   const [heroReady, setHeroReady] = useState(false)
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set())
   const [activeId, setActiveId] = useState<string | null>('hero')
-  const [closingVisible, setClosingVisible] = useState(false)
   const [scrollPct, setScrollPct] = useState(0)
   const [heroScroll, setHeroScroll] = useState(0)
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map())
-  const closingRef = useRef<HTMLDivElement>(null)
   const heroSectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -270,16 +268,6 @@ export default function AboutPage() {
       observers.push(active)
     })
     return () => observers.forEach((o) => o.disconnect())
-  }, [])
-
-  useEffect(() => {
-    if (!closingRef.current) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setClosingVisible(true); obs.disconnect() } },
-      { threshold: 0.1 }
-    )
-    obs.observe(closingRef.current)
-    return () => obs.disconnect()
   }, [])
 
   useEffect(() => {
@@ -605,7 +593,7 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="dark relative overflow-hidden scroll-mt-20 border-t border-slate-800/90 bg-slate-950 py-14 sm:py-16 px-6 sm:px-10"
+              className="dark relative overflow-hidden scroll-mt-20 border-t border-slate-800/90 bg-slate-950 pb-20 pt-14 sm:pb-24 sm:pt-16 px-6 sm:px-10"
             >
               <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-25%,rgba(6,182,212,0.07),transparent_52%)]" />
               <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8">
@@ -715,8 +703,7 @@ export default function AboutPage() {
         )
       })}
 
-      {/* bottom padding so last chapter isn't flush against viewport edge */}
-      <div ref={closingRef} className="h-10" />
+      <div className="h-8 shrink-0 bg-slate-950 md:h-10" aria-hidden />
     </main>
   )
 }
