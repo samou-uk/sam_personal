@@ -69,7 +69,7 @@ const chapters = [
     label: 'Music',
     eyebrow: 'Chapter 04',
     title: 'Music.',
-    body: "I have been involved in music ever since I was 8 years old (as you can see in the photo!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.",
+    body: "I have been involved in music ever since I was 8 years old (as you can see in the video!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.",
     note: "Music still influences how I think about pacing, texture, and when something feels controlled without feeling lifeless.",
     image: '/samyoungpiano_about.webp',
     imageAlt: 'Sam as a child playing piano',
@@ -102,7 +102,10 @@ function TypewriterHeadline({ count }: { count: number }) {
   const prefixCount = Math.min(count, INTRO_PREFIX.length)
   const accentCount = Math.max(0, count - INTRO_PREFIX.length)
   return (
-    <h1 className="text-5xl md:text-7xl lg:text-[5.75rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap">
+    <h1
+      dir="ltr"
+      className="text-left text-balance text-5xl md:text-7xl lg:text-[5.75rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap"
+    >
       <span>{INTRO_PREFIX.slice(0, prefixCount)}</span>
       <span className="text-primary dark:text-[#ADD8E6]">{INTRO_ACCENT.slice(0, accentCount)}</span>
       {count < INTRO_FULL.length && (
@@ -142,9 +145,9 @@ function InterstitialSection() {
   }, [triggered])
 
   return (
-    <section ref={ref} className="relative flex min-h-[30vh] items-center pt-16 pb-6 px-8 sm:px-12 xl:px-20 border-t border-slate-100 dark:border-slate-800">
+    <section ref={ref} className="relative flex min-h-0 items-center py-10 sm:py-12 pb-12 sm:pb-14 px-8 sm:px-12 xl:px-20 bg-white dark:bg-slate-900">
       <div className="max-w-6xl mx-auto w-full">
-        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-extralight text-slate-700 dark:text-slate-300 tracking-tight leading-[1.28]">
+        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-extralight text-slate-600 dark:text-slate-400 tracking-tight leading-[1.28]">
           {INTERSTITIAL_TEXT.slice(0, count)}
           {count < INTERSTITIAL_TEXT.length && (
             <span className="inline-block h-[0.82em] w-[2px] bg-slate-300 dark:bg-slate-600 align-[-0.05em] animate-pulse ml-0.5" />
@@ -338,8 +341,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* ── MOBILE HERO — full-bleed editorial ── */}
-        <div className="lg:hidden relative min-h-screen">
+        {/* ── MOBILE HERO — full-bleed; copy bottom-anchored, typewriter LTR / left-aligned ── */}
+        <div className="lg:hidden relative flex min-h-screen flex-col justify-end">
           {/* Full-bleed photo */}
           <Image
             src="/about.webp"
@@ -350,14 +353,18 @@ export default function AboutPage() {
             priority
           />
 
-          {/* Gradient: heavy at bottom for text, separate top band for nav */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/75 to-transparent" />
+          {/* Readability: stronger wash toward bottom where copy sits */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/80" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/75 to-transparent" />
 
-          {/* Content pinned to bottom */}
-          <div className={`absolute bottom-0 left-0 right-0 px-6 pb-10 space-y-4 transition-all duration-700 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            {/* Inline typewriter — white on dark photo */}
-            <h1 className="text-5xl font-extralight text-white tracking-tight leading-[0.92]">
+          <div
+            className={`relative z-10 w-full max-w-none px-5 pb-[calc(4rem+env(safe-area-inset-bottom)+3rem)] pt-8 text-left space-y-4 transition-all duration-700 sm:px-6 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          >
+            {/* Inline typewriter — white on dark photo; LTR, grows left → right */}
+            <h1
+              dir="ltr"
+              className="w-full text-5xl font-extralight text-white tracking-tight leading-[0.92] text-left text-balance"
+            >
               <span>{INTRO_PREFIX.slice(0, Math.min(typedCount, INTRO_PREFIX.length))}</span>
               <span className="text-[#ADD8E6]">{INTRO_ACCENT.slice(0, Math.max(0, typedCount - INTRO_PREFIX.length))}</span>
               {typedCount < INTRO_FULL.length && (
@@ -365,30 +372,30 @@ export default function AboutPage() {
               )}
             </h1>
 
-            <p className="text-sm text-white/55 font-light leading-relaxed">
-              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours.
+            <p className="w-full max-w-none text-left text-sm text-white/75 font-light leading-relaxed text-balance">
+              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours, and a Computational Mathematics minor.
             </p>
 
-            <div className="flex items-center justify-end pt-1">
-              <div className="flex items-center gap-1.5 text-white/35 font-light">
-                <span className="text-xs">Scroll</span>
-                <ArrowDown className="h-3 w-3 animate-bounce" />
-              </div>
+            <div className="flex w-full items-center justify-start gap-2 pt-1">
+              <span className="text-xs text-white/45 font-light">Scroll</span>
+              <ArrowDown className="h-3 w-3 shrink-0 animate-bounce" aria-hidden />
             </div>
           </div>
         </div>
 
-        {/* ── DESKTOP HERO (text left, portrait right) ── */}
-        <div className="hidden lg:relative lg:z-10 lg:flex lg:min-h-screen lg:flex-col lg:justify-center lg:px-12 xl:px-20 lg:w-[52%] lg:pt-24 lg:pb-20">
-          <div className={`transition-all duration-700 delay-100 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <TypewriterHeadline count={typedCount} />
-          </div>
-          <p className={`mt-8 max-w-md text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed transition-all duration-700 delay-200 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours.
-          </p>
-          <div className={`mt-14 flex items-center gap-3 text-sm text-slate-400 dark:text-slate-500 font-light select-none transition-all duration-700 delay-300 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <span>Scroll through the chapters</span>
-            <ArrowDown className="h-3.5 w-3.5 animate-bounce" />
+        {/* ── DESKTOP HERO — block centered in column; all copy left-aligned inside it ── */}
+        <div className="hidden lg:relative lg:z-10 lg:flex lg:min-h-screen lg:w-[52%] lg:flex-col lg:items-center lg:justify-center lg:px-12 xl:px-20 lg:py-12">
+          <div className="mx-auto w-full max-w-xl space-y-8 text-left">
+            <div className={`w-full transition-all duration-700 delay-100 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <TypewriterHeadline count={typedCount} />
+            </div>
+            <p className={`w-full text-left text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed text-balance transition-all duration-700 delay-200 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours, and a Computational Mathematics minor.
+            </p>
+            <div className={`flex w-full items-center justify-start gap-3 text-left text-sm text-slate-400 dark:text-slate-500 font-light select-none transition-all duration-700 delay-300 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <span>Scroll through the chapters</span>
+              <ArrowDown className="h-3.5 w-3.5 animate-bounce" aria-hidden />
+            </div>
           </div>
         </div>
       </section>
@@ -407,22 +414,19 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="relative flex items-center py-16 sm:py-24 lg:min-h-screen lg:py-28 px-6 sm:px-10 overflow-hidden scroll-mt-20"
+              className="relative flex items-center py-10 sm:py-14 lg:py-20 px-6 sm:px-10 overflow-hidden scroll-mt-20 border-t border-slate-300/70 bg-gradient-to-b from-slate-100/95 via-slate-50 to-white dark:border-slate-700/45 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900"
             >
-              {/* Faint court-line stripes */}
-              {[38, 46, 54, 62].map((top) => (
-                <div key={top} aria-hidden className="absolute left-0 right-0 h-px bg-emerald-400/[0.07] dark:bg-emerald-400/[0.05]" style={{ top: `${top}%` }} />
-              ))}
-
-
-              <div className="relative max-w-6xl mx-auto w-full grid gap-14 lg:gap-20 items-center lg:grid-cols-[1fr_1.1fr]">
+              <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-8 lg:gap-12 items-center lg:grid-cols-[1fr_1.1fr]">
 
                 {/* Text */}
                 <div className="space-y-6 lg:order-1">
                   <div className={`about-slide-left ${visible ? 'about-visible' : ''}`} style={{ '--delay': '0ms' } as React.CSSProperties}>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
                   </div>
-                  <div className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '80ms' }} />
+                  <div
+                    className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`}
+                    style={{ transitionDelay: '80ms' }}
+                  />
                   <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                     {ch.title}
                   </h2>
@@ -436,18 +440,18 @@ export default function AboutPage() {
                   {/* mobile: 2-col photo grid */}
                   <div className="grid lg:hidden grid-cols-2 gap-3">
                     <div className="flex flex-col gap-3">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.10)]`} style={{ '--delay': '60ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
+                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '60ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
                         <Image src="/tennis (2).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
                       </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.10)]`} style={{ '--delay': '200ms', '--rot': '0deg', aspectRatio: '4/3' } as React.CSSProperties}>
+                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '200ms', '--rot': '0deg', aspectRatio: '4/3' } as React.CSSProperties}>
                         <Image src="/tennis (4).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
                       </div>
                     </div>
                     <div className="flex flex-col gap-3 pt-6">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.10)]`} style={{ '--delay': '130ms', '--rot': '0deg', aspectRatio: '1/1' } as React.CSSProperties}>
+                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '130ms', '--rot': '0deg', aspectRatio: '1/1' } as React.CSSProperties}>
                         <Image src="/tennis_about.webp" alt="Tennis" fill className="object-cover object-top" sizes="45vw" />
                       </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.10)]`} style={{ '--delay': '300ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
+                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '300ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
                         <Image src="/tennis (1).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
                       </div>
                     </div>
@@ -457,13 +461,13 @@ export default function AboutPage() {
                   <div className="hidden lg:grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-4">
                       <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(15,23,42,0.10)]`}
+                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
                         style={{ '--delay': '80ms', '--rot': '-1deg', aspectRatio: '3/4' } as React.CSSProperties}
                       >
                         <Image src="/tennis (2).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="260px" />
                       </div>
                       <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(15,23,42,0.10)]`}
+                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
                         style={{ '--delay': '240ms', '--rot': '0.5deg', aspectRatio: '4/3' } as React.CSSProperties}
                       >
                         <Image src="/tennis (4).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="260px" />
@@ -471,20 +475,20 @@ export default function AboutPage() {
                     </div>
                     <div className="flex flex-col gap-4 pt-10">
                       <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(15,23,42,0.10)]`}
+                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
                         style={{ '--delay': '160ms', '--rot': '1.5deg', aspectRatio: '1/1' } as React.CSSProperties}
                       >
                         <Image src="/tennis_about.webp" alt="Tennis" fill className="object-cover object-top" sizes="220px" />
                       </div>
                       <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/60 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(15,23,42,0.10)]`}
+                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
                         style={{ '--delay': '320ms', '--rot': '-1deg', aspectRatio: '3/4' } as React.CSSProperties}
                       >
                         <Image src="/tennis (1).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="220px" />
                       </div>
                     </div>
                     <div className="col-span-2 flex justify-end mt-1">
-                      <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums">
+                      <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
                         {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
                       </span>
                     </div>
@@ -502,14 +506,14 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="relative flex items-center py-16 sm:py-24 lg:min-h-screen lg:py-28 px-6 sm:px-10 overflow-hidden scroll-mt-20 bg-stone-50 dark:bg-stone-950"
+              className="relative flex items-center py-10 sm:py-14 lg:py-20 px-6 sm:px-10 overflow-hidden scroll-mt-20 border-t border-stone-300/60 bg-gradient-to-b from-stone-100/90 via-stone-50 to-slate-50 dark:border-slate-600/35 dark:from-slate-950 dark:via-stone-950 dark:to-slate-950"
             >
-              {/* Amber glow */}
-              <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[44rem] w-[44rem] rounded-full bg-amber-200/20 dark:bg-amber-800/10 blur-3xl" />
-              <div aria-hidden className="pointer-events-none absolute -left-20 bottom-0 h-[28rem] w-[28rem] rounded-full bg-orange-100/25 dark:bg-orange-900/8 blur-3xl" />
+              {/* Soft depth — same cool family as other chapters */}
+              <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[44rem] w-[44rem] rounded-full bg-slate-200/25 dark:bg-slate-800/20 blur-3xl" />
+              <div aria-hidden className="pointer-events-none absolute -left-20 bottom-0 h-[28rem] w-[28rem] rounded-full bg-cyan-100/20 dark:bg-cyan-950/20 blur-3xl" />
 
 
-              <div className="relative max-w-6xl mx-auto w-full grid gap-14 lg:gap-20 items-center lg:grid-cols-[1.2fr_1fr]">
+              <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-8 lg:gap-12 items-center lg:grid-cols-[1.2fr_1fr]">
 
                 {/* Photo mosaic */}
                 <div className="lg:order-1">
@@ -577,14 +581,14 @@ export default function AboutPage() {
                     <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
                   </div>
                   <div className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '80ms' }} />
-                  <h2 className={`about-slide-right ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-stone-900 dark:text-stone-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
+                  <h2 className={`about-slide-right ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                     {ch.title}
                   </h2>
-                  <p className={`about-slide-right ${visible ? 'about-visible' : ''} text-base md:text-lg text-stone-700 dark:text-stone-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
+                  <p className={`about-slide-right ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                     {ch.body}
                   </p>
                   <div className="flex justify-start pt-2">
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums">
+                    <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
                       {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
                     </span>
                   </div>
@@ -601,15 +605,10 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="dark relative bg-slate-900 py-24 px-6 sm:px-10 overflow-hidden scroll-mt-20"
+              className="dark relative overflow-hidden scroll-mt-20 border-t border-slate-800/90 bg-slate-950 py-14 sm:py-16 px-6 sm:px-10"
             >
-              {/* Staff lines */}
-              {[22, 29, 36, 43, 50].map((top) => (
-                <div key={top} aria-hidden className="absolute left-0 right-0 h-px bg-white/[0.05]" style={{ top: `${top}%` }} />
-              ))}
-
-
-              <div className="relative max-w-6xl mx-auto w-full space-y-12">
+              <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-25%,rgba(6,182,212,0.07),transparent_52%)]" />
+              <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8">
 
                 {/* Heading block — spans full width, no competing image */}
                 <div className="space-y-5 max-w-3xl">
@@ -627,7 +626,7 @@ export default function AboutPage() {
 
                 {/* Wide landscape video */}
                 <div
-                  className={`about-banner-animate ${visible ? 'about-visible' : ''} relative w-full overflow-hidden rounded-[1.75rem] border border-white/[0.07] shadow-[0_40px_100px_rgba(0,0,0,0.6)]`}
+                  className={`about-banner-animate ${visible ? 'about-visible' : ''} relative w-full overflow-hidden rounded-[1.75rem] border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.55)]`}
                   style={{ aspectRatio: '16/9' }}
                 >
                   <video
@@ -639,11 +638,11 @@ export default function AboutPage() {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                   {/* top fade */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-900/55 to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-950/65 to-transparent" />
                   {/* bottom fade */}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-slate-900/65 to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-slate-950/70 to-transparent" />
                   {/* inset vignette */}
-                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_80px_rgba(2,6,23,0.45)]" />
+                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
                 </div>
 
                 {/* Body below the video */}
@@ -656,7 +655,7 @@ export default function AboutPage() {
 
                 {/* Counter */}
                 <div className="flex justify-end">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-light tabular-nums">
+                  <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-500 font-light tabular-nums md:inline">
                     {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
                   </span>
                 </div>
@@ -671,10 +670,9 @@ export default function AboutPage() {
             key={ch.id}
             id={`chapter-${ch.id}`}
             ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-            className="relative flex items-center py-16 sm:py-24 lg:min-h-screen lg:py-28 px-6 sm:px-10 overflow-hidden scroll-mt-20"
+            className="relative flex items-center py-10 sm:py-14 lg:py-20 px-6 sm:px-10 overflow-hidden scroll-mt-20 bg-gradient-to-b from-white to-slate-50/90 dark:from-slate-900 dark:to-slate-950"
           >
-
-            <div className="relative max-w-6xl mx-auto w-full grid gap-14 lg:gap-20 items-center lg:grid-cols-[1.05fr_1fr]">
+            <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-8 lg:gap-12 items-center lg:grid-cols-[1.05fr_1fr]">
 
               {/* text block */}
               <div className="space-y-6 order-2 lg:order-1">
@@ -707,7 +705,7 @@ export default function AboutPage() {
                   <WorldGlobe />
                 </div>
                 <div className="mt-5 flex justify-end lg:pr-4">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums">
+                  <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
                     {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
                   </span>
                 </div>
@@ -718,7 +716,7 @@ export default function AboutPage() {
       })}
 
       {/* bottom padding so last chapter isn't flush against viewport edge */}
-      <div ref={closingRef} className="h-16" />
+      <div ref={closingRef} className="h-10" />
     </main>
   )
 }

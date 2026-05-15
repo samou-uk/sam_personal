@@ -5,6 +5,15 @@ import { motion } from 'framer-motion'
 
 const experiences = [
   {
+    title: 'Financial Accounting Co-op',
+    company: 'Hove Street Properties',
+    location: 'Toronto, Ontario, Canada · On-site',
+    date: 'May 2026 – Present',
+    points: [
+      'Hove Street Properties is a privately owned and controlled real estate group, providing a full spectrum of investment, asset, property management and construction services for over 200 properties in North America.',
+    ],
+  },
+  {
     title: 'IT Application Support – Corporate (Co-op)',
     company: 'Linamar Corporation',
     location: 'Guelph, Canada',
@@ -30,7 +39,7 @@ const experiences = [
     ],
   },
   {
-    title: 'Assistant Accounting Intern (Co-op)',
+    title: 'Summer Intern',
     company: 'Fortune Foods UK',
     location: 'Reading, United Kingdom',
     date: 'May 2024 – August 2024',
@@ -40,6 +49,15 @@ const experiences = [
       'Deployed an internal labelling platform with one-click translation, banned E‑number flagging, allergen detection, barcode generation, and HTML-to-PDF export — cutting creation time by 80%+ and ensuring EU/UK FSA compliance.',
       'Shipped customer-facing cataloguing software using Flask and Python, reducing production time by over 50%.',
       'Managed RTI payroll and GL entries in Sage50 and Payroo. Handled daily journal entries and stock checks across SKUs in Excel.',
+    ],
+  },
+  {
+    title: 'Website Developer',
+    company: 'Cmart Oriental Foods',
+    location: 'Reading, England, United Kingdom',
+    date: 'May 2020 – July 2023',
+    points: [
+      'Built and maintained a Shopify storefront over 3+ years (now decommissioned), launched during COVID-19 to support local food access and continuity of business operations, generating £100k+ in total sales.',
     ],
   },
 ]

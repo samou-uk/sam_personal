@@ -7,6 +7,18 @@ import { ChevronDown } from 'lucide-react'
 
 const experiences = [
   {
+    title: 'Financial Accounting Co-op',
+    company: 'Hove Street Properties',
+    location: 'Toronto, Canada',
+    date: 'May 2026 – Present',
+    image: '/hove.jpeg',
+    summary:
+      'Hove Street Properties is a privately owned and controlled real estate group, providing a full spectrum of investment, asset, property management and construction services for over 200 properties in North America.',
+    highlights: ['200+ properties', 'North America', 'On-site'],
+    points: [
+    ],
+  },
+  {
     title: 'IT Application Support – Corporate (Co-op)',
     company: 'Linamar Corporation',
     location: 'Guelph, Canada',
@@ -38,7 +50,7 @@ const experiences = [
     ],
   },
   {
-    title: 'Assistant Accounting Intern (Co-op)',
+    title: 'Summer Intern',
     company: 'Fortune Foods UK',
     location: 'Reading, United Kingdom',
     date: 'May 2024 – August 2024',
@@ -51,6 +63,18 @@ const experiences = [
       'Deployed an internal labelling platform with one-click translation, banned E‑number flagging, allergen detection, barcode generation, and HTML-to-PDF export — cutting creation time by 80%+ and ensuring EU/UK FSA compliance.',
       'Shipped customer-facing cataloguing software using Flask and Python, reducing production time by over 50%.',
       'Managed RTI payroll and GL entries in Sage50 and Payroo. Handled daily journal entries and stock checks across SKUs in Excel.',
+    ],
+  },
+  {
+    title: 'Website Developer',
+    company: 'Cmart Oriental Foods',
+    location: 'Reading, United Kingdom',
+    date: 'May 2020 – July 2023',
+    image: '/cmart.png',
+    summary:
+      'Built and maintained a Shopify storefront over 3+ years (now decommissioned), launched during COVID-19 to support local food access and continuity of business operations, generating £100k+ in total sales.',
+    highlights: ['£100k+ sales', 'Shopify', 'COVID-19 launch'],
+    points: [
     ],
   },
 ]
@@ -74,17 +98,9 @@ export default function ExperiencePage() {
           <div className="space-y-8">
             {experiences.map((exp, index) => {
               const isExpanded = expandedIndex === index
-              
-              return (
-                    <div
-                      key={index}
-                      className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
-                    >
-                  {/* Header - Always visible */}
-                  <button
-                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                    className="w-full text-left"
-                  >
+              const hasPoints = (exp.points?.length ?? 0) > 0
+
+              const headerBody = (
                     <div className="flex items-start gap-6">
                       {/* Logo */}
                       <div className="flex-shrink-0 w-16 h-16">
@@ -100,7 +116,7 @@ export default function ExperiencePage() {
                           />
                         </div>
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-6">
                           <div className="flex-1 min-w-0">
@@ -114,7 +130,7 @@ export default function ExperiencePage() {
                               <span className="text-slate-300 dark:text-slate-600">·</span>
                               <span>{exp.date}</span>
                             </div>
-                            
+
                             {/* Summary */}
                             <p className="text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-4">
                               {exp.summary}
@@ -129,23 +145,46 @@ export default function ExperiencePage() {
                               ))}
                             </div>
                           </div>
-                          
-                          {/* Expand button */}
-                          <div className="flex-shrink-0 pt-1">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                              isExpanded 
-                                ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900' 
-                                : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
-                            }`}>
-                              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+
+                          {hasPoints && (
+                            <div className="flex-shrink-0 pt-1">
+                              <div
+                                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                  isExpanded
+                                    ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900'
+                                    : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
+                                }`}
+                              >
+                                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                     </div>
+              )
+
+              return (
+                    <div
+                      key={index}
+                      className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
+                    >
+                  {hasPoints ? (
+                  <button
+                    type="button"
+                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                    className="w-full text-left"
+                  >
+                    {headerBody}
                   </button>
+                  ) : (
+                  <div className="w-full text-left">
+                    {headerBody}
+                  </div>
+                  )}
 
                   {/* Expandable Content */}
+                  {hasPoints && (
                   <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     isExpanded ? 'max-h-[2000px] opacity-100 mt-6' : 'max-h-0 opacity-0'
                   }`}>
@@ -162,6 +201,7 @@ export default function ExperiencePage() {
                       </ul>
                     </div>
                   </div>
+                  )}
                 </div>
               )
             })}

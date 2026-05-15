@@ -59,7 +59,7 @@ export default function About() {
             <div className="bg-white/60 backdrop-blur-2xl rounded-2xl p-8 border border-white/80 shadow-lg">
               <div className="space-y-6 text-lg text-slate-700 font-light leading-relaxed">
                 <p>
-                  Hi! I'm <span className="text-slate-900 font-normal">Sam</span>, a student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside a Statistics, Joint Honours. I won't bore you too much, but here's a little bit about me…
+                  Hi! I'm <span className="text-slate-900 font-normal">Sam</span>, a student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours, and a Computational Mathematics minor. I won't bore you too much, but here's a little bit about me…
                 </p>
                 <p>
                   I was born in London and spent the first 18 years of my life enduring the torrential rain before hopping across the pond to Waterloo, Canada to pursue my Bachelor's Degree.

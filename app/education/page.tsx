@@ -1,283 +1,172 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Navigation from '@/components/Navigation'
 import Image from 'next/image'
-import { ChevronDown, Code, Database, Server, BarChart3, Heart, Layers } from 'lucide-react'
+import { MapPin } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const education = [
   {
     school: 'University of Waterloo',
     location: 'Waterloo, Canada',
-    degree: 'Bachelor of Mathematics, Mathematics/Financial Analysis and Risk Management (CFA Specialization)',
-    details: 'Joint Honours in Statistics · Computational Mathematics Minor · President\'s Scholarship',
-    summary: 'Pursuing Mathematics/Financial Analysis & Risk Management with Statistics Joint Honours, CFA Specialization, and Computational Mathematics Minor.',
-    coursework: ['Optimization', 'Financial Mathematics', 'Calculus III', 'Linear Algebra II', 'Investment Science', 'Statistics', 'Business Law'],
-    activities: ['Mathematics/Financial Analysis', 'Statistics Joint Honours', 'CFA Specialization', 'Computational Mathematics Minor'],
+    summary:
+      'Pursuing Mathematics/Financial Analysis & Risk Management with Statistics Joint Honours, CFA Specialization, and Computational Mathematics Minor.',
+    coursework: ['Optimization', 'Computational Finance', 'Stochastic Simulation Methods', 'Investment Science', 'Business Law'],
+    activities: null as string[] | null,
     image: '/UW.svg',
-    year: '2023 - Present',
-    highlight: 'President\'s Scholarship',
+    year: '2023 – Present',
   },
   {
     school: 'Tonbridge School',
     location: 'Tonbridge, United Kingdom',
-    degree: 'A-Levels in Mathematics, Physics and Computer Science, AS Further Mathematics',
-    details: 'House Praepostor (Prefect), Competitive Coding Society, Fencing Team, Tennis, Field Hockey XIII, Berkshire Youth Symphony Orchestra',
-    summary: 'Completed A-Levels in Mathematics, Physics and Computer Science, AS Further Mathematics. Served as House Praepostor (Prefect).',
-    coursework: null,
+    summary:
+      'Completed A-Levels in Mathematics, Physics and Computer Science, AS Further Mathematics. Served as House Praepostor (Prefect).',
+    coursework: null as string[] | null,
     activities: ['Competitive Coding Society', 'Fencing Team', 'Tennis', 'Field Hockey XIII', 'Berkshire Youth Symphony Orchestra'],
     image: '/tonbridge.webp',
-    year: '2021 - 2023',
-    highlight: 'House Praepostor',
+    year: '2021 – 2023',
   },
-]
+] as const
 
-const skillCategories = [
-  {
-    title: 'Languages',
-    skills: ['Python', 'JavaScript', 'SQL', 'C', 'R', 'Bash'],
-    icon: Code,
-  },
-  {
-    title: 'Frontend & Backend',
-    skills: ['React', 'Flask', 'HTML/CSS', 'Liquid (Shopify)'],
-    icon: Layers,
-  },
-  {
-    title: 'Data & Databases',
-    skills: ['Pandas', 'NumPy', 'Prophet', 'MySQL', 'SQLite', 'Supabase', 'Firebase'],
-    icon: Database,
-  },
-  {
-    title: 'Infrastructure',
-    skills: ['Linux (Cron, SSH)', 'AWS EC2', 'Cloudflare Workers (KV)', 'Gunicorn', 'Apache Guacamole', 'Railway'],
-    icon: Server,
-  },
-  {
-    title: 'Enterprise Systems',
-    skills: ['IFS (V8, Cloud)', 'Sage 50', 'ServiceNow', 'Payroo', 'Loftware Spectrum'],
-    icon: BarChart3,
-  },
-  {
-    title: 'Interests',
-    skills: ['Tennis', 'Golf', 'Sabre Fencing', 'Formula One', 'Sim Racing', 'Specialty Coffee', 'Cooking'],
-    icon: Heart,
-  },
-]
+type Education = (typeof education)[number]
+
+function Tag({ label }: { label: string }) {
+  return (
+    <span className="rounded-lg border border-slate-200/90 bg-white px-3 py-1.5 text-xs font-light text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/[0.04] hover:text-primary hover:shadow-sm dark:border-slate-600/60 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:border-[#ADD8E6]/40 dark:hover:bg-[#ADD8E6]/[0.06] dark:hover:text-[#ADD8E6]">
+      {label}
+    </span>
+  )
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mb-3 flex items-center gap-2.5">
+      <span className="h-px w-6 bg-primary/45 dark:bg-[#ADD8E6]/45" />
+      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+        {children}
+      </p>
+    </div>
+  )
+}
+
+function EduEntry({ edu, index }: { edu: Education; index: number }) {
+  const reduce = useReducedMotion()
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="relative overflow-hidden py-16 first:pt-0 sm:py-20 md:py-24"
+    >
+      <div className="relative w-full space-y-10">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col gap-6 sm:flex-row sm:items-start"
+        >
+          <motion.div
+            whileHover={reduce ? undefined : { scale: 1.04, rotate: -1.5 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+            className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[14px] border border-slate-200/80 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] dark:border-slate-600/50 dark:bg-slate-800 dark:shadow-[0_2px_12px_rgba(0,0,0,0.35)]"
+          >
+            <Image
+              src={edu.image}
+              alt={edu.school}
+              fill
+              sizes="64px"
+              className="object-contain p-2.5"
+              priority={index === 0}
+            />
+          </motion.div>
+          <div className="min-w-0 flex-1 space-y-2">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 className="text-3xl font-extralight tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl">
+                {edu.school}
+              </h2>
+              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-light text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                {edu.year}
+              </span>
+            </div>
+            <p className="flex items-center gap-1.5 text-sm font-light text-slate-500 dark:text-slate-400">
+              <MapPin className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" aria-hidden />
+              {edu.location}
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="w-full text-base font-light leading-relaxed text-slate-600 dark:text-slate-300 text-balance [text-wrap:pretty] sm:text-[1.0625rem] sm:leading-[1.65] md:text-lg md:leading-relaxed">
+            {edu.summary}
+          </p>
+        </motion.div>
+
+        {edu.coursework && edu.coursework.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <SectionLabel>Coursework</SectionLabel>
+            <div className="flex flex-wrap gap-2">
+              {edu.coursework.map((c) => (
+                <Tag key={c} label={c} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {edu.activities && edu.activities.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <SectionLabel>Activities</SectionLabel>
+            <div className="flex flex-wrap gap-2">
+              {edu.activities.map((a) => (
+                <Tag key={a} label={a} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </motion.article>
+  )
+}
 
 export default function EducationPage() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
-
   return (
     <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
-      <section className="pt-32 pb-16">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-              <span className="inline-block">Where I've</span>{' '}
-              <span className="inline-block text-primary dark:text-[#ADD8E6]">studied</span>
-            </h1>
+        <section className="pt-32 pb-24">
+          <div className="mx-auto max-w-5xl px-6 sm:px-8">
+            <header className="relative z-10 mb-16 md:mb-20">
+              <h1 className="text-6xl font-extralight tracking-tight text-slate-900 dark:text-slate-100 md:text-7xl">
+                <span className="inline-block">Where I&apos;ve</span>{' '}
+                <span className="inline-block text-primary dark:text-[#ADD8E6]">studied</span>
+              </h1>
+            </header>
+
+            <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80">
+              {education.map((edu, index) => (
+                <EduEntry key={edu.school} edu={edu} index={index} />
+              ))}
+            </div>
           </div>
-
-          <div className="space-y-8">
-            {education.map((edu, index) => {
-              const isExpanded = expandedIndex === index
-              
-              return (
-                <div
-                  key={index}
-                  className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
-                >
-                  {/* Header - Always visible */}
-                  <button
-                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                    className="w-full text-left"
-                  >
-                    <div className="flex items-start gap-6">
-                      {/* Logo */}
-                      <div className="flex-shrink-0 w-16 h-16">
-                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={edu.image}
-                            alt={edu.school}
-                            width={64}
-                            height={64}
-                            sizes="64px"
-                            className="object-contain p-3"
-                            priority={index === 0}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-6">
-                          <div className="flex-1 min-w-0">
-                            <h2 className="text-2xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-                              {edu.school}
-                            </h2>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
-                              <span>{edu.location}</span>
-                              <span className="text-slate-300 dark:text-slate-600">·</span>
-                              <span>{edu.year}</span>
-                            </div>
-                            
-                            {/* Summary */}
-                            <p className="text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-4">
-                              {edu.summary}
-                            </p>
-
-                            {/* Highlight badge */}
-                            <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 dark:bg-[#ADD8E6]/20 border border-primary/15 dark:border-[#ADD8E6]/30">
-                              <span className="text-xs font-light text-primary dark:text-[#ADD8E6]">{edu.highlight}</span>
-                            </div>
-                          </div>
-                          
-                          {/* Expand button */}
-                          <div className="flex-shrink-0 pt-1">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                              isExpanded 
-                                ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900' 
-                                : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
-                            }`}>
-                              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Expandable Content */}
-                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isExpanded ? 'max-h-[2000px] opacity-100 mt-6' : 'max-h-0 opacity-0'
-                  }`}>
-                    <div className="pl-24 space-y-6">
-                      {edu.degree && (
-                        <div>
-                          <p className="text-base font-light text-slate-900 dark:text-slate-100 leading-relaxed">
-                            {edu.degree}
-                          </p>
-                        </div>
-                      )}
-
-                      {edu.details && (
-                        <div>
-                          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                            {edu.details}
-                          </p>
-                        </div>
-                      )}
-
-                      {edu.coursework && edu.coursework.length > 0 && (
-                        <div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider mb-3">Relevant Coursework</p>
-                          <div className="flex flex-wrap gap-2">
-                            {edu.coursework.map((course, courseIndex) => (
-                              <span
-                                key={courseIndex}
-                                className="px-3 py-1.5 text-xs font-light text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 rounded-full"
-                              >
-                                {course}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {edu.activities && edu.activities.length > 0 && (
-                        <div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-wider mb-3">Activities & Focus</p>
-                          <div className="flex flex-wrap gap-2">
-                            {edu.activities.map((activity, actIndex) => (
-                              <span
-                                key={actIndex}
-                                className="px-3 py-1.5 text-xs font-light text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 rounded-full"
-                              >
-                                {activity}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills section combined onto this page */}
-      <section className="pb-32">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          <div className="mb-20">
-            <h2 className="text-5xl md:text-6xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-              <span className="inline-block">What I</span>{' '}
-              <span className="inline-block text-primary dark:text-[#ADD8E6]">know</span>
-            </h2>
-          </div>
-
-          <div className="space-y-20">
-            {skillCategories.map((category, index) => {
-              const Icon = category.icon
-              const isHovered = hoveredCategory === category.title
-              
-              return (
-                <div
-                  key={category.title}
-                  onMouseEnter={() => setHoveredCategory(category.title)}
-                  onMouseLeave={() => setHoveredCategory(null)}
-                  className="group"
-                >
-                  {/* Category Header */}
-                  <div className="flex items-center gap-6 mb-8">
-                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      isHovered ? 'bg-slate-100 dark:bg-slate-800 scale-110' : 'bg-slate-50 dark:bg-slate-800/50'
-                    }`}>
-                      <Icon
-                        className={`w-7 h-7 transition-colors duration-300 ${
-                          isHovered ? 'text-primary dark:text-[#ADD8E6]' : 'text-slate-400'
-                        }`}
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-extralight text-slate-900 dark:text-slate-100 tracking-tight mb-1 transition-colors duration-300">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
-                        {category.skills.length} skills
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Skills - Flowing layout */}
-                  <div className="flex flex-wrap gap-3">
-                    {category.skills.map((skill, skillIndex) => (
-                      <span
-                        key={skillIndex}
-                        className={`px-4 py-2 rounded-lg text-sm font-light border transition-all duration-300 ${
-                          isHovered
-                            ? 'text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 shadow-sm scale-105'
-                            : 'text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:border-slate-300 dark:hover:border-slate-600'
-                        }`}
-                        style={{
-                          transitionDelay: isHovered ? `${skillIndex * 20}ms` : '0ms'
-                        }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+        </section>
       </div>
     </main>
   )

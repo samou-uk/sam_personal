@@ -32,6 +32,7 @@ const searchData: SearchResult[] = [
   // Projects
   { title: 'Placecard', href: '/projects?project=Placecard', category: 'Project', description: 'Private supper-club app for UW/WLU students' },
   { title: 'FortuneVantage', href: '/projects?project=FortuneVantage', category: 'Project', description: 'DSS and BI Platform for UK-based food wholesaler' },
+  { title: 'Fortune Commerce', href: '/projects?project=Fortune Commerce', category: 'Project', description: 'Full-stack B2B e-commerce for UK wholesale — React, Flask, PostgreSQL, Railway' },
   { title: 'Stock Analysis Tool', href: '/projects?project=Stock Analysis Tool', category: 'Project', description: 'Live trading data with technical & sentiment analysis' },
   { title: 'miniERP', href: '/projects?project=miniERP', category: 'Project', description: 'Lightweight ERP for small business owners' },
   { title: 'Bill Splitter', href: '/projects?project=Bill Splitter', category: 'Project', description: 'Quick app to divide group expenses fairly' },

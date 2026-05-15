@@ -7,58 +7,87 @@ const education = [
   {
     school: 'University of Waterloo',
     location: 'Waterloo, Canada',
+    dates: '2023 — Present',
     degree: 'Bachelor of Mathematics, Mathematics/Financial Analysis and Risk Management (CFA Specialization)',
     details: 'Joint Honours in Statistics · Computational Mathematics Minor · President\'s Scholarship',
-    coursework: 'Relevant Coursework: Optimization, Financial Mathematics, Calculus III, Linear Algebra II, Investment Science, Statistics, Business Law',
+    coursework: ['Optimization', 'Computational Finance', 'Stochastic Simulation Methods', 'Investment Science', 'Business Law'],
   },
   {
     school: 'Tonbridge School',
     location: 'Tonbridge, United Kingdom',
-    degree: null,
+    dates: '2021 — 2023',
+    degree: 'A-Levels in Mathematics, Physics and Computer Science, AS Further Mathematics',
     details: 'House Praepostor (Prefect), Competitive Coding Society, Fencing Team, Tennis, Field Hockey XIII, Berkshire Youth Symphony Orchestra',
-    coursework: null,
+    coursework: null as string[] | null,
   },
 ]
 
 export default function Education() {
   return (
-    <section id="education" className="py-32 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(5,150,105,0.03),transparent_50%)]"></div>
-      
-      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
+    <section id="education" className="relative overflow-hidden bg-white py-32 dark:bg-slate-900">
+      <div className="mx-auto max-w-5xl px-6 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          className="mb-24"
+          className="mb-16"
         >
-          <h2 className="text-6xl md:text-7xl font-extralight text-slate-900 tracking-tighter">Education</h2>
+          <h2 className="text-6xl font-extralight tracking-tighter text-slate-900 dark:text-slate-100 md:text-7xl">
+            Education
+          </h2>
         </motion.div>
 
-        <div className="space-y-8">
+        <div className="divide-y divide-slate-200 border-t border-b border-slate-200 dark:divide-slate-700 dark:border-slate-700">
           {education.map((edu, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+            <motion.article
+              key={edu.school}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              whileHover={{ y: -4 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ delay: index * 0.08, duration: 0.5 }}
+              className="grid gap-8 py-10 sm:grid-cols-[minmax(0,7rem)_1fr] sm:gap-10 sm:py-12"
             >
-              <div className="bg-white/60 backdrop-blur-2xl rounded-2xl p-10 border border-white/80 shadow-lg hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-                <h3 className="text-2xl font-light text-slate-900 mb-3 tracking-tight">{edu.school}</h3>
-                <p className="text-sm text-slate-600 font-light mb-6">{edu.location}</p>
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                  {edu.dates}
+                </p>
+              </div>
+
+              <div className="min-w-0 space-y-6">
+                <header>
+                  <h3 className="text-2xl font-extralight tracking-tight text-slate-900 dark:text-slate-100 sm:text-3xl">
+                    {edu.school}
+                  </h3>
+                  <p className="mt-1 text-sm font-light text-slate-500 dark:text-slate-400">{edu.location}</p>
+                </header>
+
                 {edu.degree && (
-                  <p className="text-lg font-light text-slate-900 mb-4 tracking-tight">{edu.degree}</p>
+                  <p className="max-w-2xl text-base font-light leading-relaxed text-slate-800 dark:text-slate-200">
+                    {edu.degree}
+                  </p>
                 )}
-                <p className="text-slate-700 mb-4 leading-relaxed text-base font-light">{edu.details}</p>
-                {edu.coursework && (
-                  <p className="text-slate-600 leading-relaxed text-sm font-light mt-6">{edu.coursework}</p>
+
+                <p className="max-w-2xl text-sm font-light leading-relaxed text-slate-600 dark:text-slate-300">
+                  {edu.details}
+                </p>
+
+                {edu.coursework && edu.coursework.length > 0 && (
+                  <div>
+                    <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+                      Relevant coursework
+                    </p>
+                    <ul className="max-w-xl space-y-2 border-l border-slate-200 pl-4 dark:border-slate-600">
+                      {edu.coursework.map((c) => (
+                        <li key={c} className="text-sm font-light text-slate-700 dark:text-slate-300">
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

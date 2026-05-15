@@ -29,6 +29,16 @@ const projects = [
     featured: true,
   },
   {
+    name: 'Fortune Commerce',
+    tagline: 'Full-stack B2B wholesale e-commerce — 500+ SKUs',
+    category: 'Full-Stack',
+    description:
+      'Built and shipped a full-stack B2B e-commerce platform (React, TypeScript, Flask, PostgreSQL, Railway) for a UK food wholesale business with 500+ live SKUs. Features include corporate accounts with hierarchical RBAC and approval workflows, AES-256 encrypted audit logging, modular XLSX import pipelines with OOXML structural validation and WEBP image conversion, a drag-and-drop email/PDF report builder with dynamic template rendering, CDN caching, and server-side catalog price validation.',
+    skills: ['React', 'TypeScript', 'Flask', 'PostgreSQL', 'Railway'],
+    image: '/fortunecommerce1.jpg',
+    featured: true,
+  },
+  {
     name: 'Stock Analysis Tool',
     tagline: 'Live trading data with technical & sentiment analysis',
     category: 'GitHub',
