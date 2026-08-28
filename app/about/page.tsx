@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import Navigation from '@/components/Navigation'
 import WorldGlobe from '@/components/WorldGlobe'
 import { ArrowDown } from 'lucide-react'
@@ -10,10 +10,8 @@ import { ArrowDown } from 'lucide-react'
 const chapters = [
   {
     id: 'roots',
-    number: '01',
-    label: 'Roots',
-    eyebrow: 'Chapter 01',
-    title: 'Across the Pond',
+    label: 'roots',
+    title: 'across the pond',
     body: "I was born in London and spent the first 18 years of my life enduring the torrential rain before hopping across the pond to Waterloo, Canada to pursue my Bachelor's Degree.",
     body2: "A major part of my decision to come to Canada was a friendly interaction with a CBSA officer when I first arrived in Toronto in 2018 (on holiday). Their friendliness and professionalism left a lasting impression on me, shaping my perception of Canada. That first impression stuck with me, and ultimately influenced my decision to move across the pond for university.",
     note: "A lot of how I think comes from living between contexts: UK and Canada, business and engineering, precision and practicality.",
@@ -21,81 +19,181 @@ const chapters = [
     imageAlt: 'Tonbridge, London',
     imageFit: 'object-cover' as const,
     flip: false,
-    numberColor: 'text-slate-400 dark:text-slate-500',
-    numberClass: 'chapter-num',
-    accentBar: 'bg-slate-400 dark:bg-slate-500',
-    accentGlow: 'accent-glow-slate',
     noteClass: 'border-slate-200/70 bg-slate-50/70 dark:border-slate-700/50 dark:bg-slate-800/40',
   },
   {
     id: 'tennis',
-    number: '02',
-    label: 'Sports',
-    eyebrow: 'Chapter 02',
-    title: 'Outside of academia\nand its tribulations…',
+    label: 'sports',
+    title: 'outside of academia\nand its tribulations…',
     body: "I enjoy playing golf, tennis and sabre fencing. Tennis, being the most accessible, is probably my favourite sport. The other two are slightly more difficult to facilitate!\n\nI also enjoy watching Formula One. As a result, I fell down the rabbit hole of simracing too (a very costly rabbit hole at that!)",
     note: "I like things that reward repetition, timing, and tiny improvements over time. That loop feels very familiar to building.",
     image: '/tennis_about.webp',
     imageAlt: 'Sam playing tennis',
     imageFit: 'object-cover' as const,
     flip: false,
-    numberColor: 'text-slate-400 dark:text-slate-500',
-    numberClass: 'chapter-num',
-    accentBar: 'bg-slate-400 dark:bg-slate-500',
-    accentGlow: 'accent-glow-slate',
     noteClass: 'border-slate-200/70 bg-slate-50/70 dark:border-slate-700/50 dark:bg-slate-800/40',
   },
   {
     id: 'cooking',
-    number: '03',
-    label: 'Cooking',
-    eyebrow: 'Chapter 03',
-    title: 'I like food',
+    label: 'cooking',
+    title: 'i like food',
     body: "Having learned to cook at a young age, this skill has become particularly important since starting university in September 2023. While my cooking predominantly involves Chinese techniques, my girlfriend always claims that I make a brilliant Chicken & Mash!",
     note: "It's one of the clearest reminders that precision and instinct don't compete. Also, apparently the Chicken & Mash is unusually strong.",
     image: '/chickenmash_about.webp',
     imageAlt: 'Chicken and mash',
     imageFit: 'object-cover' as const,
     flip: true,
-    numberColor: 'text-slate-400 dark:text-slate-500',
-    numberClass: 'chapter-num-right',
-    accentBar: 'bg-slate-400 dark:bg-slate-500',
-    accentGlow: 'accent-glow-slate',
     noteClass: 'border-slate-200/70 bg-slate-50/70 dark:border-slate-700/50 dark:bg-slate-800/40',
   },
   {
     id: 'music',
-    number: '04',
-    label: 'Music',
-    eyebrow: 'Chapter 04',
-    title: 'Music.',
+    label: 'music',
+    title: 'music.',
     body: "I have been involved in music ever since I was 8 years old (as you can see in the video!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.",
     note: "Music still influences how I think about pacing, texture, and when something feels controlled without feeling lifeless.",
     image: '/samyoungpiano_about.webp',
     imageAlt: 'Sam as a child playing piano',
     imageFit: 'object-cover' as const,
     flip: false,
-    numberColor: 'text-slate-400 dark:text-slate-500',
-    numberClass: 'chapter-num',
-    accentBar: 'bg-slate-500',
-    accentGlow: 'accent-glow-slate',
     noteClass: 'border-slate-200/70 bg-slate-50/70 dark:border-slate-700/50 dark:bg-slate-800/40',
   },
 ] as const
 
 type Chapter = (typeof chapters)[number]
 
+type CollagePhoto = {
+  src: string
+  alt: string
+  delay: string
+  rot: string
+  aspect: string
+  objectPosition?: string
+}
+
+const tennisPhotos: CollagePhoto[] = [
+  { src: '/tennis_about.webp', alt: 'Tennis', delay: '80ms', rot: '-10deg', aspect: 'aspect-[3/4]', objectPosition: 'object-top' },
+  { src: '/tennis (2).jpeg', alt: 'Tennis', delay: '160ms', rot: '-3deg', aspect: 'aspect-[4/5]' },
+  { src: '/tennis (1).jpeg', alt: 'Tennis', delay: '240ms', rot: '4deg', aspect: 'aspect-[4/5]' },
+  { src: '/tennis (4).jpeg', alt: 'Tennis', delay: '320ms', rot: '11deg', aspect: 'aspect-[5/4]' },
+]
+
+const cookingColumns: CollagePhoto[][] = [
+  [
+    { src: '/foodnew (1).jpeg', alt: 'Food', delay: '80ms', rot: '-2.5deg', aspect: 'aspect-square' },
+    { src: '/food (2).jpeg', alt: 'Food', delay: '260ms', rot: '1.5deg', aspect: 'aspect-[4/5]' },
+    { src: '/foodnew (3).jpeg', alt: 'Food', delay: '440ms', rot: '-1deg', aspect: 'aspect-square' },
+  ],
+  [
+    { src: '/foodnew (2).jpeg', alt: 'Food', delay: '160ms', rot: '2.5deg', aspect: 'aspect-[3/4]' },
+    { src: '/food (5).jpeg', alt: 'Food', delay: '380ms', rot: '-2deg', aspect: 'aspect-[4/5]' },
+  ],
+  [
+    { src: '/foodnew (4).jpeg', alt: 'Food', delay: '240ms', rot: '-2.5deg', aspect: 'aspect-[3/4]' },
+    { src: '/food (3).jpeg', alt: 'Food', delay: '360ms', rot: '2deg', aspect: 'aspect-square' },
+    { src: '/food (6).jpeg', alt: 'Food', delay: '520ms', rot: '-1.5deg', aspect: 'aspect-[4/5]' },
+  ],
+]
+
+function CollageFrame({
+  photo,
+  visible,
+  tone,
+  sizes,
+  className = '',
+  fullWidth = false,
+  zIndex,
+}: {
+  photo: CollagePhoto
+  visible: boolean
+  tone: 'slate' | 'stone'
+  sizes: string
+  className?: string
+  fullWidth?: boolean
+  zIndex?: number
+}) {
+  const ring =
+    tone === 'stone'
+      ? 'ring-stone-200/80 dark:ring-stone-600/40'
+      : 'ring-slate-200/90 dark:ring-slate-600/45'
+
+  return (
+    <div
+      className={`collage-frame photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} ${photo.aspect} relative overflow-hidden rounded-[0.9rem] bg-white shadow-[0_10px_28px_rgba(15,23,42,0.1)] ring-1 ${ring} dark:bg-slate-900 ${fullWidth ? 'w-full' : ''} ${className}`}
+      style={{ '--delay': photo.delay, '--rot': photo.rot, ...(zIndex !== undefined ? { zIndex } : {}) } as React.CSSProperties}
+    >
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className={`object-cover ${photo.objectPosition ?? 'object-center'}`}
+        sizes={sizes}
+      />
+    </div>
+  )
+}
+
+function ChapterPhotoCollage({
+  layout,
+  visible,
+  tone,
+}: {
+  layout: 'tennis' | 'cooking'
+  visible: boolean
+  tone: 'slate' | 'stone'
+}) {
+  if (layout === 'tennis') {
+    return (
+      <div className="collage-fan flex items-end justify-center py-1">
+        {tennisPhotos.map((photo, i) => (
+          <CollageFrame
+            key={photo.src}
+            photo={photo}
+            visible={visible}
+            tone={tone}
+            sizes="150px"
+            className={`collage-fan-card collage-fan-card-${i + 1} shrink-0`}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="collage-columns grid grid-cols-3">
+      {cookingColumns.map((column, colIndex) => (
+        <div
+          key={colIndex}
+          className={`collage-column collage-column-${colIndex + 1} flex flex-col`}
+        >
+          {column.map((photo, photoIndex) => (
+            <CollageFrame
+              key={photo.src}
+              photo={photo}
+              visible={visible}
+              tone={tone}
+              sizes="(max-width: 1024px) 28vw, 140px"
+              fullWidth
+              zIndex={colIndex * 10 + photoIndex + 1}
+              className={photoIndex > 0 ? 'collage-column-card' : ''}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ─── per-chapter animation config ─────────────────────────────────────────
 const chapterMeta = {
   roots:   { textAnim: 'about-animate',      photoAnim: 'about-photo-animate', darkSection: false },
   tennis:  { textAnim: 'about-animate',      photoAnim: 'about-photo-far',     darkSection: false },
   cooking: { textAnim: 'about-animate-fade', photoAnim: 'about-photo-fade',    darkSection: false },
-  music:   { textAnim: 'about-animate',      photoAnim: 'about-photo-scale',   darkSection: true  },
+  music:   { textAnim: 'about-animate',      photoAnim: 'about-photo-scale',   darkSection: false },
 } as const
 
 // ─── typewriter ────────────────────────────────────────────────────────────
-const INTRO_PREFIX = "Hi, I'm "
-const INTRO_ACCENT = 'Sam.'
+const INTRO_PREFIX = "hi, i'm "
+const INTRO_ACCENT = 'sam.'
 const INTRO_FULL = INTRO_PREFIX + INTRO_ACCENT
 
 function TypewriterHeadline({ count }: { count: number }) {
@@ -104,7 +202,7 @@ function TypewriterHeadline({ count }: { count: number }) {
   return (
     <h1
       dir="ltr"
-      className="text-left text-balance text-5xl md:text-7xl lg:text-[5.75rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap"
+      className="text-left text-balance text-5xl md:text-7xl lg:text-[5.75rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap"
     >
       <span>{INTRO_PREFIX.slice(0, prefixCount)}</span>
       <span className="text-primary dark:text-[#ADD8E6]">{INTRO_ACCENT.slice(0, accentCount)}</span>
@@ -116,7 +214,7 @@ function TypewriterHeadline({ count }: { count: number }) {
 }
 
 // ─── interstitial ──────────────────────────────────────────────────────────
-const INTERSTITIAL_TEXT = "I won't bore you too much, but here's a little bit about me…"
+const INTERSTITIAL_TEXT = "i won't bore you too much, but here's a little bit about me…"
 
 function InterstitialSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -147,7 +245,7 @@ function InterstitialSection() {
   return (
     <section ref={ref} className="relative flex min-h-0 items-center py-10 sm:py-12 pb-12 sm:pb-14 px-8 sm:px-12 xl:px-20 bg-white dark:bg-slate-900">
       <div className="max-w-6xl mx-auto w-full">
-        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-extralight text-slate-600 dark:text-slate-400 tracking-tight leading-[1.28]">
+        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-extralight lowercase text-slate-600 dark:text-slate-400 tracking-tight leading-[1.28]">
           {INTERSTITIAL_TEXT.slice(0, count)}
           {count < INTERSTITIAL_TEXT.length && (
             <span className="inline-block h-[0.82em] w-[2px] bg-slate-300 dark:bg-slate-600 align-[-0.05em] animate-pulse ml-0.5" />
@@ -171,7 +269,7 @@ function ChapterNav({
   onJumpHero: () => void
 }) {
   const navItems = [
-    { id: 'hero', label: 'Hi', onClick: onJumpHero },
+    { id: 'hero', label: 'hi', onClick: onJumpHero },
     ...chapters.map((ch) => ({ id: ch.id, label: ch.label, onClick: () => onJump(ch.id) })),
   ]
 
@@ -189,7 +287,7 @@ function ChapterNav({
             className="group relative flex items-center justify-end gap-2.5 py-1"
             aria-label={`Go to ${item.label}`}
           >
-            <span className={`text-[10px] uppercase tracking-[0.18em] font-medium transition-all duration-200 ${
+            <span className={`text-[10px] lowercase tracking-wide font-light transition-all duration-200 ${
               active
                 ? 'opacity-100 text-slate-800 dark:text-slate-100 translate-x-0'
                 : 'opacity-40 text-slate-600 dark:text-slate-400 translate-x-1 group-hover:opacity-80 group-hover:translate-x-0'
@@ -351,7 +449,7 @@ export default function AboutPage() {
             {/* Inline typewriter — white on dark photo; LTR, grows left → right */}
             <h1
               dir="ltr"
-              className="w-full text-5xl font-extralight text-white tracking-tight leading-[0.92] text-left text-balance"
+              className="w-full text-5xl font-extralight lowercase text-white tracking-tight leading-[0.92] text-left text-balance"
             >
               <span>{INTRO_PREFIX.slice(0, Math.min(typedCount, INTRO_PREFIX.length))}</span>
               <span className="text-[#ADD8E6]">{INTRO_ACCENT.slice(0, Math.max(0, typedCount - INTRO_PREFIX.length))}</span>
@@ -361,11 +459,11 @@ export default function AboutPage() {
             </h1>
 
             <p className="w-full max-w-none text-left text-sm text-white/75 font-light leading-relaxed text-balance">
-              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours, and a Computational Mathematics minor.
+              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a Computational Mathematics minor.
             </p>
 
             <div className="flex w-full items-center justify-start gap-2 pt-1">
-              <span className="text-xs text-white/45 font-light">Scroll</span>
+              <span className="text-xs text-white/45 font-light lowercase">scroll</span>
               <ArrowDown className="h-3 w-3 shrink-0 animate-bounce" aria-hidden />
             </div>
           </div>
@@ -378,10 +476,10 @@ export default function AboutPage() {
               <TypewriterHeadline count={typedCount} />
             </div>
             <p className={`w-full text-left text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed text-balance transition-all duration-700 delay-200 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management alongside Statistics, Joint Honours, and a Computational Mathematics minor.
+              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a Computational Mathematics minor.
             </p>
             <div className={`flex w-full items-center justify-start gap-3 text-left text-sm text-slate-400 dark:text-slate-500 font-light select-none transition-all duration-700 delay-300 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              <span>Scroll through the chapters</span>
+              <span className="lowercase">scroll through the chapters</span>
               <ArrowDown className="h-3.5 w-3.5 animate-bounce" aria-hidden />
             </div>
           </div>
@@ -392,7 +490,7 @@ export default function AboutPage() {
       <InterstitialSection />
 
       {/* ──────────── CHAPTERS ──────────── */}
-      {chapters.map((ch, idx) => {
+      {chapters.map((ch) => {
         const visible = visibleIds.has(ch.id)
         const meta = chapterMeta[ch.id as keyof typeof chapterMeta]
         // ── Sports / Tennis: polaroid photo + standard layout ─────────────
@@ -408,14 +506,7 @@ export default function AboutPage() {
 
                 {/* Text */}
                 <div className="space-y-6 lg:order-1">
-                  <div className={`about-slide-left ${visible ? 'about-visible' : ''}`} style={{ '--delay': '0ms' } as React.CSSProperties}>
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
-                  </div>
-                  <div
-                    className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`}
-                    style={{ transitionDelay: '80ms' }}
-                  />
-                  <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
+                  <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                     {ch.title}
                   </h2>
                   <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
@@ -423,64 +514,9 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* Photos — horizontal scroll on mobile, 2-col grid on desktop */}
+                {/* Photo collage */}
                 <div className="lg:order-2">
-                  {/* mobile: 2-col photo grid */}
-                  <div className="grid lg:hidden grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-3">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '60ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
-                        <Image src="/tennis (2).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '200ms', '--rot': '0deg', aspectRatio: '4/3' } as React.CSSProperties}>
-                        <Image src="/tennis (4).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-3 pt-6">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '130ms', '--rot': '0deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/tennis_about.webp" alt="Tennis" fill className="object-cover object-top" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_12px_30px_rgba(15,23,42,0.08)]`} style={{ '--delay': '300ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
-                        <Image src="/tennis (1).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="45vw" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* desktop: original 2-col staggered grid */}
-                  <div className="hidden lg:grid grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-4">
-                      <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
-                        style={{ '--delay': '80ms', '--rot': '-1deg', aspectRatio: '3/4' } as React.CSSProperties}
-                      >
-                        <Image src="/tennis (2).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="260px" />
-                      </div>
-                      <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
-                        style={{ '--delay': '240ms', '--rot': '0.5deg', aspectRatio: '4/3' } as React.CSSProperties}
-                      >
-                        <Image src="/tennis (4).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="260px" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-4 pt-10">
-                      <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
-                        style={{ '--delay': '160ms', '--rot': '1.5deg', aspectRatio: '1/1' } as React.CSSProperties}
-                      >
-                        <Image src="/tennis_about.webp" alt="Tennis" fill className="object-cover object-top" sizes="220px" />
-                      </div>
-                      <div
-                        className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.25rem] overflow-hidden border border-slate-200/75 dark:border-slate-600/45 shadow-[0_20px_50px_rgba(15,23,42,0.09)]`}
-                        style={{ '--delay': '320ms', '--rot': '-1deg', aspectRatio: '3/4' } as React.CSSProperties}
-                      >
-                        <Image src="/tennis (1).jpeg" alt="Tennis" fill className="object-cover object-center" sizes="220px" />
-                      </div>
-                    </div>
-                    <div className="col-span-2 flex justify-end mt-1">
-                      <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
-                        {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
-                      </span>
-                    </div>
-                  </div>
+                  <ChapterPhotoCollage layout="tennis" visible={visible} tone="slate" />
                 </div>
               </div>
             </section>
@@ -500,86 +536,21 @@ export default function AboutPage() {
               <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[44rem] w-[44rem] rounded-full bg-slate-200/25 dark:bg-slate-800/20 blur-3xl" />
               <div aria-hidden className="pointer-events-none absolute -left-20 bottom-0 h-[28rem] w-[28rem] rounded-full bg-cyan-100/20 dark:bg-cyan-950/20 blur-3xl" />
 
-
               <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-8 lg:gap-12 items-center lg:grid-cols-[1.2fr_1fr]">
 
-                {/* Photo mosaic */}
+                {/* Photo collage */}
                 <div className="lg:order-1">
-                  {/* mobile: 2-col photo grid */}
-                  <div className="grid lg:hidden grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-3">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '60ms', '--rot': '0deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/chickenmash_about.webp" alt="Chicken and mash" fill className="object-cover" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '220ms', '--rot': '0deg', aspectRatio: '2/3' } as React.CSSProperties}>
-                        <Image src="/food (3).jpeg" alt="Food" fill className="object-cover" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '360ms', '--rot': '0deg', aspectRatio: '4/3' } as React.CSSProperties}>
-                        <Image src="/food (2).jpeg" alt="Food" fill className="object-cover" sizes="45vw" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-3 pt-5">
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '130ms', '--rot': '0deg', aspectRatio: '4/3' } as React.CSSProperties}>
-                        <Image src="/food (1).jpeg" alt="Food" fill className="object-cover" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '290ms', '--rot': '0deg', aspectRatio: '3/4' } as React.CSSProperties}>
-                        <Image src="/food (4).jpeg" alt="Food" fill className="object-cover" sizes="45vw" />
-                      </div>
-                      <div className={`food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_12px_30px_rgba(15,23,42,0.09)]`} style={{ '--delay': '430ms', '--rot': '0deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/food (5).jpeg" alt="Food" fill className="object-cover" sizes="45vw" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* desktop: 3-col staggered mosaic */}
-                  <div className="hidden lg:grid grid-cols-3 gap-3 sm:gap-4">
-                    <div className="flex flex-col gap-3 sm:gap-4">
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '60ms', '--rot': '-1.5deg', aspectRatio: '2/3' } as React.CSSProperties}>
-                        <Image src="/food (3).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '200ms', '--rot': '1deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/food (5).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-3 sm:gap-4 pt-8 lg:pt-12">
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '120ms', '--rot': '0.5deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/chickenmash_about.webp" alt="Chicken and mash" fill className="object-cover" sizes="180px" />
-                      </div>
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '280ms', '--rot': '-1deg', aspectRatio: '4/3' } as React.CSSProperties}>
-                        <Image src="/food (1).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-3 sm:gap-4 pt-4 lg:pt-6">
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '160ms', '--rot': '-0.5deg', aspectRatio: '3/4' } as React.CSSProperties}>
-                        <Image src="/food (4).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '340ms', '--rot': '1.2deg', aspectRatio: '1/1' } as React.CSSProperties}>
-                        <Image src="/food (2).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                      <div className={`photo-lift food-card-stagger ${visible ? 'food-card-visible' : ''} relative rounded-[1.1rem] overflow-hidden border border-stone-200/60 dark:border-stone-700/40 shadow-[0_16px_40px_rgba(15,23,42,0.09)]`} style={{ '--delay': '460ms', '--rot': '-0.8deg', aspectRatio: '4/3' } as React.CSSProperties}>
-                        <Image src="/food (6).jpeg" alt="Food" fill className="object-cover" sizes="180px" />
-                      </div>
-                    </div>
-                  </div>
+                  <ChapterPhotoCollage layout="cooking" visible={visible} tone="stone" />
                 </div>
 
                 {/* Text */}
                 <div className="space-y-6 lg:order-2">
-                  <div className={`about-slide-right ${visible ? 'about-visible' : ''}`} style={{ '--delay': '0ms' } as React.CSSProperties}>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
-                  </div>
-                  <div className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '80ms' }} />
-                  <h2 className={`about-slide-right ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
+                  <h2 className={`about-slide-right ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                     {ch.title}
                   </h2>
                   <p className={`about-slide-right ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                     {ch.body}
                   </p>
-                  <div className="flex justify-start pt-2">
-                    <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
-                      {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
-                    </span>
-                  </div>
                 </div>
               </div>
             </section>
@@ -593,19 +564,15 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="dark relative overflow-hidden scroll-mt-20 border-t border-slate-800/90 bg-slate-950 pb-20 pt-14 sm:pb-24 sm:pt-16 px-6 sm:px-10"
+              className="relative overflow-hidden scroll-mt-20 border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/90 to-white px-6 pb-20 pt-14 dark:border-slate-800/90 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 sm:px-10 sm:pb-24 sm:pt-16"
             >
-              <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-25%,rgba(6,182,212,0.07),transparent_52%)]" />
+              <div aria-hidden className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-25%,rgba(6,182,212,0.05),transparent_52%)] dark:bg-[radial-gradient(ellipse_90%_55%_at_50%_-25%,rgba(6,182,212,0.07),transparent_52%)]" />
               <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8">
 
                 {/* Heading block — spans full width, no competing image */}
                 <div className="space-y-5 max-w-3xl">
-                  <div className={`about-slide-left ${visible ? 'about-visible' : ''}`} style={{ '--delay': '0ms' } as React.CSSProperties}>
-                    <span className="text-[10px] text-slate-500 uppercase tracking-[0.22em] font-light">{ch.eyebrow}</span>
-                  </div>
-                  <div className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '80ms' }} />
                   <h2
-                    className={`about-slide-left ${visible ? 'about-visible' : ''} text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-extralight text-slate-100 tracking-tight leading-[1.02] whitespace-pre-line`}
+                    className={`about-slide-left ${visible ? 'about-visible' : ''} text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.02] whitespace-pre-line`}
                     style={{ '--delay': '120ms' } as React.CSSProperties}
                   >
                     {ch.title}
@@ -614,7 +581,7 @@ export default function AboutPage() {
 
                 {/* Wide landscape video */}
                 <div
-                  className={`about-banner-animate ${visible ? 'about-visible' : ''} relative w-full overflow-hidden rounded-[1.75rem] border border-white/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.55)]`}
+                  className={`about-banner-animate ${visible ? 'about-visible' : ''} relative w-full overflow-hidden rounded-[1.75rem] border border-slate-300 shadow-lg dark:border-white/[0.08] dark:shadow-[0_32px_80px_rgba(0,0,0,0.55)]`}
                   style={{ aspectRatio: '16/9' }}
                 >
                   <video
@@ -626,27 +593,20 @@ export default function AboutPage() {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                   {/* top fade */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-950/65 to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-900/15 to-transparent dark:from-slate-950/65" />
                   {/* bottom fade */}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-slate-950/70 to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-slate-900/20 to-transparent dark:from-slate-950/70" />
                   {/* inset vignette */}
-                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
+                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_80px_rgba(0,0,0,0.12)] dark:shadow-[inset_0_0_80px_rgba(0,0,0,0.5)]" />
                 </div>
 
                 {/* Body below the video */}
                 <p
-                  className={`about-animate ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-400 font-light leading-relaxed`}
+                  className={`about-animate ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-400 font-light leading-relaxed`}
                   style={{ '--delay': '200ms' } as React.CSSProperties}
                 >
                   {ch.body}
                 </p>
-
-                {/* Counter */}
-                <div className="flex justify-end">
-                  <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-500 font-light tabular-nums md:inline">
-                    {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
-                  </span>
-                </div>
               </div>
             </section>
           )
@@ -664,11 +624,7 @@ export default function AboutPage() {
 
               {/* text block */}
               <div className="space-y-6 order-2 lg:order-1">
-                <div className={`about-slide-left ${visible ? 'about-visible' : ''}`} style={{ '--delay': '0ms' } as React.CSSProperties}>
-                  <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] font-light">{ch.eyebrow}</span>
-                </div>
-                <div className={`h-[1.5px] w-14 origin-left rounded-full ${ch.accentBar} ${visible ? ch.accentGlow : ''} transition-all duration-700 ease-out ${visible ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '80ms' }} />
-                <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
+                <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                   {ch.title}
                 </h2>
                 <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
@@ -692,18 +648,12 @@ export default function AboutPage() {
                 >
                   <WorldGlobe />
                 </div>
-                <div className="mt-5 flex justify-end lg:pr-4">
-                  <span className="hidden text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 font-light tabular-nums md:inline">
-                    {String(idx + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
-                  </span>
-                </div>
               </div>
             </div>
           </section>
         )
       })}
 
-      <div className="h-8 shrink-0 bg-slate-950 md:h-10" aria-hidden />
     </main>
   )
 }

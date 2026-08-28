@@ -39,7 +39,7 @@ const experiences = [
     ],
   },
   {
-    title: 'Summer Intern',
+    title: 'Business Systems Intern',
     company: 'Fortune Foods UK',
     location: 'Reading, United Kingdom',
     date: 'May 2024 – August 2024',

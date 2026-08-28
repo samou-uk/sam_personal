@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X as XIcon, Plus, Search, Wifi, Battery, SlidersHorizontal, Volume2, Sun, Target, Bluetooth, RotateCw, Calendar } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -11,8 +11,8 @@ const webProjects = [
     name: 'samou.co.uk',
     displayName: 'Personal Website',
     tagline: 'My personal portfolio',
-    image: '/samweblight.png',
-    darkImage: '/samwebdark.png',
+    image: '/samwebsite.png',
+    darkImage: '/samwebsite.png',
     mobileImage: '/samweblightmobile.png',
     mobileDarkImage: '/samwebdarkmobile.png',
     icon: '/sam.png',
@@ -20,21 +20,6 @@ const webProjects = [
     themeColor: '#ffffff',
     darkThemeColor: '#1E3A5F',
     statusBarMode: 'dark',
-    darkStatusBarMode: 'light',
-  },
-  {
-    name: 'the-placecard.vercel.app',
-    displayName: 'Placecard',
-    tagline: 'Private supper-club app for students',
-    image: '/placecard.png',
-    mobileImage: '/placecardmobile.png',
-    icon: '/placecardlogodark.png',
-    darkIcon: '/placecardlogo.png',
-    link: 'https://the-placecard.vercel.app',
-    caseStudyLink: '/case-studies?project=placecard',
-    themeColor: '#000000',
-    darkThemeColor: '#000000',
-    statusBarMode: 'light',
     darkStatusBarMode: 'light',
   },
   {
@@ -97,7 +82,7 @@ const webProjects = [
 export default function DeviceMockup() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [openTabs, setOpenTabs] = useState<number[]>([0, 1, 2, 3, 4, 5])
+  const [openTabs, setOpenTabs] = useState<number[]>([0, 1, 2, 3, 4])
   const [windowState, setWindowState] = useState<'normal' | 'maximized' | 'minimized' | 'closed'>('normal')
   const [currentTime, setCurrentTime] = useState<Date | null>(null)
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false)
@@ -1225,6 +1210,7 @@ export default function DeviceMockup() {
                               alt={currentProject.name}
                               width={1200}
                               height={2000}
+                              quality={95}
                               sizes="(max-width: 1200px) 100vw, 1200px"
                               className="w-full h-auto object-top dark:hidden"
                             />
@@ -1235,6 +1221,7 @@ export default function DeviceMockup() {
                               alt={currentProject.name}
                               width={1200}
                               height={2000}
+                              quality={95}
                               sizes="(max-width: 1200px) 100vw, 1200px"
                               className="w-full h-auto object-top"
                             />
@@ -1247,6 +1234,7 @@ export default function DeviceMockup() {
                         alt={currentProject.name}
                           width={1200}
                           height={2000}
+                          quality={95}
                           sizes="(max-width: 1200px) 100vw, 1200px"
                           className="w-full h-auto object-top"
                       />

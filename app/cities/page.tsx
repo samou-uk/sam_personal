@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import Navigation from '@/components/Navigation'
 
 const CITIES = [
@@ -101,9 +101,8 @@ export default function CitiesPage() {
           ref={headerRef}
           className={`mb-12 transition-all duration-700 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         >
-          <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
-            <span className="inline-block">Places I've</span>{' '}
-            <span className="inline-block text-primary dark:text-[#ADD8E6]">been</span>
+          <h1 className="mb-6 text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+            cities
           </h1>
           <p className="text-base text-slate-600 dark:text-slate-400 font-light sm:whitespace-nowrap">
             Some of the cities (or towns) that have really resonated with me.

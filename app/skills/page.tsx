@@ -53,9 +53,8 @@ export default function SkillsPage() {
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-              <span className="inline-block">What I</span>{' '}
-              <span className="inline-block text-primary dark:text-[#ADD8E6]">know</span>
+            <h1 className="text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+              skills
             </h1>
           </div>
 

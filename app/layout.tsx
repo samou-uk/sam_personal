@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: 'Sam Chusen Ou - Portfolio',
-  description: 'Mathematics/Financial Analysis & Risk Management with Joint Statistics and Computational Mathematics at the University of Waterloo',
+  description: 'Mathematics/Financial Analysis & Risk Management, Statistics Joint Honours, and Computational Mathematics minor at the University of Waterloo',
 }
 
 export default function RootLayout({

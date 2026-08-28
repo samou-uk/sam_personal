@@ -13,9 +13,8 @@ export default function PrivacyPage() {
           <div className="max-w-5xl mx-auto px-6 sm:px-8">
             {/* Header */}
             <div className="mb-10">
-              <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                <span className="inline-block">Privacy</span>{' '}
-                <span className="inline-block text-primary dark:text-[#ADD8E6]">Policy</span>
+              <h1 className="mb-4 text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+                privacy
               </h1>
               <p className="text-base text-slate-500 dark:text-slate-400 font-light max-w-2xl">
                 Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -109,9 +108,8 @@ export default function PrivacyPage() {
 
               {/* Terms of Use Section */}
               <div className="pt-8 border-t border-slate-200 dark:border-slate-800 mt-12">
-                <h1 className="text-4xl md:text-5xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
-                  <span className="inline-block">Terms of</span>{' '}
-                  <span className="inline-block text-primary dark:text-[#ADD8E6]">Use</span>
+                <h1 className="mb-6 text-4xl font-extralight lowercase tracking-tight text-slate-900 dark:text-slate-100 md:text-5xl">
+                  terms of use
                 </h1>
               </div>
 

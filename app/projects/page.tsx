@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect, Suspense } from 'react'
 import Navigation from '@/components/Navigation'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { ExternalLink, Github, Search, X, ArrowUpRight, X as XIcon, BookOpen } from 'lucide-react'
-import DeviceMockup from '@/components/DeviceMockup'
+import { motion, useReducedMotion } from 'framer-motion'
+import { ExternalLink, Github, ArrowUpRight, X as XIcon, BookOpen } from 'lucide-react'
+import WebProjectsShowcase, { type WebShowcaseSite } from '@/components/WebProjectsShowcase'
 
 const projects = [
   {
@@ -25,7 +26,7 @@ const projects = [
     category: 'Full-Stack',
     description: 'Designed and shipped a secure, production BI platform for a UK food wholesaler, covering customer management and sales analytics.',
     skills: ['Python', 'SQL', 'Flask', 'JS', 'HTML'],
-    image: '/fortuneVantage.png',
+    image: '/fortunevantage1.png',
     featured: true,
   },
   {
@@ -35,26 +36,8 @@ const projects = [
     description:
       'Built and shipped a full-stack B2B e-commerce platform (React, TypeScript, Flask, PostgreSQL, Railway) for a UK food wholesale business with 500+ live SKUs. Features include corporate accounts with hierarchical RBAC and approval workflows, AES-256 encrypted audit logging, modular XLSX import pipelines with OOXML structural validation and WEBP image conversion, a drag-and-drop email/PDF report builder with dynamic template rendering, CDN caching, and server-side catalog price validation.',
     skills: ['React', 'TypeScript', 'Flask', 'PostgreSQL', 'Railway'],
-    image: '/fortunecommerce1.jpg',
+    image: '/fortunecommerce1.png',
     featured: true,
-  },
-  {
-    name: 'Stock Analysis Tool',
-    tagline: 'Live trading data with technical & sentiment analysis',
-    category: 'GitHub',
-    description: 'Built a stock analysis tool with RSI, MACD, moving averages, sentiment analysis via TextBlob, regression models, and live Yahoo Finance integration.',
-    skills: ['Python', 'TextBlob', 'Tkinter', 'Yahoo Finance'],
-    link: 'https://github.com/samou-uk/stock-analysis-tool',
-    github: true,
-    image: '/stocktool.png',
-  },
-  {
-    name: 'miniERP',
-    tagline: 'Lightweight ERP for small business owners',
-    category: 'Full-Stack',
-    description: 'Production-ready mini ERP covering invoicing, inventory, banking, loans, analytics, and year-end close — designed for simplicity and clarity.',
-    skills: ['Python', 'Flask', 'SQLite', 'JavaScript', 'Jinja2'],
-    image: '/miniERP.png',
   },
   {
     name: 'Bill Splitter',
@@ -67,23 +50,6 @@ const projects = [
     image: '/billsplitter.png',
   },
   {
-    name: 'Automated Food Labelling',
-    tagline: 'Automates translations, compliance checks, and barcode creation',
-    category: 'Production',
-    description: 'Cut manual label creation time by 80%+. Auto-translates Chinese ingredients, validates E-numbers, flags allergens, and generates barcodes. Outputs print-ready PDFs. Deployed on AWS EC2 with Guacamole remote access.',
-    skills: ['Python', 'AWS EC2', 'Apache Guacamole', 'Linux', 'HTML'],
-    image: '/labelling.png',
-    featured: true,
-  },
-  {
-    name: 'Han\'s Reservation System',
-    tagline: 'Secure, GDPR-compliant restaurant booking system',
-    category: 'Full-Stack',
-    description: 'Custom Flask + SQLite system with GDPR compliance, AES encryption, Argon2 hashing, SMTP alerts, dynamic table control, Excel exports, and Cron-driven reports. Used in live restaurant operations.',
-    skills: ['Python', 'Flask', 'SQLite', 'Argon2', 'JavaScript'],
-    image: '/hansweb.png',
-  },
-  {
     name: 'BaoClicker',
     tagline: 'Hidden clicker game with scores that persist',
     category: 'Mini Game',
@@ -91,15 +57,6 @@ const projects = [
     skills: ['React', 'JavaScript'],
     link: 'https://fortunefoods.co.uk/BaoClicker',
     image: '/BaoClicker.png',
-  },
-  {
-    name: 'Fortune Express',
-    tagline: 'Pizzeria-style game reimagined for a Fortune Foods store',
-    category: 'Mini Game',
-    description: 'Interactive React mini-game inspired by classic pizzeria simulators, adapted to a Fortune Foods retail store setting. Features order fulfillment, animations, sound effects, and an instruction modal to boost engagement and brand personality.',
-    skills: ['React', 'JavaScript'],
-    link: 'https://fortunefoods.co.uk/fortune-express',
-    image: '/fortuneexpress.png',
   },
   {
     name: 'Racing Sim Hardware',
@@ -128,15 +85,6 @@ const projects = [
     image: '/hansweb.png',
   },
   {
-    name: 'fortunefoods.shop',
-    tagline: 'Wholesale platform with smart search & UX',
-    category: 'Web',
-    description: 'Wholesale platform with Liquid-based access control, Algolia search, and custom JS middleware for collection remapping. Enhanced UX for trade customers.',
-    skills: ['Shopify', 'Liquid', 'Algolia', 'JavaScript'],
-    link: 'https://www.fortunefoods.shop',
-    image: '/ffukshop;.png',
-  },
-  {
     name: 'cmartshop.co.uk',
     tagline: 'Legacy online shop generating £104K in sales',
     category: 'Web',
@@ -154,16 +102,311 @@ const projects = [
     link: 'https://www.taste5.co.uk',
     image: '/taste5web.png',
   },
+  {
+    name: 'samou.co.uk',
+    tagline: 'My personal portfolio',
+    category: 'Web',
+    description: 'Personal portfolio site with responsive design, dark mode, and interactive project showcases.',
+    skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    link: 'https://samou.co.uk',
+    image: '/samwebsite.png',
+  },
 ]
 
-const categories = ['All', ...Array.from(new Set(projects.map(p => p.category)))]
+const projectSections = [
+  {
+    id: 'web',
+    title: 'web',
+    names: [
+      'fortunefoods.co.uk',
+      'cmartshop.co.uk',
+      'taste5.co.uk',
+      'hansbuffetbasingstoke.co.uk',
+      'samou.co.uk',
+    ],
+  },
+  {
+    id: 'full-stack',
+    title: 'full stack',
+    names: ['Fortune Commerce', 'FortuneVantage', 'Placecard'],
+  },
+  {
+    id: 'misc',
+    title: 'misc',
+    names: ['Racing Sim Hardware', 'BaoClicker', 'Bill Splitter'],
+  },
+] as const
+
+const sectionEase = [0.22, 1, 0.36, 1] as const
+
+const webSiteExtras: Record<string, Partial<WebShowcaseSite>> = {
+  'fortunefoods.co.uk': { icon: '/ffuk.jpg', navLabel: 'fortune foods' },
+  'cmartshop.co.uk': { icon: '/cmartlogo.png', navLabel: 'cmart' },
+  'taste5.co.uk': { icon: '/taste5logo.png', navLabel: 'taste5' },
+  'hansbuffetbasingstoke.co.uk': {
+    icon: '/hans.png',
+    image: '/hansweb2.png',
+    iconImageClassName: 'object-contain p-1.5',
+    navLabel: 'hans buffet',
+  },
+  'samou.co.uk': { icon: '/sam.png', image: '/samwebsite.png', navLabel: 'samou' },
+}
+
+function toWebShowcaseSite(project: Project): WebShowcaseSite {
+  const extras = webSiteExtras[project.name] ?? {}
+  return {
+    name: project.name,
+    tagline: project.tagline,
+    link: project.link,
+    image: extras.image ?? project.image ?? '',
+    darkImage: extras.darkImage,
+    icon: extras.icon,
+    iconImageClassName: extras.iconImageClassName,
+    navLabel: extras.navLabel,
+  }
+}
+
+type Project = (typeof projects)[number]
+
+function excerpt(text: string, maxLen = 155) {
+  if (text.length <= maxLen) return text
+  const cut = text.slice(0, maxLen)
+  const lastSpace = cut.lastIndexOf(' ')
+  return `${cut.slice(0, lastSpace > 90 ? lastSpace : maxLen).trim()}…`
+}
+
+function SectionTitle({
+  title,
+  isFirst = false,
+}: {
+  title: string
+  isFirst?: boolean
+}) {
+  const reduceMotion = useReducedMotion()
+
+  return (
+    <div className={isFirst ? 'pt-32 pb-10 md:pb-14' : 'border-t border-slate-200/80 pt-16 pb-10 dark:border-slate-800 md:pt-20 md:pb-14'}>
+      <motion.h2
+        initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.65, ease: sectionEase }}
+        className="text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100"
+      >
+        {title}
+      </motion.h2>
+    </div>
+  )
+}
+
+function FullStackShowcase({
+  project,
+  index,
+  onClick,
+}: {
+  project: Project
+  index: number
+  onClick: () => void
+}) {
+  const reduceMotion = useReducedMotion()
+  const hasCaseStudy = project.name === 'Placecard' || project.name === 'FortuneVantage'
+
+  return (
+    <motion.button
+      type="button"
+      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: sectionEase }}
+      onClick={onClick}
+      className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-[0_20px_50px_rgba(15,23,42,0.1)] dark:border-slate-700/80 dark:bg-slate-950 dark:hover:border-[#ADD8E6]/30 dark:hover:shadow-black/40"
+    >
+      <div className="relative aspect-[4/3] min-h-[220px] overflow-hidden bg-slate-50 sm:min-h-[280px] lg:aspect-[16/10] lg:min-h-[320px] xl:min-h-[360px] dark:bg-slate-950">
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            quality={95}
+            sizes="(max-width: 640px) 100vw, 640px"
+            className="object-contain object-top p-2 transition-transform duration-500 ease-out group-hover:scale-[1.02] sm:p-4"
+          />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/[0.06] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:from-slate-950/30" />
+      </div>
+
+      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+        <div className="space-y-2.5">
+          <h3 className="text-[1.75rem] font-extralight lowercase leading-tight tracking-tight text-slate-900 transition-colors group-hover:text-primary dark:text-slate-100 dark:group-hover:text-[#ADD8E6] sm:text-3xl">
+            {project.name}
+          </h3>
+          <p className="text-sm font-light leading-relaxed text-slate-600 dark:text-slate-400 sm:text-base">
+            {project.tagline}
+          </p>
+          <p className="text-xs font-light tracking-wide text-slate-400 dark:text-slate-500 sm:text-sm">
+            {project.skills.join(' · ')}
+          </p>
+        </div>
+
+        <div className="mt-auto flex items-center gap-5 pt-2">
+          {hasCaseStudy && (
+            <Link
+              href={`/case-studies?project=${project.name === 'Placecard' ? 'placecard' : 'fortune'}`}
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 text-xs font-light text-slate-500 transition-colors hover:text-primary dark:text-slate-400 dark:hover:text-[#ADD8E6] sm:text-sm"
+            >
+              <BookOpen className="h-3.5 w-3.5" />
+              case study
+            </Link>
+          )}
+          <span className="inline-flex items-center gap-1.5 text-xs font-light text-slate-500 transition-colors group-hover:text-primary dark:text-[#ADD8E6] dark:group-hover:text-[#ADD8E6] sm:text-sm">
+            details
+            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        </div>
+      </div>
+    </motion.button>
+  )
+}
+
+function MiscHeroCard({ project, onClick }: { project: Project; onClick: () => void }) {
+  const reduceMotion = useReducedMotion()
+
+  return (
+    <motion.button
+      type="button"
+      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.55, ease: sectionEase }}
+      onClick={onClick}
+      className="group relative block w-full overflow-hidden rounded-2xl border border-slate-300 text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)] dark:border-slate-700/80 dark:hover:border-[#ADD8E6]/30 dark:hover:shadow-lg"
+    >
+      <div className="relative aspect-[2/1] sm:aspect-[21/9]">
+        {project.images && project.images.length > 0 ? (
+          <div className="grid h-full grid-cols-2">
+            {project.images.map((img, i) => (
+              <div key={img} className="relative overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <Image
+                  src={img}
+                  alt={`${project.name} ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 448px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+              </div>
+            ))}
+          </div>
+        ) : project.image ? (
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            sizes="100vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 px-5 pb-5 pt-16 sm:px-6 sm:pb-6">
+          <div>
+            <p className="mb-1 text-xs font-light lowercase text-white/50">hardware</p>
+            <h3 className="text-2xl font-extralight lowercase tracking-tight text-white sm:text-3xl">
+              {project.name}
+            </h3>
+          </div>
+          <ArrowUpRight className="h-5 w-5 shrink-0 text-white/70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+        </div>
+      </div>
+    </motion.button>
+  )
+}
+
+function MiscCompactCard({
+  project,
+  index,
+  onClick,
+}: {
+  project: Project
+  index: number
+  onClick: () => void
+}) {
+  const reduceMotion = useReducedMotion()
+  const label = project.category === 'GitHub' ? 'github' : project.category === 'Mini Game' ? 'mini game' : project.category.toLowerCase()
+
+  return (
+    <motion.button
+      type="button"
+      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: sectionEase }}
+      onClick={onClick}
+      className="group relative block w-full overflow-hidden rounded-2xl border border-slate-300 text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)] dark:border-slate-700/80 dark:hover:border-[#ADD8E6]/30 dark:hover:shadow-lg"
+    >
+      <div className="relative aspect-[5/4] bg-slate-50 dark:bg-slate-950">
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            className={`transition-transform duration-700 group-hover:scale-[1.04] ${
+              project.category === 'Mini Game' || project.category === 'GitHub'
+                ? 'object-contain object-center p-6 sm:p-8'
+                : 'object-cover'
+            }`}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 px-4 pb-4 pt-12 sm:px-5 sm:pb-5">
+          <div className="min-w-0">
+            <p className="mb-1 text-xs font-light lowercase text-white/50">{label}</p>
+            <h3 className="truncate text-lg font-extralight lowercase tracking-tight text-white sm:text-xl">
+              {project.name}
+            </h3>
+          </div>
+          {(project.link || project.github) && (
+            <ArrowUpRight className="h-4 w-4 shrink-0 text-white/70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
+          )}
+        </div>
+      </div>
+    </motion.button>
+  )
+}
+
+function MiscSection({
+  projects,
+  onProjectClick,
+}: {
+  projects: Project[]
+  onProjectClick: (project: Project) => void
+}) {
+  const hero = projects.find((p) => p.name === 'Racing Sim Hardware')
+  const rest = projects.filter((p) => p.name !== 'Racing Sim Hardware')
+
+  return (
+    <div className="space-y-5">
+      {hero && <MiscHeroCard project={hero} onClick={() => onProjectClick(hero)} />}
+      {rest.length > 0 && (
+        <div className="grid gap-5 sm:grid-cols-2">
+          {rest.map((project, index) => (
+            <MiscCompactCard
+              key={project.name}
+              project={project}
+              index={index}
+              onClick={() => onProjectClick(project)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function ProjectsPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedProject, setSelectedProject] = useState<number | null>(null)
+  const [selectedProjectName, setSelectedProjectName] = useState<string | null>(null)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
   const [lightboxImages, setLightboxImages] = useState<string[] | null>(null)
   const [lightboxIndex, setLightboxIndex] = useState(0)
@@ -173,23 +416,34 @@ function ProjectsPageContent() {
   const [maximizeModalPosition, setMaximizeModalPosition] = useState<{ top: number; left: number } | null>(null)
   const [isManuallyClosing, setIsManuallyClosing] = useState(false)
 
-  const filteredProjects = projects.filter(project => {
-    const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory
-    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         project.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
+  const projectByName = (name: string) =>
+    projects.find((project) => project.name.toLowerCase() === name.toLowerCase())
+
+  const sectionsWithProjects = projectSections.map((section) => ({
+    ...section,
+    projects: section.names
+      .map((name) => projectByName(name))
+      .filter((project): project is Project => Boolean(project)),
+  }))
+
+  const selectedProject = selectedProjectName ? projectByName(selectedProjectName) : null
 
   const closeProjectPanel = () => {
     setIsManuallyClosing(true)
-    setSelectedProject(null)
-    // Clear the project query parameter from URL
+    setSelectedProjectName(null)
     if (searchParams?.get('project')) {
       router.push('/projects')
     }
-    // Reset the flag after a short delay to allow URL to update
     setTimeout(() => setIsManuallyClosing(false), 100)
+  }
+
+  const openProject = (project: Project) => {
+    if (selectedProjectName === project.name) {
+      closeProjectPanel()
+      return
+    }
+    setSelectedProjectName(project.name)
+    router.push(`/projects?project=${encodeURIComponent(project.name)}`)
   }
 
   const openLightbox = (image: string | string[], index: number = 0) => {
@@ -241,7 +495,7 @@ function ProjectsPageContent() {
   const handleTouchEnd = () => {
     // Swipe right more than 100px to close
     if (swipeDistance > 100) {
-      if (selectedProject !== null) {
+      if (selectedProjectName) {
         closeProjectPanel()
       } else if (lightboxImage || lightboxImages) {
         closeLightbox()
@@ -259,14 +513,14 @@ function ProjectsPageContent() {
           setShowMaximizeModal(false)
         } else if (lightboxImage || lightboxImages) {
           closeLightbox()
-        } else if (selectedProject !== null) {
+        } else if (selectedProjectName) {
           closeProjectPanel()
         }
       }
     }
     window.addEventListener('keydown', handleEscape)
     return () => window.removeEventListener('keydown', handleEscape)
-  }, [lightboxImage, lightboxImages, selectedProject, showMaximizeModal])
+  }, [lightboxImage, lightboxImages, selectedProjectName, showMaximizeModal])
 
   // Close maximize modal when clicking outside
   useEffect(() => {
@@ -289,190 +543,69 @@ function ProjectsPageContent() {
   useEffect(() => {
     if (!searchParams || isManuallyClosing) return
     const projectName = searchParams.get('project')
-    if (projectName) {
-      // Find the project by name in the base projects array (case-insensitive)
-      const project = projects.find(
-        p => p.name.toLowerCase() === projectName.toLowerCase()
-      )
-      if (project) {
-        // Find its index in filteredProjects
-        const projectIndex = filteredProjects.findIndex(
-          p => p.name.toLowerCase() === projectName.toLowerCase()
-        )
-        if (projectIndex !== -1) {
-          setSelectedProject(projectIndex)
-        }
-      }
+    if (projectName && projectByName(projectName)) {
+      setSelectedProjectName(projectByName(projectName)!.name)
     }
-    // Don't close the panel if there's no param - user might have clicked a project normally
-  }, [searchParams, filteredProjects, isManuallyClosing])
+  }, [searchParams, isManuallyClosing])
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
       <div className="pt-20 pb-16 md:pb-0">
-      {/* Hero Section with Header and UX Showcase */}
-      <section className="pt-32 pb-8 md:pb-12">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-6 tracking-tight">
-              <span className="inline-block">What I've</span>{' '}
-              <span className="inline-block text-primary dark:text-[#ADD8E6]">built</span>
-            </h1>
-            <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">
-              A mix of production systems, experiments, and revenue-shaping tools across software, operations, and a few weird side quests.
-            </p>
-          </div>
-        </div>
+        <div className="mx-auto max-w-5xl px-6 sm:px-8">
+          {sectionsWithProjects.map((section) => {
+            if (section.projects.length === 0) return null
 
-        {/* UX/Web Dev Showcase - Hero */}
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 mb-8 md:mb-12">
-          <DeviceMockup />
-        </div>
-      </section>
-
-      <section className="pb-32">
-
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          {/* Filter & Search */}
-          <div className="mb-12">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex-1 w-full sm:min-w-[200px] sm:max-w-md">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    placeholder="Search projects"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border-b border-slate-300 dark:border-slate-600 focus:border-primary dark:focus:border-[#ADD8E6] focus:outline-none text-slate-900 dark:text-slate-100 font-light placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors duration-200 bg-transparent text-sm sm:text-base"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-1 overflow-x-auto pb-2 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 scrollbar-hide">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-light transition-colors duration-200 whitespace-nowrap flex-shrink-0 ${
-                      selectedCategory === category
-                        ? 'text-primary dark:text-[#ADD8E6] border-b-2 border-primary dark:border-[#ADD8E6]'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 active:text-slate-900 dark:active:text-slate-100'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200/70 dark:border-slate-800 pt-4">
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
-                Showing <span className="text-slate-900 dark:text-slate-100">{filteredProjects.length}</span> of <span className="text-slate-900 dark:text-slate-100">{projects.length}</span> builds
-                {selectedCategory !== 'All' && <> in <span className="text-slate-900 dark:text-slate-100">{selectedCategory}</span></>}
-                {searchQuery && <> matching <span className="text-slate-900 dark:text-slate-100">&ldquo;{searchQuery}&rdquo;</span></>}
-              </p>
-              {(selectedCategory !== 'All' || searchQuery) && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory('All')
-                    setSearchQuery('')
-                  }}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 transition-colors hover:border-primary/40 hover:text-slate-900 dark:hover:text-slate-100"
-                >
-                  <X className="w-3.5 h-3.5" />
-                  <span>Clear filters</span>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Search Bar only now */}
-
-          {filteredProjects.length === 0 ? (
-            <div className="text-center py-32">
-              <p className="text-slate-500 font-light">No projects found.</p>
-            </div>
-          ) : (
-            <>
-              {/* Instagram-style Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 mb-12">
-                {filteredProjects.map((project, index) => {
-                  const hasImage = project.image
-                  const hasImages = project.images && project.images.length > 0
-                  const isSelected = selectedProject === index
-                  
-                  return (
-                    <div
-                      key={project.name}
-                      className="group cursor-pointer"
-                      onClick={() => {
-                        if (isSelected) {
-                          closeProjectPanel()
-                        } else {
-                          setSelectedProject(index)
-                          router.push(`/projects?project=${encodeURIComponent(project.name)}`)
-                        }
+            if (section.id === 'web') {
+              const showcaseSites = section.projects.map(toWebShowcaseSite).filter((site) => site.image)
+              return (
+                <section key={section.id} id="projects-web" className="scroll-mt-24 pb-20 md:pb-28">
+                  <SectionTitle title={section.title} isFirst />
+                  <div className="relative left-1/2 w-[min(100vw-3rem,72rem)] max-w-none -translate-x-1/2">
+                    <WebProjectsShowcase
+                      sites={showcaseSites}
+                      onProjectClick={(name) => {
+                        const project = section.projects.find((site) => site.name === name)
+                        if (project) openProject(project)
                       }}
-                    >
-                      <div className="relative aspect-square overflow-hidden bg-slate-100 rounded-lg sm:rounded-xl active:scale-95 transition-transform duration-300 mb-2 ring-1 ring-slate-200/70 dark:ring-slate-800 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-slate-200/40 dark:group-hover:shadow-black/20">
-                        {hasImage && (
-                          <Image
-                            src={project.image}
-                            alt={project.name}
-                            fill
-                            sizes="(max-width: 640px) 50vw, 33vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        )}
-                        {hasImages && (
-                          <div className="grid grid-cols-2 h-full">
-                            {project.images.map((img, imgIndex) => (
-                              <div key={imgIndex} className="relative">
-                                <Image
-                                  src={img}
-                                  alt={`${project.name} ${imgIndex + 1}`}
-                                  fill
-                                  sizes="(max-width: 640px) 25vw, 16.5vw"
-                                  className="object-cover"
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 opacity-0 translate-y-2 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[10px] sm:text-xs text-slate-900">
-                              {project.category}
-                            </span>
-                            <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-white/90 font-light">
-                              <span>Open project</span>
-                              <ArrowUpRight className="w-3.5 h-3.5" />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Title at bottom */}
-                      <div className="text-center">
-                        <p className="font-light text-xs sm:text-sm text-slate-900 dark:text-slate-100 line-clamp-1 group-hover:text-primary dark:group-hover:text-[#ADD8E6] transition-colors duration-200">
-                          {project.name}
-                        </p>
-                        <p className="font-light text-[10px] sm:text-xs text-slate-500 mt-0.5">
-                          {project.category}
-                        </p>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
+                    />
+                  </div>
+                </section>
+              )
+            }
 
-              {/* Selected Project Details - Slides in from side */}
-              {selectedProject !== null && filteredProjects[selectedProject] && (
+            if (section.id === 'full-stack') {
+              return (
+                <section key={section.id} id="projects-full-stack" className="scroll-mt-24 pb-20 md:pb-28">
+                  <SectionTitle title={section.title} />
+                  <div className="relative left-1/2 w-[min(100vw-3rem,72rem)] max-w-none -translate-x-1/2">
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+                      {section.projects.map((project, index) => (
+                        <FullStackShowcase
+                          key={project.name}
+                          project={project}
+                          index={index}
+                          onClick={() => openProject(project)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              )
+            }
+
+            return (
+              <section key={section.id} id="projects-misc" className="scroll-mt-24 pb-24 md:pb-32">
+                <SectionTitle title={section.title} />
+                <div className="relative left-1/2 w-[min(100vw-3rem,72rem)] max-w-none -translate-x-1/2">
+                  <MiscSection projects={section.projects} onProjectClick={openProject} />
+                </div>
+              </section>
+            )
+          })}
+        </div>
+
+          {selectedProject && (
                 <div 
                   className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
                   onClick={closeProjectPanel}
@@ -490,7 +623,7 @@ function ProjectsPageContent() {
                   >
                     <div className="p-4 sm:p-8 relative">
                       {(() => {
-                        const project = filteredProjects[selectedProject]
+                        const project = selectedProject
                         const hasImage = project.image
                         const hasImages = project.images && project.images.length > 0
 
@@ -538,14 +671,18 @@ function ProjectsPageContent() {
                                 {hasImage && (
                                   <button
                                     onClick={() => openLightbox(project.image)}
-                                    className="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-100 block cursor-pointer mb-4"
+                                    className="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-950 block cursor-pointer mb-4"
                                   >
                                     <Image
                                       src={project.image}
                                       alt={project.name}
                                       fill
                                       sizes="(max-width: 640px) 100vw, 50vw"
-                                      className="object-cover"
+                                      className={
+                                        project.category === 'Web' || project.category === 'Full-Stack'
+                                          ? 'object-contain object-top'
+                                          : 'object-cover'
+                                      }
                                     />
                                   </button>
                                 )}
@@ -572,30 +709,21 @@ function ProjectsPageContent() {
 
                             {/* Content */}
                             <div>
-                              <h2 className="text-2xl sm:text-4xl font-extralight text-slate-900 dark:text-slate-100 mb-3 sm:mb-4 tracking-tight">
+                              <h2 className="mb-4 text-2xl font-extralight lowercase tracking-tight text-slate-900 dark:text-slate-100 sm:mb-6 sm:text-3xl">
                                 {project.name}
                               </h2>
                               
-                              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 font-light mb-4 sm:mb-6">
-                                {project.tagline}
-                              </p>
-                              
-                              <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-light mb-6 sm:mb-8 text-sm sm:text-base">
+                              <p className="mb-6 text-sm font-light leading-relaxed text-slate-700 dark:text-slate-300 sm:mb-8 sm:text-base">
                                 {project.description}
                               </p>
 
-                              {/* Skills */}
-                              <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
-                                {project.skills.map((skill, skillIndex) => (
-                                  <span
-                                    key={skillIndex}
-                                    className="text-xs text-slate-600 dark:text-slate-300 font-light"
-                                  >
+                              <ul className="mb-6 space-y-1 border-l border-slate-200 pl-4 dark:border-slate-700 sm:mb-8">
+                                {project.skills.map((skill) => (
+                                  <li key={skill} className="text-sm font-light text-slate-600 dark:text-slate-400">
                                     {skill}
-                                    {skillIndex < project.skills.length - 1 && <span className="mx-2 text-slate-400">·</span>}
-                                  </span>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
 
                               {/* Case Study Link for Placecard and FortuneVantage */}
                               {(project.name === 'Placecard' || project.name === 'FortuneVantage') && (
@@ -605,7 +733,7 @@ function ProjectsPageContent() {
                                     className="inline-flex items-center gap-2 text-sm text-primary dark:text-[#ADD8E6] hover:text-primary-dark dark:hover:text-[#ADD8E6]/80 active:text-primary-dark dark:active:text-[#ADD8E6]/80 transition-colors duration-200 font-light"
                                   >
                                     <BookOpen className="w-4 h-4" />
-                                    Read Case Study
+                                    Read case study
                                   </Link>
                                 </div>
                               )}
@@ -616,34 +744,21 @@ function ProjectsPageContent() {
                                   href={project.link}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 text-sm text-primary dark:text-[#ADD8E6] hover:text-primary-dark dark:hover:text-[#ADD8E6]/80 active:text-primary-dark dark:active:text-[#ADD8E6]/80 transition-colors duration-200 font-light"
+                                  className="inline-flex items-center gap-2 text-sm font-light text-primary transition-colors hover:text-primary-dark dark:text-[#ADD8E6] dark:hover:text-[#ADD8E6]/80"
                                 >
                                   {project.github ? (
                                     <>
-                                      <Github className="w-4 h-4" />
-                                      View on GitHub
+                                      <Github className="h-4 w-4" />
+                                      github
                                     </>
                                   ) : (
                                     <>
-                                      <ExternalLink className="w-4 h-4" />
-                                      Visit Site
+                                      <ExternalLink className="h-4 w-4" />
+                                      visit site
                                     </>
                                   )}
                                 </a>
                               )}
-
-                              {/* Close Button at Bottom */}
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  closeProjectPanel()
-                                }}
-                                className="mt-8 w-full py-3 px-4 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium rounded-lg transition-colors touch-manipulation flex items-center justify-center gap-2"
-                                aria-label="Close"
-                              >
-                                <XIcon className="w-5 h-5" strokeWidth={2} />
-                                <span>Close</span>
-                              </button>
                             </div>
                           </>
                         )
@@ -652,10 +767,6 @@ function ProjectsPageContent() {
                   </div>
                 </div>
               )}
-            </>
-          )}
-        </div>
-      </section>
       </div>
 
       {/* Lightbox Modal */}

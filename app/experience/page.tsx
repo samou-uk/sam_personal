@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import Navigation from '@/components/Navigation'
-import Image from 'next/image'
-import { ChevronDown } from 'lucide-react'
+import Image from '@/components/SiteImage'
+import { ChevronDown, Star } from 'lucide-react'
 
 const experiences = [
   {
@@ -14,7 +14,6 @@ const experiences = [
     image: '/hove.jpeg',
     summary:
       'Hove Street Properties is a privately owned and controlled real estate group, providing a full spectrum of investment, asset, property management and construction services for over 200 properties in North America.',
-    highlights: ['200+ properties', 'North America', 'On-site'],
     points: [
     ],
   },
@@ -25,7 +24,6 @@ const experiences = [
     date: 'January 2025 – August 2025',
     image: '/linamar.png',
     summary: 'Resolved 600+ finance, operations and access incidents, automated processes eliminating 99.96% of manual work, and resolved 100+ SOD issues.',
-    highlights: ['600+ incidents solved', '99.96% audit prep time saved', '100+ SOD issues resolved'],
     points: [
       'Resolved 600+ finance, operations and access incidents with an average resolution time under 4 hours, exceeding SLA targets by 92%.',
       'Automated dormant accounts review process with Python, eliminating 99.96% of manual work and preparing audit-ready data for external auditors.',
@@ -41,7 +39,6 @@ const experiences = [
     date: 'August 2024 – September 2025',
     image: '/hans.png',
     summary: 'Built production Flask reservation system with £2,000+ annual savings, GDPR compliance, and 1,700+ week-one bookings.',
-    highlights: ['£2,000+ savings', 'GDPR compliant', '1,700+ week-one bookings'],
     points: [
       'Shipped a RESTful Flask-based reservation system; £2,000+ annual savings, 1,700+ week-one bookings, 30,000+ month-one visits.',
       'Implemented role-based authentication with AES-encrypted PII, Argon2 hashing, CSRF protection, CSP, and custom rate limiting.',
@@ -50,13 +47,12 @@ const experiences = [
     ],
   },
   {
-    title: 'Summer Intern',
+    title: 'Business Systems Intern',
     company: 'Fortune Foods UK',
     location: 'Reading, United Kingdom',
     date: 'May 2024 – August 2024',
     image: '/ffuk.jpg',
     summary: 'Launched B2B e-commerce platform with 58.4% referral-driven sales, 65% returning customers, and automation cutting creation time by 80% and production time by 50%.',
-    highlights: ['58.4% referral sales', '65% returning customers', '80%+ label generation time saved', 'Catalogue production time cut by 50%+'],
     points: [
       'Launched a secure B2B e-commerce site (Shopify, Liquid, JS) with a React marketing site, driving 6.1k+ verified sessions, 65% returning customers, and 58.4% referral-driven sales.',
       'Implemented Algolia to reduce multilingual search errors, deployed custom JS middleware for dynamic collection remapping.',
@@ -73,7 +69,6 @@ const experiences = [
     image: '/cmart.png',
     summary:
       'Built and maintained a Shopify storefront over 3+ years (now decommissioned), launched during COVID-19 to support local food access and continuity of business operations, generating £100k+ in total sales.',
-    highlights: ['£100k+ sales', 'Shopify', 'COVID-19 launch'],
     points: [
     ],
   },
@@ -89,22 +84,22 @@ export default function ExperiencePage() {
       <section className="pt-32 pb-32">
         <div className="max-w-5xl mx-auto px-6 sm:px-8">
           <div className="mb-20">
-            <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-              <span className="inline-block">Where I've</span>{' '}
-              <span className="inline-block text-primary dark:text-[#ADD8E6]">worked</span>
+            <h1 className="text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+              experience
             </h1>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-5">
             {experiences.map((exp, index) => {
               const isExpanded = expandedIndex === index
               const hasPoints = (exp.points?.length ?? 0) > 0
+              const showStars = exp.company !== 'Hove Street Properties'
 
               const headerBody = (
                     <div className="flex items-start gap-6">
                       {/* Logo */}
                       <div className="flex-shrink-0 w-16 h-16">
-                        <div className="relative w-16 h-16 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-16 h-16 rounded-lg border border-slate-200 bg-slate-50 dark:border-transparent dark:bg-slate-800 flex items-center justify-center overflow-hidden">
                           <Image
                             src={exp.image}
                             alt={exp.company}
@@ -132,27 +127,25 @@ export default function ExperiencePage() {
                             </div>
 
                             {/* Summary */}
-                            <p className="text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-4">
-                              {exp.summary}
+                            <p className={`text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed ${showStars ? 'flex gap-2.5' : ''}`}>
+                              {showStars && (
+                                <Star
+                                  className="mt-1 h-3.5 w-3.5 shrink-0 fill-primary/25 text-primary dark:fill-[#ADD8E6]/25 dark:text-[#ADD8E6]"
+                                  strokeWidth={1.5}
+                                  aria-hidden
+                                />
+                              )}
+                              <span>{exp.summary}</span>
                             </p>
-
-                            {/* Highlight badges */}
-                            <div className="flex flex-wrap gap-2">
-                              {(exp.highlights || []).map((highlight, idx) => (
-                                <div key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/8 dark:bg-[#ADD8E6]/20 border border-primary/15 dark:border-[#ADD8E6]/30">
-                                  <span className="text-xs font-light text-primary dark:text-[#ADD8E6]">{highlight}</span>
-                                </div>
-                              ))}
-                            </div>
                           </div>
 
                           {hasPoints && (
                             <div className="flex-shrink-0 pt-1">
                               <div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300 ${
                                   isExpanded
-                                    ? 'bg-primary dark:bg-[#ADD8E6] text-white dark:text-slate-900'
-                                    : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
+                                    ? 'border-primary bg-primary text-white dark:border-[#ADD8E6] dark:bg-[#ADD8E6] dark:text-slate-900'
+                                    : 'border-slate-200 bg-slate-50 text-slate-400 group-hover:border-slate-300 group-hover:bg-slate-100 dark:border-transparent dark:bg-slate-800 dark:text-slate-500 dark:group-hover:bg-slate-700'
                                 }`}
                               >
                                 <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -167,7 +160,7 @@ export default function ExperiencePage() {
               return (
                     <div
                       key={index}
-                      className="group relative border-b border-slate-200 dark:border-slate-700 pb-8 last:border-b-0 last:pb-0"
+                      className="group relative rounded-2xl border border-slate-300 bg-white p-6 shadow-sm transition-colors dark:border-slate-700/60 dark:bg-slate-900/80 dark:shadow-none sm:p-8"
                     >
                   {hasPoints ? (
                   <button
@@ -188,12 +181,12 @@ export default function ExperiencePage() {
                   <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     isExpanded ? 'max-h-[2000px] opacity-100 mt-6' : 'max-h-0 opacity-0'
                   }`}>
-                    <div className="pl-24">
-                      <ul className="space-y-3 list-disc list-inside">
+                    <div className="pl-0 sm:pl-24">
+                      <ul className="list-inside list-disc space-y-3 border-t border-slate-200 pt-6 dark:border-slate-700">
                         {exp.points.map((point, pointIndex) => (
-                              <li 
-                                key={pointIndex} 
-                                className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm font-light"
+                              <li
+                                key={pointIndex}
+                                className="text-sm font-light leading-relaxed text-slate-600 dark:text-slate-300"
                               >
                                 {point}
                               </li>

@@ -3,20 +3,20 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import { Home, User, Briefcase, FolderKanban, GraduationCap, FileText, BookOpen, Menu, X, Music, Mail, Sun, Moon, Globe, Linkedin, Github, Instagram, MapPin } from 'lucide-react'
 import { useTheme } from '@/components/ThemeProvider'
 import GlobalSearch from '@/components/GlobalSearch'
 
 const navItems = [
-  { name: 'Home', href: '/', icon: Home },
-  { name: 'Experience', href: '/experience', icon: Briefcase },
-  { name: 'Projects', href: '/projects', icon: FolderKanban },
-  { name: 'Case studies', href: '/case-studies', icon: BookOpen },
-  { name: 'Education', href: '/education', icon: GraduationCap },
-  { name: 'Resume', href: '/resume', icon: FileText },
-  { name: 'Contact', href: '/contact', icon: Mail },
-  { name: 'Places', href: '/cities', icon: MapPin, desktopOnly: false },
+  { name: 'home', href: '/', icon: Home },
+  { name: 'experience', href: '/experience', icon: Briefcase },
+  { name: 'projects', href: '/projects', icon: FolderKanban },
+  { name: 'case studies', href: '/case-studies', icon: BookOpen },
+  { name: 'education', href: '/education', icon: GraduationCap },
+  { name: 'resume', href: '/resume', icon: FileText },
+  { name: 'contact', href: '/contact', icon: Mail },
+  { name: 'cities', href: '/cities', icon: MapPin, desktopOnly: false },
 ]
 
 export default function Navigation() {
@@ -103,12 +103,12 @@ export default function Navigation() {
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
-                const isHovered = hoveredItem === item.name
+                const isHovered = hoveredItem === item.href
                 return (
                   <Link 
                     key={item.href} 
                     href={item.href}
-                    onMouseEnter={() => setHoveredItem(item.name)}
+                    onMouseEnter={() => setHoveredItem(item.href)}
                     onMouseLeave={() => setHoveredItem(null)}
                   >
                     <div className="relative">
@@ -127,7 +127,7 @@ export default function Navigation() {
                       
                       {/* Tooltip */}
                       {isHovered && (
-                          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light rounded-lg whitespace-nowrap pointer-events-none z-50">
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light lowercase rounded-lg whitespace-nowrap pointer-events-none z-50">
                             {item.name}
                             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-slate-100 rotate-45"></div>
                           </div>
@@ -159,8 +159,8 @@ export default function Navigation() {
                   )}
                 </button>
                 {hoveredTheme && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light rounded-lg whitespace-nowrap pointer-events-none z-50">
-                    {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light lowercase rounded-lg whitespace-nowrap pointer-events-none z-50">
+                    {theme === 'dark' ? 'light mode' : 'dark mode'}
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-slate-100 rotate-45"></div>
                   </div>
                 )}
@@ -185,8 +185,8 @@ export default function Navigation() {
                 
                 {/* Tooltip */}
                 {hoveredMusic && !musicDropdownOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light rounded-lg whitespace-nowrap pointer-events-none z-50">
-                    Evening tunes
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light lowercase rounded-lg whitespace-nowrap pointer-events-none z-50">
+                    evening tunes
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-slate-100 rotate-45"></div>
                   </div>
                 )}
@@ -195,8 +195,8 @@ export default function Navigation() {
                     {musicDropdownOpen && (
                       <div className="absolute right-0 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-2xl border border-white/80 dark:border-slate-700/80 shadow-2xl p-4">
                         <div className="mb-3">
-                          <h3 className="text-sm font-light text-slate-900 dark:text-slate-100 mb-1">Evening tunes</h3>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light">Currently playing</p>
+                          <h3 className="text-sm font-light lowercase text-slate-900 dark:text-slate-100 mb-1">evening tunes</h3>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-light lowercase">currently playing</p>
                         </div>
                         <div className="rounded-lg overflow-hidden bg-slate-100/50 dark:bg-slate-800/50 min-h-[352px] flex items-center justify-center">
                           {spotifyLoaded ? (
@@ -212,7 +212,7 @@ export default function Navigation() {
                               loading="eager"
                             />
                           ) : (
-                            <div className="text-slate-400 dark:text-slate-500 text-sm font-light">Loading...</div>
+                            <div className="text-slate-400 dark:text-slate-500 text-sm font-light lowercase">loading…</div>
                           )}
                         </div>
                   </div>
@@ -258,7 +258,7 @@ export default function Navigation() {
                       }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span className="text-base font-light">{item.name}</span>
+                      <span className="text-base font-light lowercase">{item.name}</span>
                     </div>
                   </Link>
                 )
@@ -267,22 +267,22 @@ export default function Navigation() {
 
             {/* Mobile footer inside hamburger */}
             <div className="mt-6 border-t border-slate-200 dark:border-slate-800 pt-4">
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-light mb-3">
-                &copy; {new Date().getFullYear()} Sam Chusen Ou
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-light mb-3 lowercase">
+                &copy; {new Date().getFullYear()} sam chusen ou
               </p>
               {/* Internal links only in mobile footer section */}
               <div className="flex flex-wrap gap-3 mb-3 text-[11px] font-light text-slate-500 dark:text-slate-400">
                 <a
                   href="/restaurants"
-                  className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                  className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200 lowercase"
                 >
-                  Restaurant notes
+                  restaurant notes
                 </a>
                 <a
                   href="/privacy"
-                  className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200"
+                  className="hover:text-primary dark:hover:text-[#ADD8E6] transition-colors duration-200 lowercase"
                 >
-                  Privacy
+                  privacy
                 </a>
               </div>
 
@@ -336,7 +336,7 @@ export default function Navigation() {
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200/30 dark:border-slate-700/30">
           <div className="flex items-center justify-around h-16 px-1">
             {navItems
-              .filter((item) => item.name !== 'Home' && item.name !== 'Places')
+              .filter((item) => item.name !== 'home' && item.name !== 'cities')
               .map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
@@ -348,7 +348,7 @@ export default function Navigation() {
                       }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span className="mt-0.5 font-light text-[10px]">
+                      <span className="mt-0.5 font-light lowercase text-[10px]">
                         {item.name}
                       </span>
                     </div>

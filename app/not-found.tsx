@@ -24,8 +24,8 @@ export default function NotFound() {
               <h1 className="text-5xl sm:text-6xl md:text-5xl font-extralight text-slate-900 dark:text-slate-100 mb-2 md:mb-1 tracking-tight">
                 <span className="inline-block">404</span>
               </h1>
-              <p className="text-xl sm:text-2xl md:text-xl font-extralight text-slate-600 dark:text-slate-400 mb-3 md:mb-2">
-                Page not found
+              <p className="text-xl sm:text-2xl md:text-xl font-extralight lowercase text-slate-600 dark:text-slate-400 mb-3 md:mb-2">
+                page not found
               </p>
               <p className="text-sm sm:text-base md:text-sm text-slate-500 dark:text-slate-500 font-light max-w-md mx-auto mb-4 md:mb-3">
                 The page you're looking for doesn't exist or has been moved.

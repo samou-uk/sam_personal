@@ -17,9 +17,8 @@ export default function ResumePage() {
           <div className="max-w-5xl mx-auto px-6 sm:px-8">
             {/* Header */}
             <div className="mb-10">
-              <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                <span className="inline-block">My</span>{' '}
-                <span className="inline-block text-primary dark:text-[#ADD8E6]">resume</span>
+              <h1 className="mb-4 text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+                resume
               </h1>
               <p className="text-base text-slate-500 dark:text-slate-400 font-light max-w-2xl">
                 A quick snapshot of what I&apos;ve been up to. You can view it right here,
@@ -37,7 +36,7 @@ export default function ResumePage() {
                 download="Sam_Chusen_Ou.pdf"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-light hover:bg-primary-dark transition-colors duration-200"
               >
-                Download PDF
+                download pdf
               </a>
             </div>
             <p className="text-xs text-slate-400 dark:text-slate-500 font-light mb-10 -mt-6">

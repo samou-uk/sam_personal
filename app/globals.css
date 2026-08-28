@@ -678,8 +678,100 @@
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease-out;
 }
 .photo-lift:hover {
-  transform: translateY(-6px) scale(1.015);
-  box-shadow: 0 32px 64px rgba(15, 23, 42, 0.18);
+  transform: translateY(-8px) rotate(var(--rot, 0deg)) scale(1.045) !important;
+  box-shadow: 0 28px 56px rgba(15, 23, 42, 0.22);
+  z-index: 30 !important;
+}
+
+/* ── chapter photo collages ── */
+.collage-fan {
+  min-height: 0;
+  padding-inline: 0.25rem;
+}
+
+.collage-fan-card {
+  width: clamp(6.5rem, 28vw, 9.375rem);
+  margin-left: -1.35rem;
+  transform-origin: center bottom;
+  border-radius: 0.75rem !important;
+}
+.collage-fan-card:first-child {
+  margin-left: 0;
+}
+
+.collage-fan-card-1 { z-index: 1; --rot: -10deg; }
+.collage-fan-card-2 { z-index: 2; --rot: -3deg; }
+.collage-fan-card-3 { z-index: 3; --rot: 4deg; }
+.collage-fan-card-4 { z-index: 4; --rot: 11deg; }
+
+.collage-columns {
+  align-items: start;
+  isolation: isolate;
+  max-width: 22rem;
+  margin-inline: auto;
+}
+
+.collage-column-1 {
+  padding-top: 0;
+}
+
+.collage-column-2 {
+  margin-left: -1.1rem;
+  padding-top: 2rem;
+}
+
+.collage-column-3 {
+  margin-left: -1.1rem;
+  padding-top: 0.75rem;
+}
+
+.collage-column-card {
+  margin-top: -1.25rem;
+}
+
+@media (min-width: 640px) {
+  .collage-columns {
+    max-width: 26rem;
+  }
+
+  .collage-column-2 {
+    margin-left: -1.35rem;
+    padding-top: 2.5rem;
+  }
+
+  .collage-column-3 {
+    margin-left: -1.35rem;
+    padding-top: 1rem;
+  }
+
+  .collage-column-card {
+    margin-top: -1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .collage-columns {
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .collage-column-2 {
+    margin-left: -1.5rem;
+    padding-top: 3rem;
+  }
+
+  .collage-column-3 {
+    margin-left: -1.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .collage-column-card {
+    margin-top: -1.65rem;
+  }
+}
+
+.collage-frame {
+  transform-origin: center center;
 }
 
 /* ── note card hover ── */

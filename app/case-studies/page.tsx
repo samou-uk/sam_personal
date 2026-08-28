@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, Suspense } from 'react'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 import { useSearchParams } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 
@@ -45,16 +45,15 @@ function CaseStudiesContent() {
             {/* Header */}
             <header className="space-y-4">
               <div>
-                <h1 className="text-6xl md:text-7xl font-extralight text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                  <span className="inline-block">What I&apos;ve</span>{' '}
-                  <span className="inline-block text-primary dark:text-[#ADD8E6]">built &amp; why</span>
+                <h1 className="mb-4 text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+                  case studies
                 </h1>
                 <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">
                   A deeper look into two projects I&apos;m especially proud of. The problems they solved, how I built them, and the trade-offs behind each decision.
                 </p>
               </div>
               {/* Case study switcher */}
-              <div className="inline-flex rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/70 p-1 text-xs sm:text-[13px]">
+              <div className="inline-flex rounded-full border border-slate-300 bg-slate-50 p-1 text-xs dark:border-slate-700 dark:bg-slate-900/70 sm:text-[13px]">
                 <button
                   type="button"
                   onClick={() => setActiveCaseStudy('placecard')}
@@ -65,7 +64,7 @@ function CaseStudiesContent() {
                   }`}
                 >
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="relative w-4 h-4 rounded-full overflow-hidden border border-slate-200/70 dark:border-slate-600/70 bg-slate-100 dark:bg-slate-800">
+                    <span className="relative w-4 h-4 rounded-full overflow-hidden border border-slate-200 bg-slate-100 dark:border-slate-600/70 dark:bg-slate-800">
                       <Image
                         src="/placecardlogodark.png"
                         alt="Placecard logo"
@@ -94,7 +93,7 @@ function CaseStudiesContent() {
                   }`}
                 >
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="relative w-4 h-4 rounded-full overflow-hidden border border-slate-200/70 dark:border-slate-600/70 bg-slate-100 dark:bg-slate-800">
+                    <span className="relative w-4 h-4 rounded-full overflow-hidden border border-slate-200 bg-slate-100 dark:border-slate-600/70 dark:bg-slate-800">
                       <Image
                         src="/ffuk.jpg"
                         alt="Fortune Foods UK logo"
@@ -112,18 +111,15 @@ function CaseStudiesContent() {
             <div className="space-y-12">
               {/* Placecard case study */}
               {activeCaseStudy === 'placecard' && (
-              <article className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-white/80 dark:bg-slate-900/80 p-6 sm:p-8 shadow-sm">
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-[0.2em] mb-3">
-                  Case study · HACKATHON PROJECT
-                </p>
+              <article className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/80 sm:p-8">
                 <h2 className="text-2xl md:text-3xl font-extralight text-slate-900 dark:text-slate-100 tracking-tight mb-2">
-                  Placecard – private supper-club app
+                  Placecard: private supper-club app
                 </h2>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
                   UW / WLU supper-club product · Full-stack (Flask + React + Firebase)
                 </p>
 
-                {/* Intro screenshot – main Placecard flow */}
+                {/* Intro screenshot: main Placecard flow */}
                 <div className="mb-6">
                   <button
                     type="button"
@@ -132,12 +128,12 @@ function CaseStudiesContent() {
                     }
                     className="block w-full text-left"
                   >
-                    <div className="relative aspect-[4/3] max-w-3xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                    <div className="relative aspect-[4/3] max-w-3xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                       <Image
                         src="/placecard.png"
                         alt="Placecard landing and core flow"
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                         sizes="(min-width: 1024px) 800px, 100vw"
                         priority
                       />
@@ -166,7 +162,7 @@ function CaseStudiesContent() {
                     </p>
                   </section>
 
-                  {/* Onboarding + identity – {placecard_2 img} */}
+                  {/* Onboarding + identity: {placecard_2 img} */}
                   <div className="grid gap-3 sm:grid-cols-2">
                     <button
                       type="button"
@@ -178,12 +174,12 @@ function CaseStudiesContent() {
                       }
                       className="text-left"
                     >
-                      <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                      <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                         <Image
                           src="/placecard_signup.png"
                           alt="Placecard onboarding and signup"
                           fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                          className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                           sizes="(min-width: 1024px) 400px, 50vw"
                         />
                       </div>
@@ -201,12 +197,12 @@ function CaseStudiesContent() {
                       }
                       className="text-left"
                     >
-                      <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                      <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                         <Image
                           src="/placecard_idver.png"
                           alt="Placecard student ID verification"
                           fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                          className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                           sizes="(min-width: 1024px) 400px, 50vw"
                         />
                       </div>
@@ -232,7 +228,7 @@ function CaseStudiesContent() {
                     </p>
                   </section>
 
-                  {/* How we built it – infra & stack – {placecard_3 img} */}
+                  {/* How we built it: infra & stack ({placecard_3 img}) */}
                   <section className="space-y-3">
                     <div className="mb-3 grid gap-3 sm:grid-cols-2">
                       <button
@@ -245,12 +241,12 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                           <Image
                             src="/placecard_railway.png"
                             alt="Placecard backend deployed on Railway"
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                             sizes="(min-width: 1024px) 400px, 50vw"
                           />
                         </div>
@@ -268,12 +264,12 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                           <Image
                             src="/placecard_vercel.png"
                             alt="Placecard frontend deployed on Vercel"
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                             sizes="(min-width: 1024px) 400px, 50vw"
                           />
                         </div>
@@ -304,7 +300,7 @@ function CaseStudiesContent() {
                       </li>
                       <li>
                         <span className="font-normal">AI:</span> OpenRouter + Gemini 2.5 Flash for ingredient generation
-                        and user–host matching
+                        and user-host matching
                       </li>
                       <li>
                         <span className="font-normal">Verification:</span> Tesseract OCR for student ID checks
@@ -317,7 +313,7 @@ function CaseStudiesContent() {
                     </p>
                   </section>
 
-                  {/* Security & access control – {placecard_4 img} */}
+                  {/* Security & access control: {placecard_4 img} */}
                   <section className="space-y-3">
                     <div className="mb-3 grid gap-3 sm:grid-cols-2">
                       <button
@@ -330,12 +326,12 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                           <Image
                             src="/placecard_hostdinner.png"
                             alt="Placecard host dinner management"
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                             sizes="(min-width: 1024px) 400px, 50vw"
                           />
                         </div>
@@ -353,12 +349,12 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                           <Image
                             src="/placecard_profile.png"
                             alt="Placecard User Profile"
                             fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            className="object-contain transition-transform duration-300 group-hover:scale-[1.02] bg-slate-950"
                             sizes="(min-width: 1024px) 400px, 50vw"
                           />
                         </div>
@@ -390,7 +386,7 @@ function CaseStudiesContent() {
                     </p>
                   </section>
 
-                  {/* Challenges – {placecard_5 img} */}
+                  {/* Challenges: {placecard_5 img} */}
                   <section className="space-y-3">
                     <h3 className="text-sm font-normal text-slate-900 dark:text-slate-100">
                       Challenges
@@ -403,7 +399,7 @@ function CaseStudiesContent() {
                     </p>
                   </section>
 
-                  {/* Outcome & learnings – {placecard_6 img} */}
+                  {/* Outcome & learnings: {placecard_6 img} */}
                   <section className="space-y-3">
                     <h3 className="text-sm font-normal text-slate-900 dark:text-slate-100">
                       Outcome
@@ -440,7 +436,7 @@ function CaseStudiesContent() {
                       The logo (yes, really)
                     </h3>
                     <p>
-                      The logo was drawn by me in Canva at 2am with a mouse. No design system or Figma — just sleep
+                      The logo was drawn by me in Canva at 2am with a mouse. No design system or Figma, just sleep
                       deprivation and a Logitech MX Vertical.
                     </p>
                     <p>
@@ -457,7 +453,7 @@ function CaseStudiesContent() {
                       }
                       className="mt-3 text-left"
                     >
-                      <div className="relative aspect-[4/3] max-w-sm rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 mx-auto">
+                      <div className="relative aspect-[4/3] max-w-sm rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 mx-auto">
                         <Image
                           src="/placecard_logocanva.png"
                           alt="Placecard logo drawn in Canva"
@@ -477,18 +473,15 @@ function CaseStudiesContent() {
 
               {/* FortuneVantage case study */}
               {activeCaseStudy === 'fortune' && (
-              <article className="rounded-2xl border border-slate-200/70 dark:border-slate-700/70 bg-white/80 dark:bg-slate-900/80 p-6 sm:p-8 shadow-sm">
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-light uppercase tracking-[0.2em] mb-3">
-                  Case study · Internal tooling
-                </p>
+              <article className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/80 sm:p-8">
                 <h2 className="text-2xl md:text-3xl font-extralight text-slate-900 dark:text-slate-100 tracking-tight mb-2">
-                  FortuneVantage – decision support &amp; BI platform
+                  FortuneVantage: decision support &amp; BI platform
                 </h2>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
                   Internal BI and decision support platform for wholesale operations.
                 </p>
 
-                {/* Hero screenshot – overview dashboard */}
+                {/* Hero screenshot: overview dashboard */}
                 <div className="mb-6">
                   <button
                     type="button"
@@ -500,7 +493,7 @@ function CaseStudiesContent() {
                     }
                     className="block w-full text-left"
                   >
-                    <div className="relative aspect-[4/3] max-w-3xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
+                    <div className="relative aspect-[4/3] max-w-3xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900/5 dark:bg-slate-900/40 group">
                       <Image
                         src="/vantage_1.png"
                         alt="FortuneVantage overview dashboard (seed data)"
@@ -639,7 +632,7 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
                           <Image
                             src="/vantage_2.png"
                             alt="FortuneVantage sales dashboard with KPIs (seed data)"
@@ -662,7 +655,7 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
                           <Image
                             src="/vantage_3.png"
                             alt="FortuneVantage customer detail and forecasting view (seed data)"
@@ -722,7 +715,7 @@ function CaseStudiesContent() {
                         }
                         className="text-left"
                       >
-                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
+                        <div className="relative aspect-[4/3] max-w-xl mx-auto rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/40 group">
                           <Image
                             src="/vantage_4.png"
                             alt="FortuneVantage import and catalogue tooling (seed data)"
@@ -835,7 +828,7 @@ function CaseStudiesContent() {
             </div>
 
             {showMaximizeNote && (
-              <div className="absolute top-10 left-4 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg px-3 py-2 text-xs text-slate-700 dark:text-slate-200 font-light">
+              <div className="absolute top-10 left-4 bg-white/95 dark:bg-slate-900/95 border border-slate-300 dark:border-slate-700 rounded-lg shadow-lg px-3 py-2 text-xs text-slate-700 dark:text-slate-200 font-light">
                 What is there to maximise?
               </div>
             )}

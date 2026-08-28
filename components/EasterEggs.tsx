@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import Image from 'next/image'
+import Image from '@/components/SiteImage'
 
 export default function EasterEggs() {
   const [konamiCode, setKonamiCode] = useState<string[]>([])
