@@ -22,6 +22,7 @@ type WebProject = {
   statusBarMode: string
   darkStatusBarMode: string
   keepWhiteBg?: boolean
+  caseStudyLink?: string
 }
 
 const webProjects: WebProject[] = [
