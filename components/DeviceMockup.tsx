@@ -6,7 +6,25 @@ import Link from 'next/link'
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, X as XIcon, Plus, Search, Wifi, Battery, SlidersHorizontal, Volume2, Sun, Target, Bluetooth, RotateCw, Calendar } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const webProjects = [
+type WebProject = {
+  name: string
+  displayName: string
+  tagline: string
+  image: string
+  darkImage?: string
+  mobileImage: string
+  mobileDarkImage?: string
+  icon: string
+  darkIcon?: string
+  link: string
+  themeColor: string
+  darkThemeColor: string
+  statusBarMode: string
+  darkStatusBarMode: string
+  keepWhiteBg?: boolean
+}
+
+const webProjects: WebProject[] = [
   {
     name: 'samou.co.uk',
     displayName: 'Personal Website',
