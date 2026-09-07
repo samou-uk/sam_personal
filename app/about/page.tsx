@@ -93,10 +93,10 @@ type CollagePhoto = {
 }
 
 const tennisPhotos: CollagePhoto[] = [
-  { src: '/tennis_about.webp', alt: 'Tennis', delay: '80ms', rot: '-10deg', aspect: 'aspect-[3/4]', objectPosition: 'object-top' },
-  { src: '/tennis (2).jpeg', alt: 'Tennis', delay: '160ms', rot: '-3deg', aspect: 'aspect-[4/5]' },
-  { src: '/tennis (1).jpeg', alt: 'Tennis', delay: '240ms', rot: '4deg', aspect: 'aspect-[4/5]' },
-  { src: '/tennis (4).jpeg', alt: 'Tennis', delay: '320ms', rot: '11deg', aspect: 'aspect-[5/4]' },
+  { src: '/tennis_about.webp', alt: 'Tennis', delay: '80ms', rot: '-10deg', aspect: 'aspect-[3/4]', objectPosition: 'object-[center_20%]' },
+  { src: '/tennis (2).jpeg', alt: 'Tennis', delay: '160ms', rot: '-3deg', aspect: 'aspect-[4/5]', objectPosition: 'object-center' },
+  { src: '/tennis (1).jpeg', alt: 'Tennis', delay: '240ms', rot: '4deg', aspect: 'aspect-[4/5]', objectPosition: 'object-center' },
+  { src: '/tennis (4).jpeg', alt: 'Tennis', delay: '320ms', rot: '11deg', aspect: 'aspect-[5/4]', objectPosition: 'object-center' },
 ]
 
 const cookingColumns: CollagePhoto[][] = [
@@ -165,7 +165,7 @@ function ChapterPhotoCollage({
 }) {
   if (layout === 'tennis') {
     return (
-      <div className="collage-fan flex items-end justify-center py-1">
+      <div className="collage-fan flex items-end justify-center">
         {tennisPhotos.map((photo, i) => (
           <CollageFrame
             key={photo.src}
@@ -440,45 +440,37 @@ export default function AboutPage() {
       {/* ──────────── HERO ──────────── */}
       <section ref={heroSectionRef} className="relative min-h-screen overflow-hidden">
 
-        {/* full-bleed portrait (desktop) — parallax */}
-        <div className="absolute inset-y-0 right-0 hidden w-[52%] lg:block overflow-hidden">
+        {/* Shared hero photo — one priority image for mobile + desktop */}
+        <div className="absolute inset-0 overflow-hidden lg:left-auto lg:right-0 lg:w-[52%]">
           <div
             className="absolute inset-0"
             style={{ transform: `translateY(${heroScroll * 0.22}px)`, willChange: 'transform' }}
           >
-            <Image
-              src="/about.webp"
-              alt="Sam"
-              fill
-              sizes="52vw"
-              className="object-cover object-center scale-110"
-              priority
-            />
-            {/* gradients travel with the image so there's never a gap */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 z-10"
-              style={{
-                height: '160px',
-                background: 'linear-gradient(to bottom, var(--hero-fade) 0%, var(--hero-fade-mid) 55%, transparent 100%)',
-              }}
-            />
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-white to-transparent dark:from-slate-900" />
+            <div className="absolute inset-0 lg:scale-110">
+              <Image
+                src="/about.webp"
+                alt="Sam"
+                fill
+                sizes="(max-width: 1023px) 100vw, 52vw"
+                className="object-cover object-top lg:object-center"
+                priority
+              />
+            </div>
           </div>
+          {/* Desktop edge fades — travel with the column */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 z-10 hidden lg:block"
+            style={{
+              height: '160px',
+              background: 'linear-gradient(to bottom, var(--hero-fade) 0%, var(--hero-fade-mid) 55%, transparent 100%)',
+            }}
+          />
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-48 bg-gradient-to-r from-white to-transparent dark:from-slate-900 lg:block" />
         </div>
 
         {/* ── MOBILE HERO — full-bleed; copy bottom-anchored, typewriter LTR / left-aligned ── */}
-        <div className="lg:hidden relative flex min-h-screen flex-col justify-end">
-          {/* Full-bleed photo */}
-          <Image
-            src="/about.webp"
-            alt="Sam"
-            fill
-            sizes="100vw"
-            className="object-cover object-top"
-            priority
-          />
-
+        <div className="relative flex min-h-screen flex-col justify-end lg:hidden">
           {/* Readability: stronger wash toward bottom where copy sits */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/35 to-black/80" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/75 to-transparent" />
@@ -546,7 +538,7 @@ export default function AboutPage() {
               key={ch.id}
               id={`chapter-${ch.id}`}
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
-              className="relative flex items-center py-10 sm:py-14 lg:py-20 px-6 sm:px-10 overflow-hidden scroll-mt-20 border-t border-slate-300/70 bg-gradient-to-b from-slate-100/95 via-slate-50 to-white dark:border-slate-700/45 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900"
+              className="relative flex items-center overflow-x-clip overflow-y-visible py-10 sm:py-14 lg:py-20 px-6 sm:px-10 scroll-mt-20 border-t border-slate-300/70 bg-gradient-to-b from-slate-100/95 via-slate-50 to-white dark:border-slate-700/45 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900"
             >
               <div className="relative z-10 mx-auto grid w-full max-w-6xl min-w-0 items-center gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
 
@@ -561,7 +553,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Photo collage */}
-                <div className="min-w-0 overflow-hidden lg:order-2">
+                <div className="min-w-0 overflow-visible pb-2 lg:order-2">
                   <ChapterPhotoCollage layout="tennis" visible={visible} tone="slate" />
                 </div>
               </div>
