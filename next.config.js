@@ -35,8 +35,8 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://open.spotify.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
       "img-src 'self' data: blob: https:",
       "connect-src 'self' blob: https://raw.githack.com https://raw.githubusercontent.com https://open.spotify.com https://*.spotify.com https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://vitals.vercel-insights.com https://*.vercel-analytics.com",
       "frame-src 'self' https://open.spotify.com https://calendar.google.com https://docs.google.com https://contacts.google.com",

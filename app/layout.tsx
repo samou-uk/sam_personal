@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk } from 'next/font/google'
-import Script from 'next/script'
+import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
@@ -10,11 +9,53 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import EasterEggs from '@/components/EasterEggs'
 import Footer from '@/components/Footer'
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+const satoshi = localFont({
+  src: [
+    // Satoshi starts at 300 — map extralight headlines to light
+    {
+      path: './fonts/satoshi/satoshi-300.woff2',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-300.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-400.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-500.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-700.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-700.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-900.woff2',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: './fonts/satoshi/satoshi-900.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-satoshi',
   display: 'swap',
-  variable: '--font-space-grotesk',
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -28,8 +69,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={spaceGrotesk.variable} suppressHydrationWarning>
-      <body className={`${spaceGrotesk.className} font-sans`}>
+    <html lang="en" className={satoshi.variable} suppressHydrationWarning>
+      <body className={`${satoshi.className} font-sans`}>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -63,5 +104,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-

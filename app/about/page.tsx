@@ -12,6 +12,7 @@ const chapters = [
     id: 'roots',
     label: 'roots',
     title: 'across the pond',
+    titleAccent: 'pond',
     body: "I was born in London and spent the first 18 years of my life enduring the torrential rain before hopping across the pond to Waterloo, Canada to pursue my Bachelor's Degree.",
     body2: "A major part of my decision to come to Canada was a friendly interaction with a CBSA officer when I first arrived in Toronto in 2018 (on holiday). Their friendliness and professionalism left a lasting impression on me, shaping my perception of Canada. That first impression stuck with me, and ultimately influenced my decision to move across the pond for university.",
     note: "A lot of how I think comes from living between contexts: UK and Canada, business and engineering, precision and practicality.",
@@ -25,6 +26,7 @@ const chapters = [
     id: 'tennis',
     label: 'sports',
     title: 'outside of\nacademia\nand its tribulations…',
+    titleAccent: 'academia',
     body: "I enjoy playing golf, tennis and sabre fencing. Tennis, being the most accessible, is probably my favourite sport. The other two are slightly more difficult to facilitate!\n\nI also enjoy watching Formula One. As a result, I fell down the rabbit hole of simracing too (a very costly rabbit hole at that!)",
     note: "I like things that reward repetition, timing, and tiny improvements over time. That loop feels very familiar to building.",
     image: '/tennis_about.webp',
@@ -37,6 +39,7 @@ const chapters = [
     id: 'cooking',
     label: 'cooking',
     title: 'i like food',
+    titleAccent: 'food',
     body: "Having learned to cook at a young age, this skill has become particularly important since starting university in September 2023. While my cooking predominantly involves Chinese techniques, my girlfriend always claims that I make a brilliant Chicken & Mash!",
     note: "It's one of the clearest reminders that precision and instinct don't compete. Also, apparently the Chicken & Mash is unusually strong.",
     image: '/chickenmash_about.webp',
@@ -49,6 +52,7 @@ const chapters = [
     id: 'music',
     label: 'music',
     title: 'music.',
+    titleAccent: 'music',
     body: "I have been involved in music ever since I was 8 years old (as you can see in the video!) Throughout my childhood, I played the piano, clarinet and saxophone. However, my move across the pond has not only severely diminished my free time, but also deprived me of access to a piano. These days, I am more of an appreciator of music than a musician.",
     note: "Music still influences how I think about pacing, texture, and when something feels controlled without feeling lifeless.",
     image: '/samyoungpiano_about.webp',
@@ -60,6 +64,24 @@ const chapters = [
 ] as const
 
 type Chapter = (typeof chapters)[number]
+
+const accentClass = 'font-medium text-primary dark:text-[#ADD8E6]'
+
+function withAccent(text: string, accent?: string) {
+  if (!accent || !text.includes(accent)) return text
+  const parts = text.split(accent)
+  return parts.reduce<React.ReactNode[]>((nodes, part, index) => {
+    nodes.push(part)
+    if (index < parts.length - 1) {
+      nodes.push(
+        <span key={`accent-${index}`} className={accentClass}>
+          {accent}
+        </span>
+      )
+    }
+    return nodes
+  }, [])
+}
 
 type CollagePhoto = {
   src: string
@@ -205,7 +227,7 @@ function TypewriterHeadline({ count }: { count: number }) {
       className="text-left text-balance text-5xl md:text-7xl lg:text-[5.75rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[0.92] lg:whitespace-nowrap"
     >
       <span>{INTRO_PREFIX.slice(0, prefixCount)}</span>
-      <span className="text-primary dark:text-[#ADD8E6]">{INTRO_ACCENT.slice(0, accentCount)}</span>
+      <span className={accentClass}>{INTRO_ACCENT.slice(0, accentCount)}</span>
       {count < INTRO_FULL.length && (
         <span className="inline-block h-[0.85em] w-[2px] bg-primary dark:bg-[#ADD8E6] align-[-0.05em] animate-pulse ml-1" />
       )}
@@ -245,10 +267,28 @@ function InterstitialSection() {
   return (
     <section ref={ref} className="relative flex min-h-0 items-center py-10 sm:py-12 pb-12 sm:pb-14 px-8 sm:px-12 xl:px-20 bg-white dark:bg-slate-900">
       <div className="max-w-6xl mx-auto w-full">
-        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-extralight lowercase text-slate-600 dark:text-slate-400 tracking-tight leading-[1.28]">
-          {INTERSTITIAL_TEXT.slice(0, count)}
+        <p className="text-2xl sm:text-3xl lg:text-[2.5rem] font-normal lowercase text-slate-600 dark:text-slate-400 tracking-tight leading-[1.28]">
+          {(() => {
+            const accent = 'about me'
+            const accentStart = INTERSTITIAL_TEXT.indexOf(accent)
+            const accentEnd = accentStart + accent.length
+            const visible = INTERSTITIAL_TEXT.slice(0, count)
+            const before = visible.slice(0, Math.min(count, accentStart))
+            const mid =
+              count > accentStart
+                ? visible.slice(accentStart, Math.min(count, accentEnd))
+                : ''
+            const after = count > accentEnd ? visible.slice(accentEnd) : ''
+            return (
+              <>
+                {before}
+                {mid && <span className={accentClass}>{mid}</span>}
+                {after}
+              </>
+            )
+          })()}
           {count < INTERSTITIAL_TEXT.length && (
-            <span className="inline-block h-[0.82em] w-[2px] bg-slate-300 dark:bg-slate-600 align-[-0.05em] animate-pulse ml-0.5" />
+            <span className="inline-block h-[0.82em] w-[2px] bg-primary/50 dark:bg-[#ADD8E6]/50 align-[-0.05em] animate-pulse ml-0.5" />
           )}
         </p>
       </div>
@@ -452,14 +492,17 @@ export default function AboutPage() {
               className="w-full text-5xl font-extralight lowercase text-white tracking-tight leading-[0.92] text-left text-balance"
             >
               <span>{INTRO_PREFIX.slice(0, Math.min(typedCount, INTRO_PREFIX.length))}</span>
-              <span className="text-[#ADD8E6]">{INTRO_ACCENT.slice(0, Math.max(0, typedCount - INTRO_PREFIX.length))}</span>
+              <span className="font-medium text-[#ADD8E6]">{INTRO_ACCENT.slice(0, Math.max(0, typedCount - INTRO_PREFIX.length))}</span>
               {typedCount < INTRO_FULL.length && (
                 <span className="inline-block h-[0.85em] w-[2px] bg-white/50 align-[-0.05em] animate-pulse ml-1" />
               )}
             </h1>
 
             <p className="w-full max-w-none text-left text-sm text-white/75 font-light leading-relaxed text-balance">
-              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a Computational Mathematics minor.
+              A student at the{' '}
+              <span className="font-medium text-[#ADD8E6]">University of Waterloo</span> studying
+              Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a
+              Computational Mathematics minor.
             </p>
 
             <div className="flex w-full items-center justify-start gap-2 pt-1">
@@ -476,7 +519,10 @@ export default function AboutPage() {
               <TypewriterHeadline count={typedCount} />
             </div>
             <p className={`w-full text-left text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed text-balance transition-all duration-700 delay-200 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-              A student at the University of Waterloo studying Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a Computational Mathematics minor.
+              A student at the{' '}
+              <span className={accentClass}>University of Waterloo</span> studying
+              Mathematics/Financial Analysis & Risk Management, Statistics, Joint Honours, and a
+              Computational Mathematics minor.
             </p>
             <div className={`flex w-full items-center justify-start gap-3 text-left text-sm text-slate-400 dark:text-slate-500 font-light select-none transition-all duration-700 delay-300 ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <span className="lowercase">scroll through the chapters</span>
@@ -507,7 +553,7 @@ export default function AboutPage() {
                 {/* Text */}
                 <div className="min-w-0 space-y-6 lg:order-1">
                   <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} max-w-full text-[clamp(2rem,9vw,3.5rem)] font-extralight lowercase leading-[1.06] tracking-tight text-slate-900 whitespace-pre-line dark:text-slate-100`} style={{ '--delay': '120ms' } as React.CSSProperties}>
-                    {ch.title}
+                    {withAccent(ch.title, ch.titleAccent)}
                   </h2>
                   <p className={`about-slide-left ${visible ? 'about-visible' : ''} max-w-lg text-base font-light leading-relaxed text-slate-600 dark:text-slate-300 md:text-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                     {ch.body}
@@ -546,7 +592,7 @@ export default function AboutPage() {
                 {/* Text */}
                 <div className="space-y-6 lg:order-2">
                   <h2 className={`about-slide-right ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
-                    {ch.title}
+                    {withAccent(ch.title, ch.titleAccent)}
                   </h2>
                   <p className={`about-slide-right ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                     {ch.body}
@@ -575,7 +621,7 @@ export default function AboutPage() {
                     className={`about-slide-left ${visible ? 'about-visible' : ''} text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.02] whitespace-pre-line`}
                     style={{ '--delay': '120ms' } as React.CSSProperties}
                   >
-                    {ch.title}
+                    {withAccent(ch.title, ch.titleAccent)}
                   </h2>
                 </div>
 
@@ -625,7 +671,7 @@ export default function AboutPage() {
               {/* text block */}
               <div className="space-y-6 order-2 lg:order-1">
                 <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
-                  {ch.title}
+                  {withAccent(ch.title, ch.titleAccent)}
                 </h2>
                 <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                   {ch.body}
