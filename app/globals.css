@@ -686,12 +686,14 @@
 /* ── chapter photo collages ── */
 .collage-fan {
   min-height: 0;
+  max-width: 100%;
   padding-inline: 0.25rem;
+  overflow: hidden;
 }
 
 .collage-fan-card {
-  width: clamp(6.5rem, 28vw, 9.375rem);
-  margin-left: -1.35rem;
+  width: clamp(5.75rem, 24vw, 9.375rem);
+  margin-left: -1.1rem;
   transform-origin: center bottom;
   border-radius: 0.75rem !important;
 }
@@ -703,6 +705,13 @@
 .collage-fan-card-2 { z-index: 2; --rot: -3deg; }
 .collage-fan-card-3 { z-index: 3; --rot: 4deg; }
 .collage-fan-card-4 { z-index: 4; --rot: 11deg; }
+
+@media (min-width: 640px) {
+  .collage-fan-card {
+    width: clamp(6.5rem, 28vw, 9.375rem);
+    margin-left: -1.35rem;
+  }
+}
 
 .collage-columns {
   align-items: start;

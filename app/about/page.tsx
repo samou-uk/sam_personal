@@ -24,7 +24,7 @@ const chapters = [
   {
     id: 'tennis',
     label: 'sports',
-    title: 'outside of academia\nand its tribulations…',
+    title: 'outside of\nacademia\nand its tribulations…',
     body: "I enjoy playing golf, tennis and sabre fencing. Tennis, being the most accessible, is probably my favourite sport. The other two are slightly more difficult to facilitate!\n\nI also enjoy watching Formula One. As a result, I fell down the rabbit hole of simracing too (a very costly rabbit hole at that!)",
     note: "I like things that reward repetition, timing, and tiny improvements over time. That loop feels very familiar to building.",
     image: '/tennis_about.webp',
@@ -502,20 +502,20 @@ export default function AboutPage() {
               ref={(el) => { if (el) sectionRefs.current.set(ch.id, el) }}
               className="relative flex items-center py-10 sm:py-14 lg:py-20 px-6 sm:px-10 overflow-hidden scroll-mt-20 border-t border-slate-300/70 bg-gradient-to-b from-slate-100/95 via-slate-50 to-white dark:border-slate-700/45 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900"
             >
-              <div className="relative z-10 max-w-6xl mx-auto w-full grid gap-8 lg:gap-12 items-center lg:grid-cols-[1fr_1.1fr]">
+              <div className="relative z-10 mx-auto grid w-full max-w-6xl min-w-0 items-center gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
 
                 {/* Text */}
-                <div className="space-y-6 lg:order-1">
-                  <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} text-4xl md:text-5xl lg:text-[3.5rem] font-extralight lowercase text-slate-900 dark:text-slate-100 tracking-tight leading-[1.06] whitespace-pre-line`} style={{ '--delay': '120ms' } as React.CSSProperties}>
+                <div className="min-w-0 space-y-6 lg:order-1">
+                  <h2 className={`about-slide-left ${visible ? 'about-visible' : ''} max-w-full text-[clamp(2rem,9vw,3.5rem)] font-extralight lowercase leading-[1.06] tracking-tight text-slate-900 whitespace-pre-line dark:text-slate-100`} style={{ '--delay': '120ms' } as React.CSSProperties}>
                     {ch.title}
                   </h2>
-                  <p className={`about-slide-left ${visible ? 'about-visible' : ''} text-base md:text-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed max-w-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
+                  <p className={`about-slide-left ${visible ? 'about-visible' : ''} max-w-lg text-base font-light leading-relaxed text-slate-600 dark:text-slate-300 md:text-lg`} style={{ '--delay': '220ms' } as React.CSSProperties}>
                     {ch.body}
                   </p>
                 </div>
 
                 {/* Photo collage */}
-                <div className="lg:order-2">
+                <div className="min-w-0 overflow-hidden lg:order-2">
                   <ChapterPhotoCollage layout="tennis" visible={visible} tone="slate" />
                 </div>
               </div>

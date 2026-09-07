@@ -80,127 +80,135 @@ export default function ExperiencePage() {
   return (
     <main className="min-h-screen bg-white dark:bg-slate-900">
       <Navigation />
-      <div className="pt-20 pb-16 md:pb-0">
-      <section className="pt-32 pb-32">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          <div className="mb-20">
-            <h1 className="text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
-              experience
-            </h1>
-          </div>
+      <div className="pb-16 pt-20 md:pb-0">
+        <section className="pb-24 pt-28 sm:pb-32 sm:pt-32">
+          <div className="mx-auto max-w-5xl px-6 sm:px-8">
+            <div className="mb-12 sm:mb-20">
+              <h1 className="text-[clamp(3.5rem,16vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+                experience
+              </h1>
+            </div>
 
-          <div className="space-y-5">
-            {experiences.map((exp, index) => {
-              const isExpanded = expandedIndex === index
-              const hasPoints = (exp.points?.length ?? 0) > 0
-              const showStars = exp.company !== 'Hove Street Properties'
+            <div className="space-y-4 sm:space-y-5">
+              {experiences.map((exp, index) => {
+                const isExpanded = expandedIndex === index
+                const hasPoints = (exp.points?.length ?? 0) > 0
+                const showStars = exp.company !== 'Hove Street Properties'
 
-              const headerBody = (
-                    <div className="flex items-start gap-6">
-                      {/* Logo */}
-                      <div className="flex-shrink-0 w-16 h-16">
-                        <div className="relative w-16 h-16 rounded-lg border border-slate-200 bg-slate-50 dark:border-transparent dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                          <Image
-                            src={exp.image}
-                            alt={exp.company}
-                            width={64}
-                            height={64}
-                            sizes="64px"
-                            className="object-contain p-3"
-                            priority={index === 0}
-                          />
-                        </div>
+                const headerBody = (
+                  <div className="flex items-start gap-3.5 sm:gap-6">
+                    <div className="h-12 w-12 shrink-0 sm:h-16 sm:w-16">
+                      <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-50 dark:border-transparent dark:bg-slate-800 sm:h-16 sm:w-16">
+                        <Image
+                          src={exp.image}
+                          alt={exp.company}
+                          width={64}
+                          height={64}
+                          sizes="(max-width: 640px) 48px, 64px"
+                          className="object-contain p-2 sm:p-3"
+                          priority={index === 0}
+                        />
                       </div>
+                    </div>
 
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-6">
-                          <div className="flex-1 min-w-0">
-                            <h2 className="text-2xl font-extralight text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-                              {exp.title}
-                            </h2>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-light mb-4">
-                              <span className="text-slate-900 dark:text-slate-100 font-light">{exp.company}</span>
-                              <span className="text-slate-300 dark:text-slate-600">·</span>
-                              <span>{exp.location}</span>
-                              <span className="text-slate-300 dark:text-slate-600">·</span>
-                              <span>{exp.date}</span>
-                            </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-3 sm:gap-6">
+                        <div className="min-w-0 flex-1">
+                          <h2 className="mb-1.5 text-lg font-extralight leading-snug tracking-tight text-slate-900 dark:text-slate-100 sm:mb-2 sm:text-2xl">
+                            {exp.title}
+                          </h2>
 
-                            {/* Summary */}
-                            <p className={`text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed ${showStars ? 'flex gap-2.5' : ''}`}>
-                              {showStars && (
-                                <Star
-                                  className="mt-1 h-3.5 w-3.5 shrink-0 fill-primary/25 text-primary dark:fill-[#ADD8E6]/25 dark:text-[#ADD8E6]"
-                                  strokeWidth={1.5}
-                                  aria-hidden
-                                />
-                              )}
-                              <span>{exp.summary}</span>
+                          <div className="mb-3 space-y-0.5 text-sm font-light text-slate-500 dark:text-slate-400 sm:mb-4 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0">
+                            <p className="font-light text-slate-900 dark:text-slate-100">{exp.company}</p>
+                            <p className="sm:inline">
+                              <span className="hidden text-slate-300 dark:text-slate-600 sm:inline">· </span>
+                              {exp.location}
+                            </p>
+                            <p className="sm:inline">
+                              <span className="hidden text-slate-300 dark:text-slate-600 sm:inline">· </span>
+                              {exp.date}
                             </p>
                           </div>
 
-                          {hasPoints && (
-                            <div className="flex-shrink-0 pt-1">
-                              <div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300 ${
-                                  isExpanded
-                                    ? 'border-primary bg-primary text-white dark:border-[#ADD8E6] dark:bg-[#ADD8E6] dark:text-slate-900'
-                                    : 'border-slate-200 bg-slate-50 text-slate-400 group-hover:border-slate-300 group-hover:bg-slate-100 dark:border-transparent dark:bg-slate-800 dark:text-slate-500 dark:group-hover:bg-slate-700'
-                                }`}
-                              >
-                                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                              </div>
-                            </div>
-                          )}
+                          <p
+                            className={`text-sm font-light leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base ${
+                              showStars ? 'flex gap-2 sm:gap-2.5' : ''
+                            }`}
+                          >
+                            {showStars && (
+                              <Star
+                                className="mt-1 h-3.5 w-3.5 shrink-0 fill-primary/25 text-primary dark:fill-[#ADD8E6]/25 dark:text-[#ADD8E6]"
+                                strokeWidth={1.5}
+                                aria-hidden
+                              />
+                            )}
+                            <span>{exp.summary}</span>
+                          </p>
                         </div>
+
+                        {hasPoints && (
+                          <div className="shrink-0 pt-0.5">
+                            <div
+                              className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all duration-300 ${
+                                isExpanded
+                                  ? 'border-primary bg-primary text-white dark:border-[#ADD8E6] dark:bg-[#ADD8E6] dark:text-slate-900'
+                                  : 'border-slate-200 bg-slate-50 text-slate-400 group-hover:border-slate-300 group-hover:bg-slate-100 dark:border-transparent dark:bg-slate-800 dark:text-slate-500 dark:group-hover:bg-slate-700'
+                              }`}
+                            >
+                              <ChevronDown
+                                className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
-              )
-
-              return (
-                    <div
-                      key={index}
-                      className="group relative rounded-2xl border border-slate-300 bg-white p-6 shadow-sm transition-colors dark:border-slate-700/60 dark:bg-slate-900/80 dark:shadow-none sm:p-8"
-                    >
-                  {hasPoints ? (
-                  <button
-                    type="button"
-                    onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                    className="w-full text-left"
-                  >
-                    {headerBody}
-                  </button>
-                  ) : (
-                  <div className="w-full text-left">
-                    {headerBody}
                   </div>
-                  )}
+                )
 
-                  {/* Expandable Content */}
-                  {hasPoints && (
-                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isExpanded ? 'max-h-[2000px] opacity-100 mt-6' : 'max-h-0 opacity-0'
-                  }`}>
-                    <div className="pl-0 sm:pl-24">
-                      <ul className="list-inside list-disc space-y-3 border-t border-slate-200 pt-6 dark:border-slate-700">
-                        {exp.points.map((point, pointIndex) => (
+                return (
+                  <div
+                    key={index}
+                    className="group relative rounded-2xl border border-slate-300 bg-white p-4 shadow-sm transition-colors dark:border-slate-700/60 dark:bg-slate-900/80 dark:shadow-none sm:p-8"
+                  >
+                    {hasPoints ? (
+                      <button
+                        type="button"
+                        onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                        className="w-full text-left"
+                      >
+                        {headerBody}
+                      </button>
+                    ) : (
+                      <div className="w-full text-left">{headerBody}</div>
+                    )}
+
+                    {hasPoints && (
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                          isExpanded ? 'mt-5 max-h-[2000px] opacity-100 sm:mt-6' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        <div className="pl-0 sm:pl-24">
+                          <ul className="space-y-3 border-t border-slate-200 pt-5 dark:border-slate-700 sm:list-inside sm:list-disc sm:pt-6">
+                            {exp.points.map((point, pointIndex) => (
                               <li
                                 key={pointIndex}
-                                className="text-sm font-light leading-relaxed text-slate-600 dark:text-slate-300"
+                                className="relative pl-4 text-sm font-light leading-relaxed text-slate-600 before:absolute before:left-0 before:top-[0.55em] before:h-1 before:w-1 before:rounded-full before:bg-slate-400 dark:text-slate-300 dark:before:bg-slate-500 sm:pl-0 sm:before:hidden"
                               >
                                 {point}
                               </li>
-                        ))}
-                      </ul>
-                    </div>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  )}
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
     </main>
   )
