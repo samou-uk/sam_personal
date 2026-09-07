@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Sam Chusen Ou - Portfolio',
+  title: 'sam chusen ou',
   description: 'Mathematics/Financial Analysis & Risk Management, Statistics Joint Honours, and Computational Mathematics minor at the University of Waterloo',
 }
 

@@ -243,7 +243,7 @@ export default function RestaurantsPage() {
         <section className="pt-32 pb-32">
           <div className="max-w-5xl mx-auto px-6 sm:px-8 space-y-10">
             <header>
-              <h1 className="mb-4 text-[clamp(4rem,18vw,9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
+              <h1 className="mb-4 max-w-full text-[clamp(2.5rem,min(14vw,calc((100vw-3rem)/7)),9rem)] font-extralight lowercase leading-[0.88] tracking-tighter text-slate-900 dark:text-slate-100">
                 restaurants
               </h1>
               <p className="text-base text-slate-600 dark:text-slate-400 font-light max-w-2xl">

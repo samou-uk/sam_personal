@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import { Search, X, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -55,8 +56,13 @@ export default function GlobalSearch({ forceWhite = false }: { forceWhite?: bool
   const [results, setResults] = useState<SearchResult[]>([])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -81,6 +87,17 @@ export default function GlobalSearch({ forceWhite = false }: { forceWhite?: bool
   }, [isOpen])
 
   useEffect(() => {
+    if (!isOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isOpen])
+
+  useEffect(() => {
     if (!query.trim()) {
       setResults(recommendations)
       setSelectedIndex(0)
@@ -98,10 +115,14 @@ export default function GlobalSearch({ forceWhite = false }: { forceWhite?: bool
     setSelectedIndex(0)
   }, [query])
 
-  const handleSelect = (href: string) => {
-    router.push(href)
+  const closeSearch = () => {
     setIsOpen(false)
     setQuery('')
+  }
+
+  const handleSelect = (href: string) => {
+    router.push(href)
+    closeSearch()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -117,105 +138,108 @@ export default function GlobalSearch({ forceWhite = false }: { forceWhite?: bool
     }
   }
 
-  if (!isOpen) {
-    return (
+  const modal =
+    isOpen && mounted
+      ? createPortal(
+          <div className="fixed inset-0 z-[300]" role="dialog" aria-modal="true" aria-label="search">
+            <div
+              className="absolute inset-0 bg-slate-950/45 dark:bg-black/60"
+              onClick={closeSearch}
+            />
+
+            <div className="pointer-events-none absolute inset-0 flex items-start justify-center px-4 pt-20 sm:items-center sm:pt-0">
+              <div
+                className="pointer-events-auto w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900 flex max-h-[calc(100vh-6rem)] flex-col sm:max-h-[32rem]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex flex-shrink-0 items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+                  <Search className="h-5 w-5 text-slate-400" />
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="search"
+                    className="flex-1 bg-transparent text-base font-light lowercase text-slate-900 placeholder:text-slate-400 focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-500 sm:text-sm"
+                    style={{ fontSize: '16px' }}
+                  />
+                  <kbd className="hidden items-center gap-1 rounded border border-slate-200 px-2 py-1 text-xs font-light lowercase text-slate-400 dark:border-slate-700 dark:text-slate-500 sm:inline-flex">
+                    <span className="text-[10px]">⌘</span>k
+                  </kbd>
+                  <button
+                    onClick={closeSearch}
+                    className="rounded p-1 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+                    aria-label="close search"
+                  >
+                    <X className="h-4 w-4 text-slate-400" />
+                  </button>
+                </div>
+
+                <div className="min-h-0 flex-1 overflow-y-auto">
+                  {results.length > 0 ? (
+                    <div className="py-2">
+                      {results.map((result, index) => (
+                        <Link
+                          key={`${result.href}-${index}`}
+                          href={result.href}
+                          onClick={closeSearch}
+                          className={`flex items-center gap-3 px-4 py-3 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 ${
+                            index === selectedIndex ? 'bg-slate-50 dark:bg-slate-800' : ''
+                          }`}
+                        >
+                          <div className="flex min-w-0 flex-1 items-baseline justify-between gap-3">
+                            <span className="truncate text-sm font-light lowercase text-slate-900 dark:text-slate-100">
+                              {result.title}
+                            </span>
+                            <span className="shrink-0 text-xs font-light lowercase text-slate-400 dark:text-slate-500">
+                              {result.category}
+                            </span>
+                          </div>
+                          <ArrowRight className="h-4 w-4 flex-shrink-0 text-slate-400" />
+                        </Link>
+                      ))}
+                    </div>
+                  ) : query ? (
+                    <div className="px-4 py-8 text-center">
+                      <p className="text-sm font-light lowercase text-slate-500 dark:text-slate-400">
+                        no results
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )
+      : null
+
+  return (
+    <>
       <div className="relative">
         <button
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className={`p-2.5 rounded-lg transition-all duration-200 ${forceWhite ? 'text-white/70 hover:text-white md:text-slate-500 md:hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'}`}
+          className={`rounded-lg p-2.5 transition-all duration-200 ${
+            forceWhite
+              ? 'text-white/70 hover:text-white md:text-slate-500 md:hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+              : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+          }`}
           aria-label="search"
         >
-          <Search className="w-5 h-5" />
+          <Search className="h-5 w-5" />
         </button>
 
-        {hovered && (
-          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs font-light lowercase rounded-lg whitespace-nowrap pointer-events-none z-50">
+        {hovered && !isOpen && (
+          <div className="pointer-events-none absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-light lowercase text-white dark:bg-slate-100 dark:text-slate-900">
             search
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-slate-100 rotate-45" />
+            <div className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900 dark:bg-slate-100" />
           </div>
         )}
       </div>
-    )
-  }
-
-  return (
-    <>
-      <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[200]"
-        onClick={() => {
-          setIsOpen(false)
-          setQuery('')
-        }}
-      />
-
-      <div className="fixed top-20 sm:top-[30%] left-1/2 -translate-x-1/2 sm:-translate-y-0 w-[calc(100%-2rem)] sm:w-full max-w-2xl sm:mx-4 z-[201]">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-6rem)] sm:max-h-[32rem]">
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex-shrink-0">
-            <Search className="w-5 h-5 text-slate-400" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="search"
-              className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none text-base sm:text-sm font-light lowercase"
-              style={{ fontSize: '16px' }}
-            />
-            <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-light text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded lowercase">
-              <span className="text-[10px]">⌘</span>k
-            </kbd>
-            <button
-              onClick={() => {
-                setIsOpen(false)
-                setQuery('')
-              }}
-              className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              aria-label="close search"
-            >
-              <X className="w-4 h-4 text-slate-400" />
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto min-h-0">
-            {results.length > 0 ? (
-              <div className="py-2">
-                {results.map((result, index) => (
-                  <Link
-                    key={`${result.href}-${index}`}
-                    href={result.href}
-                    onClick={() => {
-                      setIsOpen(false)
-                      setQuery('')
-                    }}
-                    className={`flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${
-                      index === selectedIndex ? 'bg-slate-50 dark:bg-slate-800' : ''
-                    }`}
-                  >
-                    <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
-                      <span className="text-sm font-light lowercase text-slate-900 dark:text-slate-100 truncate">
-                        {result.title}
-                      </span>
-                      <span className="shrink-0 text-xs font-light lowercase text-slate-400 dark:text-slate-500">
-                        {result.category}
-                      </span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                  </Link>
-                ))}
-              </div>
-            ) : query ? (
-              <div className="px-4 py-8 text-center">
-                <p className="text-sm text-slate-500 dark:text-slate-400 font-light lowercase">
-                  no results
-                </p>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </div>
+      {modal}
     </>
   )
 }
