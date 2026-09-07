@@ -234,16 +234,35 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 z-[1200] md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl">
-          {/* Close button inside overlay */}
-          <button
-            type="button"
-            onClick={() => setMenuOpen(false)}
-            className="absolute top-5 right-5 p-2 rounded-full text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <div className="pt-20 px-6 pb-6 flex flex-col h-full">
+          <div className="mx-auto max-w-7xl px-6 sm:px-8">
+            <div className="relative flex h-16 items-center">
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="absolute left-0 flex items-center"
+                aria-label="home"
+              >
+                <div className="relative h-10 w-10 overflow-hidden">
+                  <Image
+                    src="/sam.png"
+                    alt="Sam Chusen Ou"
+                    fill
+                    sizes="40px"
+                    className="object-contain"
+                  />
+                </div>
+              </Link>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="absolute right-0 rounded-full p-2 text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                aria-label="Close menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+          <div className="pt-4 px-6 pb-6 flex flex-col h-[calc(100%-4rem)]">
             <div className="space-y-1 flex-1 overflow-y-auto">
               {navItems.filter((item) => !('desktopOnly' in item && item.desktopOnly)).map((item) => {
                 const Icon = item.icon
