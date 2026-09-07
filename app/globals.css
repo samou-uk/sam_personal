@@ -144,7 +144,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-weight: 300;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
     width: 100%;
     position: relative;
     scrollbar-gutter: stable;
@@ -153,6 +153,45 @@
 
   .dark body {
     @apply bg-slate-900 text-slate-100;
+  }
+
+  /* Theme switch: quick circular reveal */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 9999;
+  }
+
+  /* Fallback for browsers without View Transitions */
+  html.theme-fade,
+  html.theme-fade body,
+  html.theme-fade body * {
+    transition:
+      background-color 0.28s cubic-bezier(0.32, 0.72, 0, 1),
+      color 0.28s cubic-bezier(0.32, 0.72, 0, 1),
+      border-color 0.28s cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 0.28s cubic-bezier(0.32, 0.72, 0, 1) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none !important;
+    }
+
+    html.theme-fade,
+    html.theme-fade body,
+    html.theme-fade body * {
+      transition: none !important;
+    }
   }
   
   /* Hide system cursor globally so only the custom cursor shows */
